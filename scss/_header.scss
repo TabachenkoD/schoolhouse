@@ -82,14 +82,19 @@ header {
     @media (max-width: 1024px) {
         position: fixed;
         top: 52px;
-        right: 0;
+        right: -100%;
         width: 100%;
         height: 100%;
         background-color: $white;
         padding: 0 20px;
-        transition: left 0.3s ease 0s;
-        overflow: auto;
+        transition: right 0.3s ease 0s;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
+}
+
+.menu-wrapper._active{
+    right: 0;
 }
 
 .menu-icon {
@@ -174,12 +179,14 @@ header {
             font-size: 1.3rem;
         }
 
-        &:has(.menu-sub-list):hover {
-            background-color: $dark-blue;
-            color: $white;
-
-            .menu-link {
+        @media (min-width: 1024px) {
+            &:has(.menu-sub-list):hover {
+                background-color: $dark-blue;
                 color: $white;
+
+                .menu-link {
+                    color: $white;
+                }
             }
         }
 
@@ -222,7 +229,7 @@ body._pc .menu-list>li:hover .menu-sub-list {
     .menu-icon::before,
     .menu-icon::after {
         position: absolute;
-       /*  left: 3px; */
+        /*  left: 3px; */
         height: 10%;
         width: 100%;
         transition: all 0.3s ease 0s;

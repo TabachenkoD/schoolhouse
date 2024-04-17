@@ -478,14 +478,19 @@ header .btn-buy-tickets {
   .menu-wrapper {
     position: fixed;
     top: 52px;
-    right: 0;
+    right: -100%;
     width: 100%;
     height: 100%;
     background-color: #FBFDFB;
     padding: 0 20px;
-    transition: left 0.3s ease 0s;
-    overflow: auto;
+    transition: right 0.3s ease 0s;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
+}
+
+.menu-wrapper._active {
+  right: 0;
 }
 
 .menu-icon {
@@ -571,12 +576,14 @@ header .btn-buy-tickets {
     font-size: 1.3rem;
   }
 }
-.menu-list li:has(.menu-sub-list):hover {
-  background-color: #008CD2;
-  color: #FBFDFB;
-}
-.menu-list li:has(.menu-sub-list):hover .menu-link {
-  color: #FBFDFB;
+@media (min-width: 1024px) {
+  .menu-list li:has(.menu-sub-list):hover {
+    background-color: #008CD2;
+    color: #FBFDFB;
+  }
+  .menu-list li:has(.menu-sub-list):hover .menu-link {
+    color: #FBFDFB;
+  }
 }
 .menu-list li:hover > a {
   color: #95CDE7;
