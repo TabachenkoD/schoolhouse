@@ -5,18 +5,38 @@ footer {
     width: 100%;
     padding-top: 50px;
     margin-top: 50px;
-    
+
     .flex-container {
         display: flex;
         justify-content: space-between;
+
+        @media (max-width: 1024px) {
+            flex-wrap: wrap;
+        }
+    }
+
+    h4 {
+        color: $white;
+        margin-bottom: 20px;
+        font-size: 1.325rem;
+    }
+    
+    @media (min-width: 1024px) {
+        h4 {
+            font-size: 1.875rem;
+        }
     }
 }
 
 .footer-menu-list {
     display: flex;
     flex-direction: column;
-
+    margin: 0;
+    padding: 0;
+    
     & li {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -26,7 +46,7 @@ footer {
         padding: 6px 16px;
         background-color: $orange;
         margin-bottom: 12px;
-        min-width: 140px;
+        min-width: 200px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -37,20 +57,10 @@ footer {
             width: 100%;
             text-align: center;
         }
-
-        @media (min-width: 1280px) {
-            font-size: 1.125rem;
-            line-height: 1.75rem;
-            min-width: 200px;
-        }
     }
 }
 
 .footer-hours {
-    h4 {
-        color: $white;
-    }
-
     .day {
         font-size: 1.125rem;
         line-height: 1.1;
@@ -61,8 +71,6 @@ footer {
         span {
             font-weight: bold;
         }
-
-
     }
 
     .today {
@@ -70,17 +78,30 @@ footer {
 
         &::after {
             content: '\25C0';
-            color: $white; 
+            color: $white;
             padding-left: 8px;
         }
     }
 
-    @media (min-width: 1024px) {
-        h4 {
-            font-size: 1.875rem;
-            line-height: 2.25rem;
-            margin-bottom: 20px;
-        }
+    @media (max-width: 1024px) {
+        margin-bottom: 30px;
+    }
+}
 
+@media (max-width: 1024px) {
+    .footer-menu,
+    .footer-map,
+    .footer-tickets,
+    .footer-hours {
+        flex: 1 1 50%;
+    }
+}
+
+@media (max-width: 767px) {
+    .footer-menu,
+    .footer-map,
+    .footer-tickets,
+    .footer-hours {
+        flex: 1 1 100%;
     }
 }

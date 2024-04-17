@@ -17,16 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     menuItemsWithSubmenu.forEach(item => {
         const submenu = item.querySelector('.menu-sub-list');
+        const link = item.querySelector('.menu-link');
 
-        item.addEventListener('click', function (event) {
-            if (submenu) {
+        link.addEventListener('click', function (event) {
+            if (submenu && event.target === link) {
+                event.preventDefault();
                 const isVisible = submenu.style.display === 'block';
+
                 document.querySelectorAll('.menu-sub-list').forEach(sub => {
-                    sub.style.display = 'none';
+                    if (sub !== submenu) {
+                        sub.style.display = 'none';
+                    }
                 });
-
                 submenu.style.display = isVisible ? 'none' : 'block';
-
                 event.stopPropagation();
             }
         });
