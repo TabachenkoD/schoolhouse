@@ -1,0 +1,49 @@
+@import "./variables";
+
+main {
+    flex: 1;
+    width: 100%;
+}
+
+.classes-events-exhibits {
+    h4 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+
+    .flex-container {
+        display: flex;
+        gap: 50px;
+        height: 700px;
+        .classes {
+            flex: 1 0 50%;
+        }
+
+        .exhibits {
+            flex: 1 0 50%;
+        }
+    }
+}
+
+
+.sponsors {
+    .sponsors-title {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        text-align: center;
+    }
+
+    .slider-img {
+        max-height: 80px;
+        width: fit-content;
+        margin: 0 30px;
+
+        img {
+            max-height: 80px;
+        }
+    }
+
+    .sponsors-slider {
+        width: 100%;
+    }
+}

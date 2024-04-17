@@ -1,0 +1,64 @@
+@import 'variables';
+
+@font-face {
+    font-family: 'Kozuka Gothic Pro M';
+    src: url('/fonts/Kozuka Gothic Pro M.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Kozuka Gothic Pro H';
+    src: url('/fonts/Kozuka Gothic Pro H.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    font-family: $font-primary;
+    color: $black;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+body._lock{
+    overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: $font-secondary;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 4rem;
+    }
+}
+
+@media (min-width: 1200px) {}
