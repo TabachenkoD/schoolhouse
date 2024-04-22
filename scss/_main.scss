@@ -5,7 +5,7 @@ main {
     width: 100%;
 }
 
-.classes-events-exhibits {
+/* .classes-events-exhibits {
     h4 {
         font-size: 2.25rem;
         line-height: 2.5rem;
@@ -15,7 +15,7 @@ main {
     .flex-container {
         display: flex;
         gap: 50px;
-        height: 700px;
+       // height: 700px;
 
         .classes {
             flex: 1 0 50%;
@@ -23,6 +23,82 @@ main {
 
         .exhibits {
             flex: 1 0 50%;
+        }
+    }
+} */
+.classes-events-exhibits {
+    h4 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+
+    .flex-container {
+        display: flex;
+        gap: 50px;
+
+        .classes {
+            flex: 1 1 0;
+
+            h4 {
+                color: $orange;
+            }
+        }
+
+        .exhibits {
+            flex: 1 1 0;
+
+            h4 {
+                color: $dark-blue;
+                margin-bottom: 36px;
+            }
+
+            .exhibits-content {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+
+                div {
+                    overflow: hidden;
+                    cursor: pointer;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: transform 0.5s ease-in-out;
+                    }
+
+                    span {
+                        display: block;
+                        margin-top: 10px;
+                        font-size: 1.5rem;
+                        line-height: 1.25;
+                        color: $dark-blue;
+                        font-weight: bold;
+                        transition: color 0.3s ease-in-out;
+                    }
+
+                    &:hover {
+                        img {
+                            transform: scale(1.1);
+                        }
+
+                        span {
+                            color: $light-blue;
+                        }
+                    }
+                }
+
+                @media (max-width: 768px) {
+                        gap: 1rem;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .flex-container {
+            flex-direction: column;
         }
     }
 }
