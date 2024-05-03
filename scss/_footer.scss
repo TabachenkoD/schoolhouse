@@ -19,12 +19,10 @@ footer {
     h4 {
         color: $white;
         margin-bottom: 20px;
-        font-size: 1.325rem;
-    }
+        font-size: $font-size-small-medium;
 
-    @media (min-width: 1024px) {
-        h4 {
-            font-size: 1.875rem;
+        @media (min-width: 1024px) {
+            font-size: $font-size-x-large;
         }
     }
 }
@@ -36,7 +34,7 @@ footer {
     padding: 0;
 
     & li {
-        font-size: 1.125rem;
+        font-size: $font-size-small;
         line-height: 1.75rem;
         list-style: none;
         padding: 0;
@@ -52,18 +50,23 @@ footer {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        transition: background-color 0.3s;
 
         & a {
             color: $white;
             width: 100%;
             text-align: center;
         }
+
+        &:hover {
+            background-color: $orange-btn-hover;
+        }
     }
 }
 
 .footer-hours {
     .day {
-        font-size: 1.125rem;
+        font-size: $font-size-small;
         line-height: 1.1;
         color: $white;
         margin-bottom: 12px;
@@ -90,7 +93,7 @@ footer {
 }
 
 .footer-copyright {
-    border-top: 2px solid $white;
+    border-top: 1px solid $white;
     padding: 24px 0;
     display: flex;
     justify-content: center;
@@ -106,6 +109,7 @@ footer {
 }
 
 @media (max-width: 1024px) {
+
     .footer-menu,
     .footer-map,
     .footer-tickets,
@@ -115,6 +119,7 @@ footer {
 }
 
 @media (max-width: 767px) {
+
     .footer-menu,
     .footer-map,
     .footer-tickets,

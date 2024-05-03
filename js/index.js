@@ -46,6 +46,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+/* window.addEventListener('scroll', function () {
+    var header_divider = document.querySelector('.header-divider');
+    if (window.scrollY > 50) {
+        header_divider.style.opacity = 1;
+    } else {
+        header_divider.style.opacity = 0;
+    }
+}); */
+window.addEventListener('scroll', function() {
+    var header = document.querySelector('header');
+    if (window.scrollY > 50) {
+        header.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)'; 
+    } else {
+        header.style.boxShadow = 'none'; 
+    }
+});
+
 /* Footer */
 const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
 const todayElement = document.getElementById(today);
