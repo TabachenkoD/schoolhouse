@@ -426,11 +426,13 @@ header .header-left-block {
 header .header-btn-container {
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: end;
 }
 @media (max-width: 1024px) {
   header .header-btn-container {
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     width: 100%;
@@ -664,30 +666,10 @@ main {
   width: 100%;
 }
 
-/* .classes-events-exhibits {
-    h4 {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-        color: $black;
-    }
-
-    .flex-container {
-        display: flex;
-        gap: 50px;
-       // height: 700px;
-
-        .classes {
-            flex: 1 0 50%;
-        }
-
-        .exhibits {
-            flex: 1 0 50%;
-        }
-    }
-} */
 .classes-events-exhibits h4 {
   font-size: 2.25rem;
   line-height: 2.5rem;
+  margin-bottom: 36px;
 }
 .classes-events-exhibits .flex-container {
   display: flex;
@@ -699,12 +681,26 @@ main {
 .classes-events-exhibits .flex-container .classes h4 {
   color: #ED7A1F;
 }
+.classes-events-exhibits .flex-container .classes .classes-content {
+  color: #ED7A1F;
+}
+.classes-events-exhibits .flex-container .classes .classes-content div {
+  cursor: pointer;
+  margin-bottom: 36px;
+}
+.classes-events-exhibits .flex-container .classes .classes-content div span {
+  font-size: 1.625rem;
+  line-height: 1.25;
+}
+.classes-events-exhibits .flex-container .classes .classes-content div p {
+  font-size: 1.2rem;
+  margin: 0;
+}
 .classes-events-exhibits .flex-container .exhibits {
   flex: 1 1 0;
 }
 .classes-events-exhibits .flex-container .exhibits h4 {
   color: #008CD2;
-  margin-bottom: 36px;
 }
 .classes-events-exhibits .flex-container .exhibits .exhibits-content {
   display: grid;
@@ -732,7 +728,7 @@ main {
   transition: color 0.3s ease-in-out;
 }
 .classes-events-exhibits .flex-container .exhibits .exhibits-content div:hover img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 .classes-events-exhibits .flex-container .exhibits .exhibits-content div:hover span {
   color: #95CDE7;
@@ -748,23 +744,37 @@ main {
   }
 }
 
+.sponsors {
+  overflow: hidden;
+  position: relative;
+}
 .sponsors .sponsors-title {
   font-size: 2.25rem;
   line-height: 2.5rem;
   text-align: center;
   margin-bottom: 40px;
 }
+.sponsors .sponsors-slider {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll 60s linear infinite;
+}
 .sponsors .slider-img {
-  max-height: 80px;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 0 30px;
+  display: inline-block;
+  margin: 0 20px;
+  height: 80px;
 }
 .sponsors .slider-img img {
-  max-height: 80px;
+  height: 100%;
+  width: auto;
 }
-.sponsors .sponsors-slider {
-  width: 100%;
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 footer {
@@ -776,6 +786,7 @@ footer {
 footer .flex-container {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 25px;
 }
 @media (max-width: 1024px) {
   footer .flex-container {
@@ -846,6 +857,21 @@ footer h4 {
   .footer-hours {
     margin-bottom: 30px;
   }
+}
+
+.footer-copyright {
+  border-top: 2px solid #FBFDFB;
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+.footer-copyright a {
+  padding: 0 10px;
+  text-align: center;
+  color: #FBFDFB;
+  text-decoration: none;
 }
 
 @media (max-width: 1024px) {

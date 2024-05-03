@@ -5,31 +5,11 @@ main {
     width: 100%;
 }
 
-/* .classes-events-exhibits {
-    h4 {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-        color: $black;
-    }
-
-    .flex-container {
-        display: flex;
-        gap: 50px;
-       // height: 700px;
-
-        .classes {
-            flex: 1 0 50%;
-        }
-
-        .exhibits {
-            flex: 1 0 50%;
-        }
-    }
-} */
 .classes-events-exhibits {
     h4 {
         font-size: 2.25rem;
         line-height: 2.5rem;
+        margin-bottom: 36px;
     }
 
     .flex-container {
@@ -42,6 +22,25 @@ main {
             h4 {
                 color: $orange;
             }
+
+            .classes-content {
+                color: $orange;
+
+                div {
+                    cursor: pointer;
+                    margin-bottom: 36px;
+
+                    span {
+                        font-size: 1.625rem;
+                        line-height: 1.25;
+                    }
+
+                    p {
+                        font-size: 1.2rem;
+                        margin: 0;
+                    }
+                }
+            }
         }
 
         .exhibits {
@@ -49,7 +48,6 @@ main {
 
             h4 {
                 color: $dark-blue;
-                margin-bottom: 36px;
             }
 
             .exhibits-content {
@@ -80,7 +78,7 @@ main {
 
                     &:hover {
                         img {
-                            transform: scale(1.1);
+                            transform: scale(1.05);
                         }
 
                         span {
@@ -90,7 +88,7 @@ main {
                 }
 
                 @media (max-width: 768px) {
-                        gap: 1rem;
+                    gap: 1rem;
                 }
             }
         }
@@ -103,8 +101,10 @@ main {
     }
 }
 
-
 .sponsors {
+    overflow: hidden;
+    position: relative;
+
     .sponsors-title {
         font-size: 2.25rem;
         line-height: 2.5rem;
@@ -112,17 +112,30 @@ main {
         margin-bottom: 40px;
     }
 
+    .sponsors-slider {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scroll 60s linear infinite;
+    }
+
     .slider-img {
-        max-height: 80px;
-        width: fit-content;
-        margin: 0 30px;
+        display: inline-block;
+        margin: 0 20px;
+        height: 80px;
 
         img {
-            max-height: 80px;
+            height: 100%;
+            width: auto;
         }
     }
 
-    .sponsors-slider {
-        width: 100%;
+    @keyframes scroll {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-50%);
+        }
     }
 }
