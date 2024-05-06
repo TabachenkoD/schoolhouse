@@ -3,6 +3,30 @@
 main {
     flex: 1;
     width: 100%;
+    padding-top: 53px;
+
+    li,
+    p {
+        line-height: 1.5;
+    }
+
+    @media (min-width: 1024px) {
+        padding-top: 94px;
+    }
+}
+
+.common-title {
+    font-size: $font-size-large;
+    color: $orange;
+}
+
+.common-subtitle {
+    color: $red;
+}
+
+.p-underline {
+    text-decoration: underline;
+    margin-bottom: 0;
 }
 
 .classes-events-exhibits {
@@ -141,15 +165,17 @@ main {
 }
 
 .visit {
-    color: $text-grey;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    
-    h4 {
-        font-size: $font-size-large;
+    color: $black;
+    padding-top: 30px;
+
+    .visit-admission {
+        line-height: 1.5;
     }
 
-    
+    li {
+        line-height: 1.5;
+    }
+
     .visit-location-map-container {
         display: flex;
         gap: 50px;
@@ -162,6 +188,83 @@ main {
         .info-window-location {
             font-weight: bold;
         }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
     }
-   
+
+}
+
+.know-before-you-go {
+    padding-top: 30px;
+
+    li,
+    p {
+        line-height: 1.5;
+    }
+}
+
+.weekly-classes {
+    padding-top: 30px;
+
+    .p-underline {
+        font-weight: bold;
+        color: $dark-blue;
+    }
+
+    .weekly-classes-btn-container {
+        padding: 25px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+            background-color: $dark-blue;
+            border-radius: 8px;
+            overflow: hidden;
+
+            a {
+                font-family: $font-secondary;
+                font-size: $font-size-small-medium;
+                letter-spacing: 1px;
+                padding: 12px 24px;
+                display: block;
+                color: $white;
+                text-decoration: none;
+                width: 100%;
+                height: 100%;
+                transition: background-color 0.4s;
+
+                &:hover {
+                    background-color: $light-blue;
+                }
+            }
+        }
+    }
+
+    .weekly-classes-items {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 30px;
+
+        .weekly-classes-item-container {
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+
+            img {
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 300px;
+            }
+
+            .common-subtitle {
+                font-weight: bold;
+
+            }
+        }
+    }
 }

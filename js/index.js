@@ -12,6 +12,7 @@ if (isTouchDevice()) {
     document.body.classList.add('_pc')
 }
 
+/* Header */
 document.addEventListener("DOMContentLoaded", function () {
     const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
 
@@ -54,12 +55,12 @@ document.addEventListener("DOMContentLoaded", function () {
         header_divider.style.opacity = 0;
     }
 }); */
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     var header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)'; 
+    if (window.scrollY > 30) {
+        header.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
     } else {
-        header.style.boxShadow = 'none'; 
+        header.style.boxShadow = 'none';
     }
 });
 
@@ -84,3 +85,29 @@ if (todayElement) {
     centerMode: true,
     variableWidth: true,
 }); */
+
+/* page Visit google map */
+function initMap() {
+    var geocoder = new google.maps.Geocoder();
+    var address = "129 E. Ocean Avenue, Boynton Beach, FL 33435";
+
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status === 'OK') {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 11,
+                center: results[0].geometry.location
+            });
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            var infoWindow = new google.maps.InfoWindow({
+                content: '<div style="font-size: 16px;"><strong class="info-window-location">Schoolhouse Children\'s Museum</strong><br>' +
+                    '129 East Ocean Avenue<br>Boynton Beach, Florida 33435-4536<br><br><a href="https://www.google.com/maps?saddr&daddr=129+East+Ocean+Avenue,+Boynton+Beach,+Florida,+33435-4536,+US" target="_blank">Get Directions</a><br></div>'
+            });
+            infoWindow.open(map, marker);
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
