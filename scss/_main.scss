@@ -268,3 +268,25 @@ main {
         }
     }
 }
+
+.exhibits {
+    .exhb-subtitles {
+        font-size: $font-size-medium;
+        color: $dark-blue;
+        margin-top: 40px;
+        margin-bottom: 26px;
+    }
+
+    .p-underline {
+        font-weight: bold;
+        color: $dark-blue;
+    }
+
+    .common-subtitle {
+        font-weight: bold;
+    }
+
+    section {
+        padding-bottom: 20px;
+    }
+}

@@ -900,6 +900,23 @@ main p {
   font-weight: bold;
 }
 
+.exhibits .exhb-subtitles {
+  font-size: 1.5rem;
+  color: #008CD2;
+  margin-top: 40px;
+  margin-bottom: 26px;
+}
+.exhibits .p-underline {
+  font-weight: bold;
+  color: #008CD2;
+}
+.exhibits .common-subtitle {
+  font-weight: bold;
+}
+.exhibits section {
+  padding-bottom: 20px;
+}
+
 footer {
   background-color: #008CD2;
   width: 100%;
