@@ -900,6 +900,9 @@ main p {
   font-weight: bold;
 }
 
+.exhibits {
+  padding-top: 30px;
+}
 .exhibits .exhb-subtitles {
   font-size: 1.5rem;
   color: #008CD2;
@@ -915,6 +918,119 @@ main p {
 }
 .exhibits section {
   padding-bottom: 20px;
+}
+
+.calendar {
+  padding-top: 30px;
+}
+.calendar .p-underline {
+  font-weight: bold;
+  color: #008CD2;
+}
+
+.rsvp {
+  padding-top: 30px;
+}
+.rsvp .rsvp-subtitles {
+  font-size: 1.5rem;
+  color: #008CD2;
+  margin-top: 40px;
+  margin-bottom: 26px;
+  text-transform: uppercase;
+}
+.rsvp p span {
+  color: #ba2c36;
+}
+
+.party {
+  padding-top: 30px;
+}
+.party .party-two-columns {
+  display: flex;
+  gap: 70px;
+}
+@media (max-width: 768px) {
+  .party .party-two-columns {
+    flex-direction: column;
+  }
+}
+.party .party-two-columns > div:first-child {
+  flex: 70;
+}
+.party .party-two-columns > div:last-child {
+  flex: 30;
+}
+.party .party-two-columns > div:last-child ul {
+  list-style-type: none;
+  padding-left: 25px;
+}
+.party .party-two-columns > div:last-child li {
+  position: relative;
+}
+.party .party-two-columns > div:last-child li span {
+  text-decoration: underline;
+}
+.party .party-two-columns > div:last-child li::before {
+  content: "- ";
+  position: absolute;
+  left: -10px;
+}
+.party .party-images-section {
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+.party .party-images-section .party-image-container {
+  flex: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  border: 0;
+  line-height: 0;
+}
+.party .party-images-section .party-image-container img {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .party .party-images-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+.party .party-subtitles {
+  font-size: 1.5rem;
+  color: #008CD2;
+  margin-top: 40px;
+  margin-bottom: 26px;
+  text-transform: uppercase;
+}
+.party .p-underline {
+  font-weight: bold;
+  color: #008CD2;
+}
+.party .request-party-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.party .request-party-btn a {
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  color: #FBFDFB;
+  text-align: center;
+  font-size: 1.325rem;
+  background-color: #ED7A1F;
+  padding: 16px 30px;
+  transition: background-color 0.3s;
+}
+.party .request-party-btn a:hover {
+  background-color: #ec6b02;
 }
 
 footer {
