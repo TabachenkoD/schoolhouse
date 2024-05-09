@@ -329,6 +329,7 @@ main {
 
         @media (max-width: 768px) {
             flex-direction: column;
+            gap: 0;
         }
     }
 
@@ -421,5 +422,65 @@ main {
                 background-color: $orange-btn-hover;
             }
         }
+    }
+}
+
+.education {
+    .education-subtitles {
+        font-size: $font-size-medium;
+        color: $dark-blue;
+        margin-top: 40px;
+        margin-bottom: 26px;
+        text-transform: uppercase;
+    }
+
+    .p-underline {
+        font-weight: bold;
+        color: $dark-blue;
+    }
+
+    .education-flex-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+
+        @media (max-width: 768px) {
+            flex-direction: column-reverse;
+        }
+    }
+
+    .education-flex-container>div:last-child {
+        margin-top: 40px;
+
+        p {
+            margin-top: 0;
+        }
+    }
+
+    .education-request-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+            display: block;
+            width: 100%;
+            text-transform: uppercase;
+            color: $white;
+            text-align: center;
+            font-size: $font-size-small-medium;
+            background-color: $orange;
+            padding: 16px 30px;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: $orange-btn-hover;
+            }
+        }
+    }
+
+    .field-Trip-pricing {
+        list-style: none;
+        padding-left: 30px;
     }
 }

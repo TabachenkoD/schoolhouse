@@ -952,6 +952,7 @@ main p {
 @media (max-width: 768px) {
   .party .party-two-columns {
     flex-direction: column;
+    gap: 0;
   }
 }
 .party .party-two-columns > div:first-child {
@@ -1031,6 +1032,57 @@ main p {
 }
 .party .request-party-btn a:hover {
   background-color: #ec6b02;
+}
+
+.education .education-subtitles {
+  font-size: 1.5rem;
+  color: #008CD2;
+  margin-top: 40px;
+  margin-bottom: 26px;
+  text-transform: uppercase;
+}
+.education .p-underline {
+  font-weight: bold;
+  color: #008CD2;
+}
+.education .education-flex-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .education .education-flex-container {
+    flex-direction: column-reverse;
+  }
+}
+.education .education-flex-container > div:last-child {
+  margin-top: 40px;
+}
+.education .education-flex-container > div:last-child p {
+  margin-top: 0;
+}
+.education .education-request-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.education .education-request-btn a {
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  color: #FBFDFB;
+  text-align: center;
+  font-size: 1.325rem;
+  background-color: #ED7A1F;
+  padding: 16px 30px;
+  transition: background-color 0.3s;
+}
+.education .education-request-btn a:hover {
+  background-color: #ec6b02;
+}
+.education .field-Trip-pricing {
+  list-style: none;
+  padding-left: 30px;
 }
 
 footer {
