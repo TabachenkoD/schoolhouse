@@ -1084,6 +1084,29 @@ main p {
   list-style: none;
   padding-left: 30px;
 }
+.education .q-a-section {
+  list-style: none;
+  padding-left: 25px;
+}
+.education .education-padding {
+  padding-top: 30px;
+}
+.education .education-container-two-columns {
+  display: flex;
+  gap: 30px;
+}
+@media (max-width: 768px) {
+  .education .education-container-two-columns {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+.education .education-container-two-columns > div:first-child {
+  flex: 50;
+}
+.education .education-container-two-columns > div:last-child {
+  flex: 50;
+}
 
 footer {
   background-color: #008CD2;

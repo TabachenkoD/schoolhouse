@@ -483,4 +483,31 @@ main {
         list-style: none;
         padding-left: 30px;
     }
+
+    .q-a-section {
+        list-style: none;
+        padding-left: 25px;
+    }
+
+    .education-padding {
+        padding-top: 30px;
+    }
+
+    .education-container-two-columns {
+        display: flex;
+        gap: 30px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    .education-container-two-columns>div:first-child {
+        flex: 50;
+    }
+
+    .education-container-two-columns>div:last-child {
+        flex: 50;
+    }
 }
