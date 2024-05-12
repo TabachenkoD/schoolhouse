@@ -701,6 +701,9 @@ main p {
   margin-bottom: 0;
 }
 
+.classes-events-exhibits {
+  padding: 50px 0;
+}
 .classes-events-exhibits h4 {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -709,7 +712,6 @@ main p {
 .classes-events-exhibits .flex-container {
   display: flex;
   gap: 50px;
-  padding: 50px;
 }
 .classes-events-exhibits .flex-container .classes {
   flex: 1 1 0;
@@ -1130,6 +1132,10 @@ main p {
   font-weight: bold;
   color: #008CD2;
 }
+.about b {
+  color: #008CD2;
+  font-size: 20px;
+}
 .about .about-board-directors {
   display: flex;
   gap: 50px;
@@ -1175,7 +1181,58 @@ main p {
     flex-direction: column;
     gap: 20px;
     margin-bottom: 0;
+    margin-top: 20px;
   }
+}
+.about .employ-app-form {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about .employ-app-form a {
+  display: block;
+  text-transform: uppercase;
+  color: #FBFDFB;
+  text-align: center;
+  font-size: 1.325rem;
+  background-color: #ED7A1F;
+  padding: 16px 30px;
+  transition: background-color 0.3s;
+}
+.about .employ-app-form a:hover {
+  background-color: #ec6b02;
+}
+.about .visit-location-map-container {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+.about .visit-location-map-container div {
+  flex: 50;
+}
+.about .visit-location-map-container #map {
+  min-height: 400px;
+}
+@media (max-width: 768px) {
+  .about .visit-location-map-container {
+    flex-direction: column;
+  }
+  .about .visit-location-map-container div {
+    flex: 100;
+  }
+}
+
+.join {
+  padding-top: 30px;
+}
+.join b {
+  color: #008CD2;
+  font-size: 20px;
+}
+.join .p-underline {
+  font-weight: bold;
+  color: #008CD2;
 }
 
 footer {
