@@ -45,6 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
             menuWrapper.classList.toggle('_active');
         })
     }
+
+   /* page Join.html arrow in collapse title*/
+    $('.collapse').on('show.bs.collapse', function () {
+        $(this).parent().find('.collapse-title').addClass('rotate-chevrone');
+    });
+
+    $('.collapse').on('hide.bs.collapse', function () {
+        console.log('hide');
+        $(this).parent().find('.collapse-title').removeClass('rotate-chevrone');
+    });
 });
 
 /* window.addEventListener('scroll', function () {
@@ -111,3 +121,7 @@ function initMap() {
         }
     });
 }
+
+/* page Join */
+
+
