@@ -704,3 +704,50 @@ main {
         }
     }
 }
+
+.support {
+    padding-top: 30px;
+
+    b {
+        color: $dark-blue;
+        font-size: 20px;
+    }
+
+    .support-request-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+            display: block;
+            text-transform: uppercase;
+            color: $white;
+            text-align: center;
+            font-size: $font-size-small-medium;
+            background-color: $orange;
+            padding: 16px 30px;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: $orange-btn-hover;
+            }
+        }
+    }
+}
+
+.volunteer {
+    padding-top: 30px;
+
+    b {
+        color: $dark-blue;
+        font-size: 20px;
+    }
+
+    .mb-16 {
+        text-decoration: underline;
+    }
+
+    .p-underline {
+        color: $dark-blue;
+    }
+}

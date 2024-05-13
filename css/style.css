@@ -1274,6 +1274,46 @@ main p {
   transition: transform 0.3s ease;
 }
 
+.support {
+  padding-top: 30px;
+}
+.support b {
+  color: #008CD2;
+  font-size: 20px;
+}
+.support .support-request-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.support .support-request-btn a {
+  display: block;
+  text-transform: uppercase;
+  color: #FBFDFB;
+  text-align: center;
+  font-size: 1.325rem;
+  background-color: #ED7A1F;
+  padding: 16px 30px;
+  transition: background-color 0.3s;
+}
+.support .support-request-btn a:hover {
+  background-color: #ec6b02;
+}
+
+.volunteer {
+  padding-top: 30px;
+}
+.volunteer b {
+  color: #008CD2;
+  font-size: 20px;
+}
+.volunteer .mb-16 {
+  text-decoration: underline;
+}
+.volunteer .p-underline {
+  color: #008CD2;
+}
+
 footer {
   background-color: #008CD2;
   width: 100%;
