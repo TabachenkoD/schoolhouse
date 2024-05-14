@@ -46,15 +46,27 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
-   /* page Join.html arrow in collapse title*/
+    /* page Join.html arrow in collapse title*/
     $('.collapse').on('show.bs.collapse', function () {
         $(this).parent().find('.collapse-title').addClass('rotate-chevrone');
     });
 
     $('.collapse').on('hide.bs.collapse', function () {
-        console.log('hide');
         $(this).parent().find('.collapse-title').removeClass('rotate-chevrone');
     });
+
+
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+    })
 });
 
 /* window.addEventListener('scroll', function () {
