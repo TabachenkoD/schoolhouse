@@ -1365,6 +1365,14 @@ main p {
 .join .children-information > div {
   flex: 50;
 }
+.join .membership-type {
+  padding-right: 25px;
+}
+@media (max-width: 990px) {
+  .join .membership-type {
+    padding-right: 7px;
+  }
+}
 .join .billing-section-form,
 .join .card-section-form,
 .join .mailing-address-section-form {
@@ -1384,9 +1392,12 @@ main p {
 .join .mailing-address-section-form > div {
   flex: 50;
 }
+.join .billing-province, .join .billing-country-other {
+  display: none;
+}
 .join .card-type-container {
   display: flex;
-  gap: 25px;
+  gap: 20px;
 }
 .join .card-type-container .form-check {
   display: flex;
@@ -1399,46 +1410,6 @@ main p {
   border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
-}
-.join .card-verification {
-  /* .tooltip-container {
-      position: relative;
-      display: inline-block;
-  }
-
-  .card-tooltip {
-      font-size: 14px;
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 27px;
-      width: 300px;
-      background-color: #f9f9f9;
-      border: 1px solid $orange;
-      padding: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-  }
-
-  .tooltip-container:hover .card-tooltip {
-      display: block;
-      opacity: 1;
-  }
-
-  .info-icon {
-      cursor: pointer;
-  }
-
-  svg {
-      margin-left: 7px;
-      fill: $orange;
-
-      @media (max-width: 768px) {
-          display: none;
-      }
-  } */
 }
 .join .card-verification .tooltip-container {
   position: relative;
@@ -1453,29 +1424,15 @@ main p {
   width: 300px;
   background-color: #f9f9f9;
   border: 1px solid #ED7A1F;
-  padding: 5px 10px;
+  padding: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-@media (pointer: coarse) {
-  .join .card-verification .tooltip-container .card-tooltip {
-    display: none;
-  }
-  .join .card-verification .info-icon:active + .card-tooltip {
-    display: block;
-    opacity: 1;
-  }
-  .join .card-verification .card-tooltip {
-    width: 220px;
-  }
-}
-@media (pointer: fine) {
-  .join .card-verification .tooltip-container:hover .card-tooltip {
-    display: block;
-    opacity: 1;
-  }
+.join .card-verification .tooltip-container:hover .card-tooltip {
+  display: block;
+  opacity: 1;
 }
 .join .card-verification .info-icon {
   cursor: pointer;
@@ -1483,6 +1440,11 @@ main p {
 .join .card-verification svg {
   margin-left: 7px;
   fill: #ED7A1F;
+}
+@media (max-width: 768px) {
+  .join .card-verification svg {
+    display: none;
+  }
 }
 .join .agreement-horisontal-container {
   display: flex;

@@ -12,10 +12,10 @@ if (isTouchDevice()) {
     document.body.classList.add('_pc')
 }
 
-/* Header */
-document.addEventListener("DOMContentLoaded", function () {
-    const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
 
+document.addEventListener("DOMContentLoaded", function () {
+    /* Header */
+    const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
     menuItemsWithSubmenu.forEach(item => {
         const submenu = item.querySelector('.menu-sub-list');
         const link = item.querySelector('.menu-link');
@@ -46,15 +46,81 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
-    /* page Join.html arrow in collapse title*/
-    $('.collapse').on('show.bs.collapse', function () {
-        $(this).parent().find('.collapse-title').addClass('rotate-chevrone');
-    });
+    /* page Join.html*/
+    const collapses = document.querySelectorAll('.collapse');
+    if (collapses.length > 0) {
+        collapses.forEach(collapse => {
+            collapse.addEventListener('show.bs.collapse', function () {
+                const collapseTitle = this.parentNode.querySelector('.collapse-title');
+                if (collapseTitle) {
+                    collapseTitle.classList.add('rotate-chevrone');
+                }
+            });
+            collapse.addEventListener('hide.bs.collapse', function () {
+                const collapseTitle = this.parentNode.querySelector('.collapse-title');
+                if (collapseTitle) {
+                    collapseTitle.classList.remove('rotate-chevrone');
+                }
+            });
+        });
+    }
 
-    $('.collapse').on('hide.bs.collapse', function () {
-        $(this).parent().find('.collapse-title').removeClass('rotate-chevrone');
-    });
+    const membershipRadios = document.querySelectorAll('input[name="membership"]');
+    if (membershipRadios.length > 0) {
+        function updateMembershipOptions() {
+            const selectedMembership = document.querySelector('input[name="membership"]:checked');
+            const familyOptions = document.querySelectorAll('.membership-type-family-option');
+            const grandparentOptions = document.querySelectorAll('.membership-type-grandparent-option');
 
+            familyOptions.forEach(option => option.style.display = 'none');
+            grandparentOptions.forEach(option => option.style.display = 'none');
+
+            if (selectedMembership?.id === 'membership-family') {
+                familyOptions.forEach(option => option.style.display = 'block');
+            } else if (selectedMembership?.id === 'membership-grandparent') {
+                grandparentOptions.forEach(option => option.style.display = 'block');
+            }
+        }
+
+        membershipRadios.forEach(radio => {
+            radio.addEventListener('change', updateMembershipOptions);
+        });
+        updateMembershipOptions();
+    }
+
+    const billingCountrySelect = document.getElementById('billing-country');
+    function updateBillingFields() {
+        const billingStateSection = document.querySelector('.billing-state');
+        const billingProvinceSection = document.querySelector('.billing-province');
+        const billingCountryOtherSection = document.querySelector('.billing-country-other');
+
+        const billingStateFields = billingStateSection.querySelectorAll('select, input');
+        const billingProvinceFields = billingProvinceSection.querySelectorAll('select, input');
+        const billingCountryOtherFields = billingCountryOtherSection.querySelectorAll('select, input');
+
+        const selectedCountry = billingCountrySelect.value;
+
+        billingStateSection.style.display = 'none';
+        billingProvinceSection.style.display = 'none';
+        billingCountryOtherSection.style.display = 'none';
+
+        billingStateFields.forEach(field => field.removeAttribute('required'));
+        billingProvinceFields.forEach(field => field.removeAttribute('required'));
+        billingCountryOtherFields.forEach(field => field.removeAttribute('required'));
+
+        if (selectedCountry === 'United States') {
+            billingStateSection.style.display = 'block';
+            billingStateFields.forEach(field => field.setAttribute('required', 'required'));
+        } else if (selectedCountry === 'Canada') {
+            billingProvinceSection.style.display = 'block';
+            billingProvinceFields.forEach(field => field.setAttribute('required', 'required'));
+        } else if (selectedCountry === 'Other') {
+            billingCountryOtherSection.style.display = 'block';
+            billingCountryOtherFields.forEach(field => field.setAttribute('required', 'required'));
+        }
+    }
+    billingCountrySelect.addEventListener('change', updateBillingFields);
+    updateBillingFields();
 
     const forms = document.querySelectorAll('.needs-validation')
     Array.from(forms).forEach(form => {
@@ -133,7 +199,5 @@ function initMap() {
         }
     });
 }
-
-/* page Join */
 
 

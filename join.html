@@ -90,7 +90,7 @@
                 Museum!</p>
             <p><i>Please note: There is a possibility the Museum will close this fall for renovations. In such an event,
                     memberships would be extended for the duration of the closure.</i></p>
-            <p class="p-underline">Memberships Include</p>
+            <p class="p-underline pb-3">Memberships Include</p>
             <ol>
                 <li>Unlimited complimentary admission to the Schoolhouse Museum for one year</li>
                 <li>10% discount on merchandise at the Schoolhouse Gift Shop</li>
@@ -426,29 +426,23 @@
                             </div>
                             <hr class="my-3" />
                             <p class="p-underline">Payment Information</p>
-                            <div class="col-md-8 col-lg-6 membership-type-family">
-                                <label for="membership-type-family" class="form-label">Membership Type</label>
-                                <select class="form-select" id="membership-type-family" required>
+
+                            <div class="col-sm-12 col-lg-6 membership-type">
+                                <label for="membership-type" class="form-label">Membership Type</label>
+                                <select class="form-select" id="membership-type" required>
                                     <option value="">Choose...</option>
-                                    <option>Family Basic - $100</option>
-                                    <option>Family Plus - $120</option>
-                                    <option>Family Premium - $175</option>
+                                    <option class="membership-type-family-option">Family Basic - $100</option>
+                                    <option class="membership-type-family-option">Family Plus - $120</option>
+                                    <option class="membership-type-family-option">Family Premium - $175</option>
+                                    <option class="membership-type-grandparent-option">Grandparent Basic - $65</option>
+                                    <option class="membership-type-grandparent-option">Grandparent Premium - $115
+                                    </option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please provide a valid membership type.
                                 </div>
                             </div>
-                            <div class="col-md-8 col-lg-6 membership-type-grandparent">
-                                <label for="membership-type-grandparent" class="form-label">Membership Type</label>
-                                <select class="form-select" id="membership-type-grandparent" required>
-                                    <option value="">Choose...</option>
-                                    <option>Grandparent Basic - $65</option>
-                                    <option>Grandparent Premium - $115</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid membership type.
-                                </div>
-                            </div>
+
                             <div class="billing-section-form">
                                 <div>
                                     <div class="col-12 pt-3">
@@ -488,7 +482,6 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-country" class="form-label">Billing Country</label>
                                         <select class="form-select" id="billing-country" required>
-                                            <option value="">Choose...</option>
                                             <option>United States</option>
                                             <option>Canada</option>
                                             <option>Other</option>
@@ -505,7 +498,7 @@
                                             Valid billing city is required.
                                         </div>
                                     </div>
-                                    <div class="col-12 pt-3">
+                                    <div class="col-12 pt-3 billing-state">
                                         <label for="billing-state" class="form-label">Billing State</label>
                                         <select class="form-select" id="billing-state" required>
                                             <option value="">Choose...</option>
@@ -600,6 +593,63 @@
                                                 value="" required>
                                             <div class="invalid-feedback">
                                                 Valid billing zip is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-3 billing-province">
+                                        <label for="billing-province" class="form-label">Billing Province</label>
+                                        <select class="form-select" id="billing-province" required>
+                                            <option value="">Choose...</option>
+                                            <optgroup label="Canadian Provinces">
+                                                <option value="AB" label="AB - Alberta">AB - Alberta</option>
+                                                <option value="BC" label="BC - British Columbia">BC - British Columbia
+                                                </option>
+                                                <option value="MB" label="MB - Manitoba">MB - Manitoba</option>
+                                                <option value="NB" label="NB - New Brunswick">NB - New Brunswick
+                                                </option>
+                                                <option value="NL" label="NL - Newfoundland and Labrador">NL -
+                                                    Newfoundland and Labrador</option>
+                                                <option value="NS" label="NS - Nova Scotia">NS - Nova Scotia</option>
+                                                <option value="ON" label="ON - Ontario">ON - Ontario</option>
+                                                <option value="PE" label="PE - Prince Edward Island">PE - Prince Edward
+                                                    Island</option>
+                                                <option value="QC" label="QC - Quebec">QC - Quebec</option>
+                                                <option value="SK" label="SK - Saskatchewan">SK - Saskatchewan</option>
+                                            </optgroup>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a valid province.
+                                        </div>
+                                        <div class="col-12 pt-3">
+                                            <label for="billing-code" class="form-label">Billing Postal Code</label>
+                                            <input type="text" class="form-control" id="billing-code" placeholder=""
+                                                value="" required>
+                                            <div class="invalid-feedback">
+                                                Valid billing code is required.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-3 billing-country-other">
+                                        <label for="billing-country-other" class="form-label">Billing Country -
+                                            Other</label>
+                                        <input type="text" class="form-control" id="billing-country-other"
+                                            placeholder="" value="" required>
+                                        <div class="invalid-feedback">
+                                            Please select a valid billing country.
+                                        </div>
+                                        <label for="billing-region-other" class="form-label pt-3">Billing Region</label>
+                                        <input type="text" class="form-control" id="billing-region-other" placeholder=""
+                                            value="" required>
+                                        <div class="invalid-feedback">
+                                            Please select a valid billing region.
+                                        </div>
+                                        <div class="col-12 pt-3">
+                                            <label for="billing-code-other" class="form-label">Billing Postal
+                                                Code</label>
+                                            <input type="text" class="form-control" id="billing-code-other"
+                                                placeholder="" value="" required>
+                                            <div class="invalid-feedback">
+                                                Valid billing code is required.
                                             </div>
                                         </div>
                                     </div>
@@ -889,13 +939,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="subscribe-newsletter">
+                            <div>
                                 <label class="form-check-label" for="subscribe-newsletter">I want to subscribe to your
                                     Newsletter</label>
-                            </div>
-                            <div class="agreement-horisontal-container">
-                                <label class="form-check-label" for="subscribe-newsletter">Verification</label>
+                                <input type="checkbox" class="form-check-input mx-2" id="subscribe-newsletter">
                             </div>
                             <hr class="my-4">
                         </div>
@@ -947,8 +994,6 @@
             <a href="index.html">© 2024 Schoolhouse Children's Museum. All Rights Reserved.</a>
         </div>
     </footer>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script defer src="js/index.js"></script>
 </body>
