@@ -1,17 +1,12 @@
 function isTouchDevice() {
-    const maxTouchPoints = navigator.maxTouchPoints || 0;
-    const touchEvent = 'ontouchstart' in window;
-    const touchMediaQuery = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-
-    return maxTouchPoints > 0 || touchEvent || touchMediaQuery;
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 }
 
 if (isTouchDevice()) {
     document.body.classList.add('_touch');
 } else {
-    document.body.classList.add('_pc')
+    document.body.classList.add('_pc');
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
     /* Header */
@@ -89,60 +84,90 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const billingCountrySelect = document.getElementById('billing-country');
-    function updateBillingFields() {
-        const billingStateSection = document.querySelector('.billing-state');
-        const billingProvinceSection = document.querySelector('.billing-province');
-        const billingCountryOtherSection = document.querySelector('.billing-country-other');
+    if (billingCountrySelect) {
+        function updateBillingFields() {
+            const billingStateSection = document.querySelector('.billing-state');
+            const billingProvinceSection = document.querySelector('.billing-province');
+            const billingCountryOtherSection = document.querySelector('.billing-country-other');
 
-        const billingStateFields = billingStateSection.querySelectorAll('select, input');
-        const billingProvinceFields = billingProvinceSection.querySelectorAll('select, input');
-        const billingCountryOtherFields = billingCountryOtherSection.querySelectorAll('select, input');
+            const billingStateFields = billingStateSection.querySelectorAll('select, input');
+            const billingProvinceFields = billingProvinceSection.querySelectorAll('select, input');
+            const billingCountryOtherFields = billingCountryOtherSection.querySelectorAll('select, input');
 
-        const selectedCountry = billingCountrySelect.value;
+            const selectedCountry = billingCountrySelect.value;
 
-        billingStateSection.style.display = 'none';
-        billingProvinceSection.style.display = 'none';
-        billingCountryOtherSection.style.display = 'none';
+            billingStateSection.style.display = 'none';
+            billingProvinceSection.style.display = 'none';
+            billingCountryOtherSection.style.display = 'none';
 
-        billingStateFields.forEach(field => field.removeAttribute('required'));
-        billingProvinceFields.forEach(field => field.removeAttribute('required'));
-        billingCountryOtherFields.forEach(field => field.removeAttribute('required'));
+            billingStateFields.forEach(field => field.removeAttribute('required'));
+            billingProvinceFields.forEach(field => field.removeAttribute('required'));
+            billingCountryOtherFields.forEach(field => field.removeAttribute('required'));
 
-        if (selectedCountry === 'United States') {
-            billingStateSection.style.display = 'block';
-            billingStateFields.forEach(field => field.setAttribute('required', 'required'));
-        } else if (selectedCountry === 'Canada') {
-            billingProvinceSection.style.display = 'block';
-            billingProvinceFields.forEach(field => field.setAttribute('required', 'required'));
-        } else if (selectedCountry === 'Other') {
-            billingCountryOtherSection.style.display = 'block';
-            billingCountryOtherFields.forEach(field => field.setAttribute('required', 'required'));
+            if (selectedCountry === 'United States') {
+                billingStateSection.style.display = 'block';
+                billingStateFields.forEach(field => field.setAttribute('required', 'required'));
+            } else if (selectedCountry === 'Canada') {
+                billingProvinceSection.style.display = 'block';
+                billingProvinceFields.forEach(field => field.setAttribute('required', 'required'));
+            } else if (selectedCountry === 'Other') {
+                billingCountryOtherSection.style.display = 'block';
+                billingCountryOtherFields.forEach(field => field.setAttribute('required', 'required'));
+            }
         }
+        billingCountrySelect.addEventListener('change', updateBillingFields);
+        updateBillingFields();
     }
-    billingCountrySelect.addEventListener('change', updateBillingFields);
-    updateBillingFields();
 
-    const forms = document.querySelectorAll('.needs-validation')
-    Array.from(forms).forEach(form => {
+    const forms = document.querySelectorAll('.needs-validation');
+    forms.forEach(form => {
         form.addEventListener('submit', event => {
             if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
+                event.preventDefault();
+                event.stopPropagation();
             }
+            form.classList.add('was-validated');
+        }, false);
+    });
 
-            form.classList.add('was-validated')
-        }, false)
-    })
+    const nameFields = document.querySelectorAll('#primary-adult-firstName, #primary-adult-lastName, #second-adult-firstName, #second-adult-lastName, #third-adult-firstName, #third-adult-lastName, #billing-firstName, #billing-lastName, #billing-city, #billing-country-other, #billing-region-other, #mailing-address-city, #sign-full-name');
+    nameFields.forEach(field => {
+        field.addEventListener('input', event => {
+            const regex = /^[a-zA-Za\s]+$/;
+            if (!regex.test(event.target.value)) {
+                event.target.value = event.target.value.replace(/[^a-zA-Za\s]/g, '');
+            }
+        });
+    });
+
+    const phoneFields = document.querySelectorAll('#primary-adult-phone, #billing-zip, #billing-code, #billing-code-other, #card-number, #card-verification, #mailing-address-zip, #other-amount');
+    phoneFields.forEach(field => {
+        field.addEventListener('input', event => {
+            const regex = /^[0-9()-\s]*$/;
+            if (!regex.test(event.target.value)) {
+                event.target.value = event.target.value.replace(/[^0-9()-\s]/g, '');
+            }
+        });
+    });
+
+    /* donation page */
+    const donationAmountSelect = document.getElementById('donation-amount');
+    if (donationAmountSelect) {
+        const otherAmountDiv = document.querySelector('.other-amount');
+        const otherAmountInput = document.getElementById('other-amount');
+        donationAmountSelect.addEventListener('change', function () {
+            if (donationAmountSelect.value === 'other') {
+                otherAmountDiv.style.display = 'block';
+                otherAmountInput.setAttribute('required', 'required');
+            } else {
+                otherAmountDiv.style.display = 'none';
+                otherAmountInput.removeAttribute('required');
+                otherAmountInput.value = '';
+            }
+        });
+    }
 });
 
-/* window.addEventListener('scroll', function () {
-    var header_divider = document.querySelector('.header-divider');
-    if (window.scrollY > 50) {
-        header_divider.style.opacity = 1;
-    } else {
-        header_divider.style.opacity = 0;
-    }
-}); */
 window.addEventListener('scroll', function () {
     var header = document.querySelector('header');
     if (window.scrollY > 30) {

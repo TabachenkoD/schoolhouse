@@ -642,7 +642,8 @@ main {
     }
 }
 
-.join {
+.join,
+.donate {
     padding-top: 30px;
 
     select {
@@ -831,7 +832,11 @@ main {
         flex: 50;
     }
 
-    .billing-province, .billing-country-other {
+    .billing-province,
+    .billing-country-other,
+    .membership-type-family-option,
+    .membership-type-grandparent-option,
+    .other-amount {
         display: none;
     }
 
@@ -916,14 +921,25 @@ main {
         flex: 70;
     }
 
-    .btn {
+    .btn-submit {
         color: $white;
         background-color: $orange;
-        padding: 8px 24px;
+        padding: 6px 24px;
         transition: background-color 0.3s ease;
 
         &:hover {
             background-color: $orange-btn-hover;
+        }
+    }
+
+    .btn-reset {
+        color: $white;
+        background-color: $light-blue;
+        padding: 6px 24px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: $dark-blue;
         }
     }
 }
