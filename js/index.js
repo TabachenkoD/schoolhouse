@@ -31,6 +31,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    $(document).ready(function () {
+        $('.fullscreen-slider').slick({
+            dots: true,
+            arrows: true,
+            infinite: true,
+            speed: 500,
+            fade: true,
+            cssEase: 'linear',
+            autoplay: true,
+            autoplaySpeed: 3000,
+            adaptiveHeight: false
+        });
+    });
+
     const iconMenu = document.querySelector('.menu-icon');
     if (iconMenu) {
         const menuWrapper = document.querySelector('.menu-wrapper');
