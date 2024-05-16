@@ -1317,6 +1317,9 @@ main p {
   background-color: #ec6b02;
 }
 
+.education {
+  padding-top: 30px;
+}
 .education .education-subtitles {
   font-size: 1.5rem;
   color: #008CD2;
