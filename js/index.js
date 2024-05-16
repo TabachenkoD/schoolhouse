@@ -1,6 +1,6 @@
-function isTouchDevice() {
+/* function isTouchDevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-}
+} */
 
 if (window.innerWidth <= 768) {
     document.body.classList.add('_touch');
@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    $(document).ready(function () {
+    const slider = document.querySelector('.fullscreen-slider');
+    if (slider) {
         $('.fullscreen-slider').slick({
             dots: true,
             arrows: true,
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
             autoplaySpeed: 3000,
             adaptiveHeight: false
         });
-    });
+    }
 
     const iconMenu = document.querySelector('.menu-icon');
     if (iconMenu) {
