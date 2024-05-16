@@ -172,7 +172,9 @@ main {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: fit-content;
+        /* width: fit-content; */
+        width: 100%;
+        max-width: 657px;
 
         &:hover {
             background-color: $orange;
@@ -295,9 +297,18 @@ main {
 .weekly-classes {
     padding-top: 30px;
 
+    b {
+        color: $orange;
+        font-size: 20px;
+    }
+
     .p-underline {
         font-weight: bold;
         color: $dark-blue;
+    }
+
+    .collapse, .card-body {
+        width: fit-content !important;
     }
 
     .weekly-classes-btn-container {
@@ -334,21 +345,16 @@ main {
         display: flex;
         gap: 20px;
         margin: 20px 0;
+        align-items: center;
+        width: 100%;
 
-        div {
+        img {
             width: 300px;
-            overflow: hidden;
+            height: fit-content;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            
 
-            img {
-                width: 100%;
-                height: auto;
-                display: block;
-            }
-
-            @media (max-width: 768px) {
+            @media (max-width: 975px) {
                 width: 200px;
             }
         }
