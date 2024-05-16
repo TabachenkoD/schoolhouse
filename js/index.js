@@ -2,7 +2,7 @@ function isTouchDevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 }
 
-if (isTouchDevice()) {
+if (window.innerWidth <= 768) {
     document.body.classList.add('_touch');
 } else {
     document.body.classList.add('_pc');
