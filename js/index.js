@@ -199,21 +199,6 @@ if (todayElement) {
     todayElement.classList.add('today');
 }
 
-/* Sponsors slider */
-/* $('.sponsors-slider').slick({
-    dots: false,
-    infinite: true,
-    arrows: false,
-    speed: 2000,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 1500,
-    swipeToSlide: false,
-    centerMode: true,
-    variableWidth: true,
-}); */
-
 function initMap() {
     var geocoder = new google.maps.Geocoder();
     var address = "129 E. Ocean Avenue, Boynton Beach, FL 33435";
