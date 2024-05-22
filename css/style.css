@@ -1224,6 +1224,60 @@ main p {
 .rsvp p span {
   color: #ba2c36;
 }
+.rsvp .rsvp-action-container {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 767px) {
+  .rsvp .rsvp-action-container {
+    flex-direction: column;
+  }
+}
+.rsvp .rsvp-action-container .rsvp-action-btn {
+  font-size: 1.5rem;
+  font-family: "Kozuka Gothic Pro H", sans-serif;
+  color: #FBFDFB;
+  background-color: #008CD2;
+  border: 1px solid #95CDE7;
+  border-radius: 8px;
+  padding: 16px 25px;
+  transition: background-color 0.7s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.rsvp .rsvp-action-container .rsvp-action-btn:hover {
+  background-color: #ED7A1F;
+}
+@media (max-width: 768px) {
+  .rsvp .rsvp-action-container .rsvp-action-btn {
+    padding: 16px 22px;
+    width: 100%;
+  }
+}
+.rsvp .rsvp-action-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 80px;
+}
+@media (max-width: 1080px) {
+  .rsvp .rsvp-action-container > div {
+    padding: 15px 30px;
+  }
+}
+@media (max-width: 767px) {
+  .rsvp .rsvp-action-container > div {
+    padding: 20px 40px;
+  }
+}
+@media (max-width: 550px) {
+  .rsvp .rsvp-action-container > div {
+    padding: 15px 20px;
+  }
+}
 
 .party {
   padding-top: 30px;
@@ -1914,6 +1968,21 @@ footer .flex-container {
   display: flex;
   justify-content: space-between;
   padding-bottom: 25px;
+  gap: 20px;
+}
+footer .flex-container .footer-hours,
+footer .flex-container .footer-tickets,
+footer .flex-container .footer-map,
+footer .flex-container .footer-menu {
+  flex: 25;
+}
+@media (max-width: 1024px) {
+  footer .flex-container .footer-hours,
+  footer .flex-container .footer-tickets,
+  footer .flex-container .footer-map,
+  footer .flex-container .footer-menu {
+    min-width: 280px;
+  }
 }
 @media (max-width: 1024px) {
   footer .flex-container {
@@ -1931,9 +2000,27 @@ footer h4 {
   }
 }
 
+.footer-map .visit-location-map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 100%;
+}
+.footer-map .visit-location-map-container #map {
+  min-height: 300px;
+}
+.footer-map .visit-location-map-container ul {
+  color: #FBFDFB;
+  padding-left: 20px;
+}
+.footer-map .visit-location-map-container ul li {
+  margin-bottom: 7px;
+}
+
 .footer-menu-list {
   display: flex;
   flex-direction: column;
+  align-items: end;
   margin: 0;
   padding: 0;
 }
@@ -1965,6 +2052,16 @@ footer h4 {
 .footer-menu-list li:hover {
   background-color: #ec6b02;
 }
+@media (min-width: 920px) and (max-width: 1024px) {
+  .footer-menu-list {
+    align-items: start;
+  }
+}
+@media (max-width: 620px) {
+  .footer-menu-list {
+    align-items: center;
+  }
+}
 
 .footer-hours .day {
   font-size: 1.125rem;
@@ -1988,6 +2085,11 @@ footer h4 {
   .footer-hours {
     margin-bottom: 30px;
   }
+}
+
+.footer-tickets a {
+  color: #FBFDFB;
+  text-decoration: none;
 }
 
 .footer-copyright {

@@ -66,7 +66,7 @@
                             </svg>
                         </a>
                     </div>
-                    <a href="#" class="btn-buy-tickets">BUY TICKETS</a>
+                    <a href="rsvp.html" class="btn-buy-tickets">BUY TICKETS</a>
                 </div>
                 <div class="menu-icon">
                     <span class=""></span>
@@ -90,7 +90,7 @@
                 creative, interactive opportunities and experiences that integrate the arts, humanities, and sciences.
             </p>
             <p>Your gift helps the Schoolhouse Children’s Museum to:</p>
-            <ul>
+            <ul style="margin-bottom: 48px;">
                 <li>Provide an enriching, safe and clean environment for our young guests of all abilities</li>
                 <li>Prioritize affordability to give every child access to play</li>
                 <li>Serve school groups and community organizations with creative, hands-on play experiences</li>
@@ -105,7 +105,7 @@
             <p>Many employers offer matching gift programs that can double your donation to the
                 Schoolhouse Children’s Museum. With employer matching, your generosity makes an even
                 greater impact.</p>
-            <ol>
+            <ol style="margin-bottom: 48px;">
                 <li>Check with your employer to see if company has a matching gift program</li>
                 <li>Obtain and fill out the matching gift form from your employer</li>
                 <ul>
@@ -127,7 +127,7 @@
                 transformative time in their life where thinking and creativity bloom – early childhood.</p>
             <p>Planned Gifts can complement your financial goals and provide tax benefits. Options for Gift Planning
                 include:</p>
-            <ul>
+            <ul style="margin-bottom: 48px;">
                 <li>Bequest</li>
                 <li>Gift Annuity</li>
                 <li>Life Insurance/retirement accounts</li>
@@ -147,11 +147,11 @@
                 (561)742-6778.<br />
                 For reference, our corporate name is Boynton Cultural Centre, Inc. and our Federal Tax ID is 31-1494582.
             </p>
-            <p>The Museum gratefully acknowledges the generosity of those who remember the Schoolhouse Children’s Museum
+            <p>
+                The Museum gratefully acknowledges the generosity of those who remember the Schoolhouse Children’s
+                Museum
             </p>
-            <span class="support-request-btn"><a
-                    href="#"
-                    target="_blank">Donate Now</a></span>
+            <span class="support-request-btn"><a href="donate.html">Donate Now</a></span>
 
         </div>
     </main>
@@ -169,10 +169,24 @@
                 </div>
             </div>
             <div class="footer-tickets">
-                <h4>TICKETS</h4>
+                <h4><a href="rsvp.html">TICKETS</a></h4>
             </div>
             <div class="footer-map">
                 <h4>MAP&DIRECTIONS</h4>
+                <div class="visit-location-map-container">
+                    <ul>
+                        <li>Phone: (561) 742-6780</li>
+                        <li>Address: 129 E. Ocean Avenue, Boynton Beach, FL 33435</li>
+                        <li>Directions:
+                            Exit I-95 at Boynton Beach Blvd. Travel ¼ mi. east and turn right (south) on Seacrest Blvd.
+                            Travel 2 blocks and turn left (east) on East Ocean Avenue.
+                            We are second building on left:
+                            129 East Ocean Avenue
+                        </li>
+                        <li>Parking is available next to the Museum, accessible via NE 1st Street.</li>
+                    </ul>
+                    <div id="map" style="height: 300px; width: 100%;"></div>
+                </div>
             </div>
             <nav class="footer-menu">
                 <ul class="footer-menu-list">
@@ -191,6 +205,8 @@
             <a href="index.html">© 2024 Schoolhouse Children's Museum. All Rights Reserved.</a>
         </div>
     </footer>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgk8Ee-HvT6XIFkzcQJWy4cLU-Y1OtAVo&callback=initMap"></script>
     <script src="js/index.js"></script>
 </body>
 

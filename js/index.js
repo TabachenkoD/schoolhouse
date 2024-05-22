@@ -214,7 +214,6 @@ if (todayElement) {
     variableWidth: true,
 }); */
 
-/* page Visit google map */
 function initMap() {
     var geocoder = new google.maps.Geocoder();
     var address = "129 E. Ocean Avenue, Boynton Beach, FL 33435";

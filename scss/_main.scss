@@ -601,6 +601,59 @@ main {
             color: $red;
         }
     }
+
+    .rsvp-action-container {
+        display: flex;
+        justify-content: space-between;
+
+        @media (max-width: 767px) {
+            flex-direction: column;
+        }
+
+        .rsvp-action-btn {
+            font-size: $font-size-medium;
+            font-family: $font-secondary;
+            color: $white;
+            background-color: $dark-blue;
+            border: 1px solid $light-blue;
+            border-radius: 8px;
+            padding: 16px 25px;
+            transition: background-color 0.7s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+    
+            &:hover {
+                background-color: $orange;
+            }
+    
+            @media (max-width: 768px) {
+                padding: 16px 22px;
+                width: 100%;
+            }
+        }
+    }
+
+    .rsvp-action-container>div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px 80px;
+
+        @media (max-width: 1080px) {
+            padding: 15px 30px;
+        }
+
+        @media (max-width: 767px) {
+            padding: 20px 40px;
+        }
+
+        @media (max-width: 550px) {
+            padding: 15px 20px;
+        }
+    }
 }
 
 .party {
@@ -1229,6 +1282,7 @@ main {
 
 .support {
     padding-top: 30px;
+
 
     b {
         color: $dark-blue;
