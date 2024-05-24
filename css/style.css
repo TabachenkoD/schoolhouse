@@ -1377,7 +1377,7 @@ main p {
 .education .education-subtitles {
   font-size: 1.5rem;
   color: #008CD2;
-  margin-top: 40px;
+  margin-top: 60px;
   margin-bottom: 26px;
   text-transform: uppercase;
 }
@@ -1432,6 +1432,7 @@ main p {
   padding-top: 30px;
 }
 .education .education-container-two-columns {
+  margin-bottom: 48px;
   display: flex;
   gap: 30px;
 }

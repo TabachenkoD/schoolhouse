@@ -767,7 +767,7 @@ main {
     .education-subtitles {
         font-size: $font-size-medium;
         color: $dark-blue;
-        margin-top: 40px;
+        margin-top: 60px;
         margin-bottom: 26px;
         text-transform: uppercase;
     }
@@ -832,6 +832,7 @@ main {
     }
 
     .education-container-two-columns {
+        margin-bottom: 48px;
         display: flex;
         gap: 30px;
 
