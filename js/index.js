@@ -181,6 +181,26 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    /* exhibits page */
+    const modal = document.getElementById('exampleModal');
+    if (modal) {
+        const modalTitle = modal.querySelector('.modal-title');
+        const modalBody = modal.querySelector('.modal-body');
+
+        document.querySelectorAll('.lobby-section-item').forEach(function (item) {
+            item.addEventListener('click', function () {
+                var title = item.getAttribute('data-title');
+                var content = item.getAttribute('data-content');
+
+                modalTitle.textContent = title;
+                modalBody.textContent = content;
+
+                var bootstrapModal = new bootstrap.Modal(modal);
+                bootstrapModal.show();
+            });
+        });
+    }
 });
 
 window.addEventListener('scroll', function () {

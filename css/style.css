@@ -1187,7 +1187,7 @@ main p {
   padding-top: 30px;
 }
 .exhibits .exhb-subtitles {
-  font-size: 1.5rem;
+  font-size: 1.85rem;
   color: #008CD2;
   margin-top: 40px;
   margin-bottom: 26px;
@@ -1201,6 +1201,45 @@ main p {
 }
 .exhibits section {
   padding-bottom: 20px;
+}
+.exhibits .lobby-section {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+}
+@media (max-width: 992px) {
+  .exhibits .lobby-section {
+    flex-wrap: wrap;
+  }
+}
+.exhibits .lobby-section-item div:first-child {
+  max-width: 500px;
+  min-width: 280px;
+  overflow: hidden;
+}
+.exhibits .lobby-section-item div:first-child img {
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+.exhibits .lobby-section-item div:last-child {
+  padding: 20px 0;
+  color: #008CD2;
+  letter-spacing: 1px;
+}
+.exhibits .lobby-section-item div:last-child h5 {
+  transition: color 0.5s ease;
+}
+.exhibits .lobby-section-item {
+  cursor: pointer;
+}
+.exhibits .lobby-section-item:hover img {
+  transform: scale(1.1);
+}
+.exhibits .lobby-section-item:hover h5 {
+  color: #95CDE7;
+}
+.exhibits .modal-title {
+  color: #008CD2;
 }
 
 .calendar {

@@ -556,7 +556,7 @@ main {
     padding-top: 30px;
 
     .exhb-subtitles {
-        font-size: $font-size-medium;
+        font-size: 1.85rem;
         color: $dark-blue;
         margin-top: 40px;
         margin-bottom: 26px;
@@ -573,6 +573,58 @@ main {
 
     section {
         padding-bottom: 20px;
+    }
+
+    .lobby-section {
+        display: flex;
+        width: 100%;
+        gap: 30px;
+
+        @media (max-width: 992px) {
+            flex-wrap: wrap;
+        }
+    }
+
+    .lobby-section-item div:first-child {
+        max-width: 500px;
+        min-width: 280px;
+        overflow: hidden;
+       
+
+        img {
+            transition: transform 0.5s ease;
+            width: 100%;
+        }
+    }
+
+    .lobby-section-item div:last-child {
+        padding: 20px 0;
+        color: $dark-blue;
+        letter-spacing: 1px;
+
+        h5 {
+            transition: color 0.5s ease;
+        }
+    }
+
+    .lobby-section-item {
+        
+        cursor: pointer;
+        
+        &:hover {
+            img {
+                transform: scale(1.1);
+            }
+
+            h5 {
+                color: $light-blue;
+            }
+            
+        }
+    }
+
+    .modal-title {
+        color: $dark-blue;
     }
 }
 
@@ -623,11 +675,11 @@ main {
             justify-content: center;
             align-items: center;
             width: 100%;
-    
+
             &:hover {
                 background-color: $orange;
             }
-    
+
             @media (max-width: 768px) {
                 padding: 16px 22px;
                 width: 100%;
@@ -635,7 +687,7 @@ main {
         }
     }
 
-    .rsvp-action-container>div{
+    .rsvp-action-container>div {
         display: flex;
         flex-direction: column;
         align-items: center;
