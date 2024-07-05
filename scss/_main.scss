@@ -575,6 +575,22 @@ main {
             flex-wrap: wrap;
         }
     }
+
+    p.rotate-chevrone {
+        svg {
+            transform: rotate(180deg);
+            transition: transform 0.3s ease;
+        }
+    }
+
+    p {
+        svg {
+            margin-left: 7px;
+            margin-bottom: 4px;
+            fill: $dark-blue;
+            transition: transform 0.3s ease;
+        }
+    }
 }
 
 .exhibits {
@@ -736,11 +752,16 @@ main {
 .party {
     padding-top: 30px;
 
+    .title-orange {
+        color: $orange;
+        font-weight: 700;
+    }
+
     .party-two-columns {
         display: flex;
         gap: 70px;
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             flex-direction: column;
             gap: 0;
         }
@@ -835,6 +856,29 @@ main {
                 background-color: $orange-btn-hover;
             }
         }
+
+        @media (max-width: 992px) {
+            width: fit-content;
+        }
+    }
+
+    .party-rigth-section {
+        position: relative;
+    }
+
+    .party-rigth-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -20px;
+        height: 1100px;
+        width: 1px;
+        background-color: #dee2e6df;
+
+        @media (max-width: 992px) {
+            display: none;
+            opacity: 0;
+        }
     }
 }
 
@@ -925,6 +969,22 @@ main {
 
     .education-container-two-columns>div:last-child {
         flex: 50;
+    }
+
+    p {
+        svg {
+            margin-left: 7px;
+            margin-bottom: 7px;
+            fill: $dark-blue;
+            transition: transform 0.3s ease;
+        }
+    }
+
+    p.rotate-chevrone {
+        svg {
+            transform: rotate(180deg);
+            transition: transform 0.3s ease;
+        }
     }
 }
 

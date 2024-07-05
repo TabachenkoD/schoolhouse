@@ -1203,6 +1203,16 @@ main p {
     flex-wrap: wrap;
   }
 }
+.weekly-classes p.rotate-chevrone svg {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+.weekly-classes p svg {
+  margin-left: 7px;
+  margin-bottom: 4px;
+  fill: #008CD2;
+  transition: transform 0.3s ease;
+}
 
 .exhibits {
   padding-top: 30px;
@@ -1342,11 +1352,15 @@ main p {
 .party {
   padding-top: 30px;
 }
+.party .title-orange {
+  color: #ED7A1F;
+  font-weight: 700;
+}
 .party .party-two-columns {
   display: flex;
   gap: 70px;
 }
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .party .party-two-columns {
     flex-direction: column;
     gap: 0;
@@ -1430,6 +1444,30 @@ main p {
 .party .request-party-btn a:hover {
   background-color: #ec6b02;
 }
+@media (max-width: 992px) {
+  .party .request-party-btn {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+.party .party-rigth-section {
+  position: relative;
+}
+.party .party-rigth-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  height: 1100px;
+  width: 1px;
+  background-color: rgba(222, 226, 230, 0.8745098039);
+}
+@media (max-width: 992px) {
+  .party .party-rigth-section::before {
+    display: none;
+    opacity: 0;
+  }
+}
 
 .education {
   padding-top: 30px;
@@ -1507,6 +1545,16 @@ main p {
 }
 .education .education-container-two-columns > div:last-child {
   flex: 50;
+}
+.education p svg {
+  margin-left: 7px;
+  margin-bottom: 7px;
+  fill: #008CD2;
+  transition: transform 0.3s ease;
+}
+.education p.rotate-chevrone svg {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
 }
 
 .about {
