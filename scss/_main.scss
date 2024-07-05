@@ -31,6 +31,15 @@ main {
 
 .hr-divider {
     color: #dee2e6df;
+    width: 1200px;
+
+    @media (max-width: 1250px) {
+        width: 900px;
+    }
+
+    @media (max-width: 768px) {
+        width: 400px;
+    }
 }
 
 .fullscreen-slider .slick-slide {
@@ -478,6 +487,22 @@ main {
     p {
         line-height: 1.5;
     }
+
+    p.rotate-chevrone {
+        svg {
+            transform: rotate(180deg);
+            transition: transform 0.3s ease;
+        }
+    }
+
+    p {
+        svg {
+            margin-left: 7px;
+            margin-bottom: 4px;
+            /* fill: $orange; */
+            transition: transform 0.3s ease;
+        }
+    }
 }
 
 .weekly-classes {
@@ -589,7 +614,7 @@ main {
         max-width: 500px;
         min-width: 280px;
         overflow: hidden;
-       
+
 
         img {
             transition: transform 0.5s ease;
@@ -608,9 +633,9 @@ main {
     }
 
     .lobby-section-item {
-        
+
         cursor: pointer;
-        
+
         &:hover {
             img {
                 transform: scale(1.1);
@@ -619,7 +644,7 @@ main {
             h5 {
                 color: $light-blue;
             }
-            
+
         }
     }
 

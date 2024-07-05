@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
-    /* page Join.html*/
+    /* page Join.html and Know before you go*/
     const collapses = document.querySelectorAll('.collapse');
     if (collapses.length > 0) {
         collapses.forEach(collapse => {
