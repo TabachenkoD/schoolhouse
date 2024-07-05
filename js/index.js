@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 var content = item.getAttribute('data-content');
 
                 modalTitle.textContent = title;
-                modalBody.textContent = content;
+                modalBody.innerHTML = content;
 
                 var bootstrapModal = new bootstrap.Modal(modal);
                 bootstrapModal.show();
