@@ -395,6 +395,10 @@ a {
   padding: 0 1.25rem;
 }
 
+.hidden {
+  display: none;
+}
+
 @media (min-width: 1024px) {
   .container {
     padding: 0 4rem;
@@ -2172,6 +2176,91 @@ main p {
 @media (max-width: 768px) {
   .volunteer .volunteer-pdf-btn-container {
     gap: 20px;
+    flex-direction: column;
+  }
+}
+
+.general-admission {
+  padding-top: 30px;
+}
+.general-admission h4 {
+  margin-bottom: 30px;
+}
+.general-admission .general-date-block {
+  width: 100%;
+  border: 1px solid grey;
+  padding: 25px;
+  display: flex;
+}
+.general-admission .general-date-block div {
+  flex: 50%;
+}
+.general-admission .general-date-block .selected-date,
+.general-admission .general-date-block .selected-time {
+  font-size: 30px;
+  color: #008CD2;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+@media (max-width: 700px) {
+  .general-admission .general-date-block {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+.general-admission table,
+.general-admission tbody,
+.general-admission tr,
+.general-admission th,
+.general-admission td,
+.general-admission .table-responsive {
+  background-color: #FBFDFB;
+}
+.general-admission .table-custom th {
+  font-weight: bold;
+}
+.general-admission .table-custom th,
+.general-admission .table-custom td {
+  vertical-align: middle;
+}
+.general-admission .rsvp-action-btn {
+  font-size: 1.325rem;
+  font-family: "Kozuka Gothic Pro H", sans-serif;
+  color: #FBFDFB;
+  background-color: #008CD2;
+  border: 1px solid #95CDE7;
+  border-radius: 8px;
+  padding: 7px 25px;
+  transition: background-color 0.7s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.general-admission .rsvp-action-btn:hover {
+  background-color: #ED7A1F;
+}
+@media (max-width: 650px) {
+  .general-admission .rsvp-action-btn {
+    padding: 7px 22px;
+    width: 100%;
+  }
+}
+.general-admission .general-admission-personal-info h4 {
+  color: #008CD2;
+}
+.general-admission .member-section-form {
+  display: flex;
+  gap: 50px;
+}
+.general-admission .member-section-form div {
+  flex: 50%;
+}
+@media (max-width: 768px) {
+  .general-admission .member-section-form {
     flex-direction: column;
   }
 }

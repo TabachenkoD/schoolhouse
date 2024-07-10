@@ -207,6 +207,155 @@ document.addEventListener("DOMContentLoaded", function () {
     const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl);
     });
+
+    /* general admission */
+    const datepickerElement = document.getElementById('datepicker-general-admission');
+    const timepickerElement = document.getElementById('timepicker-general-admission');
+
+    if (datepickerElement && timepickerElement) {
+        const availableDates = ["2024-07-10", "2024-07-12", "2024-07-15"].map(date => new Date(date));
+        const datepickerInput = document.getElementById('selected-date-display');
+        const changeDateLink = document.getElementById('change-date-link');
+        const changeTimeLink = document.getElementById('change-time-link');
+        const timepickerInput = document.getElementById('selected-time-display');
+
+        const nearestDate = availableDates[0];
+        datepickerInput.innerHTML = nearestDate ? nearestDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
+
+        const datepicker = new tempusDominus.TempusDominus(datepickerElement, {
+            defaultDate: nearestDate,
+            restrictions: {
+                enabledDates: availableDates,
+                daysOfWeekDisabled: [0, 1]
+            },
+            localization: {
+                locale: 'en',
+                format: 'MM/dd/yyyy'
+            },
+            display: {
+                inline: true,
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false,
+                }
+            }
+        });
+
+        datepicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
+            const selectedDate = e.date;
+            datepickerInput.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
+        });
+
+        const nearestTime = new Date();
+        nearestTime.setHours(10);
+        nearestTime.setMinutes(0);
+        timepickerInput.innerHTML = nearestTime ? nearestTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '';
+
+        const timepicker = new tempusDominus.TempusDominus(timepickerElement, {
+            defaultDate: nearestTime,
+            localization: {
+                locale: 'en',
+                format: 'hh:mm a'
+            },
+            display: {
+                inline: true,
+                components: {
+                    calendar: false,
+                    date: false,
+                    month: false,
+                    year: false,
+                    decades: false,
+                    clock: true,
+                    hours: true,
+                    minutes: true,
+                    seconds: false,
+                    useTwentyfourHour: false
+                }
+            }
+        });
+
+        timepicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
+            const selectedTime = e.date;
+            timepickerInput.innerHTML = selectedTime ? selectedTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '';
+        });
+
+        changeDateLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            datepickerElement.style.display = datepickerElement.style.display === 'none' ? 'block' : 'none';
+        });
+
+        changeTimeLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            timepickerElement.style.display = timepickerElement.style.display === 'none' ? 'block' : 'none';
+        });
+
+        document.addEventListener('click', (event) => {
+            const datepickerElement = document.getElementById('datepicker-general-admission');
+            const timepickerElement = document.getElementById('timepicker-general-admission');
+
+            const isClickInsideDatepicker = datepickerElement.contains(event.target) || event.target === datepickerElement || event.target.id === 'change-date-link';
+            const isClickInsideTimepicker = timepickerElement.contains(event.target) || event.target === timepickerElement || event.target.id === 'change-time-link';
+
+            if (!isClickInsideDatepicker) {
+                datepickerElement.style.display = 'none';
+            }
+
+            if (!isClickInsideTimepicker) {
+                timepickerElement.style.display = 'none';
+            }
+        });
+
+        const quantityNumber = document.querySelectorAll('.quantity');
+        quantityNumber.forEach(field => {
+            field.addEventListener('input', event => {
+                const value = event.target.value;
+                const cleanedValue = value.replace(/[^0-9]/g, '');
+                if (value !== cleanedValue) {
+                    event.target.value = cleanedValue;
+                }
+            });
+        });
+
+        const toggleBtn = document.getElementsByClassName('general-admission-hide-btn')
+        toggleBtn[0].addEventListener('click', (e) => {
+            e.preventDefault();
+            const firstStep = document.getElementById('general-admission-first-step');
+            const secondStep = document.getElementById('general-admission-second-step');
+
+            firstStep.classList.add('hidden');
+            secondStep.classList.remove('hidden');
+        });
+
+
+        const nextBtn = document.querySelector('.continue-to-payment-btn');
+        const form = document.getElementById('general-admission-form-1');
+        const secondStep = document.getElementById('general-admission-second-step');
+        const thirdStep = document.getElementById('general-admission-third-step');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
+
+        nextBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            if (form.checkValidity()) {
+                secondStep.classList.add('hidden');
+                thirdStep.classList.remove('hidden');
+
+                const formData = new FormData(form);
+                /* formData.forEach((value, key) => { */
+                    console.log(formData)
+                /* }); */
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+
+    }
 });
 
 window.addEventListener('scroll', function () {

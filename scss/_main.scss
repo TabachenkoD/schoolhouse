@@ -1632,3 +1632,97 @@ main {
         }
     }
 }
+
+.general-admission {
+    padding-top: 30px;
+
+    h4 {
+        margin-bottom: 30px;
+    }
+
+    .general-date-block {
+        width: 100%;
+        border: 1px solid grey;
+        padding: 25px;
+        display: flex;
+
+        & div {
+            flex: 50%;
+        }
+
+        .selected-date,
+        .selected-time {
+            font-size: 30px;
+            color: $dark-blue;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 700px) {
+            flex-direction: column;
+            gap: 30px;
+        }
+    }
+
+    table,
+    tbody,
+    tr,
+    th,
+    td,
+    .table-responsive {
+        background-color: $white;
+    }
+
+    .table-custom th {
+        font-weight: bold;
+    }
+
+    .table-custom th,
+    .table-custom td {
+        vertical-align: middle;
+    }
+
+    .rsvp-action-btn {
+        font-size: $font-size-small-medium;
+        font-family: $font-secondary;
+        color: $white;
+        background-color: $dark-blue;
+        border: 1px solid $light-blue;
+        border-radius: 8px;
+        padding: 7px 25px;
+        transition: background-color 0.7s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+
+        &:hover {
+            background-color: $orange;
+        }
+
+        @media (max-width: 650px) {
+            padding: 7px 22px;
+            width: 100%;
+        }
+    }
+
+    .general-admission-personal-info h4 {
+        color: $dark-blue;
+    }
+
+    .member-section-form {
+        display: flex;
+        gap: 50px;
+
+        & div {
+            flex: 50%;
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
+
+}
