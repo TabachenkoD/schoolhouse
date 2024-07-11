@@ -30,7 +30,7 @@ body {
     overflow-x: hidden;
 }
 
-body._lock{
+body._lock {
     overflow: hidden;
 }
 
@@ -56,6 +56,10 @@ a {
 
 .hidden {
     display: none;
+}
+
+.input-disabled {
+    background-color: #e9ecef;
 }
 
 @media (min-width: 768px) {}

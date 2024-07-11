@@ -1725,4 +1725,111 @@ main {
         }
     }
 
+    .billing-section-form,
+    .card-section-form,
+    .mailing-address-section-form {
+        display: flex;
+        gap: 50px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    .billing-section-form>div,
+    .card-section-form>div,
+    .mailing-address-section-form>div {
+        flex: 50;
+    }
+
+    .billing-province,
+    .billing-country-other,
+    .membership-type-family-option,
+    .membership-type-grandparent-option,
+    .other-amount {
+        display: none;
+    }
+
+    .card-type-container {
+        display: flex;
+        gap: 20px;
+
+        .form-check {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+
+            label {
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                overflow: hidden;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .card-verification {
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .card-tooltip {
+            font-size: 14px;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 27px;
+            width: 300px;
+            background-color: #f9f9f9;
+            border: 1px solid $orange;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .tooltip-container:hover .card-tooltip {
+            display: block;
+            opacity: 1;
+        }
+
+        .info-icon {
+            cursor: pointer;
+        }
+
+        svg {
+            margin-left: 7px;
+            fill: $orange;
+
+            @media (max-width: 768px) {
+                display: none;
+            }
+        }
+    }
+
+    .agreement-horisontal-container {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+
+        label {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+
+    .agreement-horisontal-container>div {
+        flex: 70;
+    }
 }
+

@@ -98,41 +98,65 @@ document.addEventListener("DOMContentLoaded", function () {
         updateMembershipOptions();
     }
 
-    const billingCountrySelect = document.getElementById('billing-country');
-    if (billingCountrySelect) {
-        function updateBillingFields() {
-            const billingStateSection = document.querySelector('.billing-state');
-            const billingProvinceSection = document.querySelector('.billing-province');
-            const billingCountryOtherSection = document.querySelector('.billing-country-other');
+    const billingCountrySelects = document.querySelectorAll('.billing-country-select');
+    function updateBillingFields(selectElement) {
+        const form = selectElement.closest('form');
+        const billingStateSection = form.querySelector('.billing-state');
+        const billingProvinceSection = form.querySelector('.billing-province');
+        const billingCountryOtherSection = form.querySelector('.billing-country-other');
 
-            const billingStateFields = billingStateSection.querySelectorAll('select, input');
-            const billingProvinceFields = billingProvinceSection.querySelectorAll('select, input');
-            const billingCountryOtherFields = billingCountryOtherSection.querySelectorAll('select, input');
+        const billingStateFields = billingStateSection.querySelectorAll('select, input');
+        const billingProvinceFields = billingProvinceSection.querySelectorAll('select, input');
+        const billingCountryOtherFields = billingCountryOtherSection.querySelectorAll('select, input');
 
-            const selectedCountry = billingCountrySelect.value;
+        const billingStateInput = billingStateSection.querySelector('#billing-state');
+        const billingZip = form.querySelector('#billing-zip');
+        const billingProvinceInput = billingProvinceSection.querySelector('#billing-province');
+        const billingPostalCode = form.querySelector('#billing-code');
+        const billingCountryOtherInput = form.querySelector('#billing-country-other');
+        const billingRegionInput = form.querySelector('#billing-region-other');
+        const billingCodeOtherInput = form.querySelector('#billing-code-other');
 
-            billingStateSection.style.display = 'none';
-            billingProvinceSection.style.display = 'none';
-            billingCountryOtherSection.style.display = 'none';
+        const selectedCountry = selectElement.value;
 
-            billingStateFields.forEach(field => field.removeAttribute('required'));
-            billingProvinceFields.forEach(field => field.removeAttribute('required'));
-            billingCountryOtherFields.forEach(field => field.removeAttribute('required'));
+        billingStateSection.style.display = 'none';
+        billingProvinceSection.style.display = 'none';
+        billingCountryOtherSection.style.display = 'none';
 
-            if (selectedCountry === 'United States') {
-                billingStateSection.style.display = 'block';
-                billingStateFields.forEach(field => field.setAttribute('required', 'required'));
-            } else if (selectedCountry === 'Canada') {
-                billingProvinceSection.style.display = 'block';
-                billingProvinceFields.forEach(field => field.setAttribute('required', 'required'));
-            } else if (selectedCountry === 'Other') {
-                billingCountryOtherSection.style.display = 'block';
-                billingCountryOtherFields.forEach(field => field.setAttribute('required', 'required'));
-            }
+        billingStateFields.forEach(field => field.removeAttribute('required'));
+        billingProvinceFields.forEach(field => field.removeAttribute('required'));
+        billingCountryOtherFields.forEach(field => field.removeAttribute('required'));
+
+        if (selectedCountry === 'United States') {
+            billingStateSection.style.display = 'block';
+            billingStateFields.forEach(field => field.setAttribute('required', 'required'));
+            billingProvinceInput.value = "";
+            billingPostalCode.value = "";
+            billingCountryOtherInput.value = "";
+            billingRegionInput.value = "";
+            billingCodeOtherInput.value = "";
+        } else if (selectedCountry === 'Canada') {
+            billingProvinceSection.style.display = 'block';
+            billingProvinceFields.forEach(field => field.setAttribute('required', 'required'));
+            billingStateInput.value = "";
+            billingZip.value = "";
+            billingCountryOtherInput.value = "";
+            billingRegionInput.value = "";
+            billingCodeOtherInput.value = "";
+        } else if (selectedCountry === 'Other') {
+            billingCountryOtherSection.style.display = 'block';
+            billingCountryOtherFields.forEach(field => field.setAttribute('required', 'required'));
+            billingStateInput.value = "";
+            billingZip.value = "";
+            billingProvinceInput.value = "";
+            billingPostalCode.value = "";
         }
-        billingCountrySelect.addEventListener('change', updateBillingFields);
-        updateBillingFields();
     }
+
+    billingCountrySelects.forEach(selectElement => {
+        selectElement.addEventListener('change', () => updateBillingFields(selectElement));
+        updateBillingFields(selectElement);
+    });
 
     const forms = document.querySelectorAll('.needs-validation');
     forms.forEach(form => {
@@ -155,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const phoneFields = document.querySelectorAll('#primary-adult-phone, #billing-zip, #billing-code, #billing-code-other, #card-number, #card-verification, #mailing-address-zip, #other-amount');
+    const phoneFields = document.querySelectorAll('#primary-adult-phone, #billing-zip, #billing-code, #billing-code-other, #card-number, #card-verification, #mailing-address-zip, #other-amount, #billing-phone-number');
     phoneFields.forEach(field => {
         field.addEventListener('input', event => {
             const regex = /^[0-9()-\s]*$/;
@@ -332,29 +356,85 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         const nextBtn = document.querySelector('.continue-to-payment-btn');
-        const form = document.getElementById('general-admission-form-1');
+        const formGeneralAdmission1 = document.getElementById('general-admission-form-1');
         const secondStep = document.getElementById('general-admission-second-step');
         const thirdStep = document.getElementById('general-admission-third-step');
+        const formGeneralAdmission2 = document.getElementById('general-admission-form-2');
 
-        form.addEventListener('submit', function (event) {
+        formGeneralAdmission1.addEventListener('submit', function (event) {
             event.preventDefault();
         });
 
         nextBtn.addEventListener('click', function (event) {
             event.preventDefault();
-            if (form.checkValidity()) {
+            if (formGeneralAdmission1.checkValidity()) {
                 secondStep.classList.add('hidden');
                 thirdStep.classList.remove('hidden');
 
-                const formData = new FormData(form);
+                const formData = new FormData(formGeneralAdmission1);
+                /* for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                } */
                 /* formData.forEach((value, key) => { */
-                    console.log(formData)
+                console.log(formData)
                 /* }); */
             } else {
-                form.classList.add('was-validated');
+                formGeneralAdmission1.classList.add('was-validated');
             }
         });
 
+
+        const checkbox = document.getElementById('address-same-personal');
+        checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+                formGeneralAdmission2.querySelector('#billing-firstName').value = formGeneralAdmission1.querySelector('#primary-adult-firstName').value;
+                formGeneralAdmission2.querySelector('#billing-lastName').value = formGeneralAdmission1.querySelector('#primary-adult-lastName').value;
+                formGeneralAdmission2.querySelector('#billing-email').value = formGeneralAdmission1.querySelector('#primary-adult-email').value;
+                formGeneralAdmission2.querySelector('#billing-phone-number').value = formGeneralAdmission1.querySelector('#primary-adult-phone').value;
+                formGeneralAdmission2.querySelector('#billing-address-1').value = formGeneralAdmission1.querySelector('#billing-address-general-admission').value;
+                formGeneralAdmission2.querySelector('#billing-city').value = formGeneralAdmission1.querySelector('#billing-city').value;
+                formGeneralAdmission2.querySelector('#billing-state').value = formGeneralAdmission1.querySelector('#billing-state').value;
+                formGeneralAdmission2.querySelector('#billing-province').value = formGeneralAdmission1.querySelector('#billing-province').value;
+                formGeneralAdmission2.querySelector('#billing-country').value = formGeneralAdmission1.querySelector('#country').value;
+                formGeneralAdmission2.querySelector('#billing-zip').value = formGeneralAdmission1.querySelector('#billing-zip').value;
+                formGeneralAdmission2.querySelector('#billing-country-other').value = formGeneralAdmission1.querySelector('#billing-country-other').value;
+                formGeneralAdmission2.querySelector('#billing-region-other').value = formGeneralAdmission1.querySelector('#billing-region-other').value;
+                formGeneralAdmission2.querySelector('#billing-code-other').value = formGeneralAdmission1.querySelector('#billing-code-other').value;
+                formGeneralAdmission2.querySelector('#billing-code').value = formGeneralAdmission1.querySelector('#billing-code').value;
+
+
+                updateBillingFields(formGeneralAdmission2.querySelector('#billing-country'));
+
+                formGeneralAdmission2.querySelectorAll('input, textarea, select').forEach(field => {
+                    if (field.value !== '' && field.id !== 'address-same-personal') {
+                        field.setAttribute('readonly', true);
+                        field.classList.add('input-disabled');
+                        if (field.tagName.toLowerCase() === 'select') {
+                            field.setAttribute('disabled', true);
+                        }
+                    }
+                });
+            } else {
+                formGeneralAdmission2.querySelectorAll('input, textarea, select').forEach(field => {
+                    if (field.id !== 'address-same-personal') {
+                        field.removeAttribute('readonly');
+                        field.removeAttribute('disabled');
+                        field.classList.remove('input-disabled');
+                    }
+                });
+            }
+        });
+
+        const finalGeneralAdmSbt = document.querySelector('.final-submit-btn');
+        finalGeneralAdmSbt.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (formGeneralAdmission2.checkValidity()) {
+                const formData = new FormData(formGeneralAdmission2);
+                console.log(formData)
+            } else {
+                formGeneralAdmission2.classList.add('was-validated');
+            }
+        });
     }
 });
 
