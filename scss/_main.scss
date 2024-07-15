@@ -1831,5 +1831,27 @@ main {
     .agreement-horisontal-container>div {
         flex: 70;
     }
+
+    .list-group {
+        flex-wrap: wrap;
+    }
+
+    .list-group-item {
+        border: 1px solid #dee2e6 !important;
+        cursor: pointer;
+    } 
+
+    .table-for-acm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+
+        p {
+            max-width: 400px;
+            text-align: left;
+        }
+    }
 }
 

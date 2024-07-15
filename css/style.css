@@ -2363,6 +2363,23 @@ main p {
 .general-admission .agreement-horisontal-container > div {
   flex: 70;
 }
+.general-admission .list-group {
+  flex-wrap: wrap;
+}
+.general-admission .list-group-item {
+  border: 1px solid #dee2e6 !important;
+  cursor: pointer;
+}
+.general-admission .table-for-acm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.general-admission .table-for-acm p {
+  max-width: 400px;
+  text-align: left;
+}
 
 footer {
   background-color: #008CD2;
