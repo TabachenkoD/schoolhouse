@@ -519,6 +519,42 @@ main {
             transition: transform 0.3s ease;
         }
     }
+
+    .volunteer-pdf-btn-container {
+        display: flex;
+        gap: 30px;
+
+        .volunteer-pdf-btn {
+            color: $white;
+            background-color: $dark-blue;
+            border: 1px solid $light-blue;
+            border-radius: 8px;
+            padding: 16px 32px;
+            transition: background-color 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            svg {
+                margin-left: 8px;
+                fill: $orange;
+                transition: fill 0.7s ease;
+            }
+
+            &:hover {
+                background-color: $light-blue;
+
+                svg {
+                    fill: $dark-blue;
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            gap: 20px;
+            flex-direction: column;
+        }
+    }
 }
 
 .weekly-classes {
@@ -665,7 +701,6 @@ main {
     }
 
     .lobby-section-item {
-
         cursor: pointer;
 
         &:hover {
@@ -1839,14 +1874,14 @@ main {
     .list-group-item {
         border: 1px solid #dee2e6 !important;
         cursor: pointer;
-    } 
+    }
 
     .table-for-acm {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
 
         p {
             max-width: 400px;
@@ -1854,4 +1889,3 @@ main {
         }
     }
 }
-

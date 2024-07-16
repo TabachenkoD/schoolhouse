@@ -1159,6 +1159,38 @@ main p {
   /* fill: $orange; */
   transition: transform 0.3s ease;
 }
+.know-before-you-go .volunteer-pdf-btn-container {
+  display: flex;
+  gap: 30px;
+}
+.know-before-you-go .volunteer-pdf-btn-container .volunteer-pdf-btn {
+  color: #FBFDFB;
+  background-color: #008CD2;
+  border: 1px solid #95CDE7;
+  border-radius: 8px;
+  padding: 16px 32px;
+  transition: background-color 0.4s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.know-before-you-go .volunteer-pdf-btn-container .volunteer-pdf-btn svg {
+  margin-left: 8px;
+  fill: #ED7A1F;
+  transition: fill 0.7s ease;
+}
+.know-before-you-go .volunteer-pdf-btn-container .volunteer-pdf-btn:hover {
+  background-color: #95CDE7;
+}
+.know-before-you-go .volunteer-pdf-btn-container .volunteer-pdf-btn:hover svg {
+  fill: #008CD2;
+}
+@media (max-width: 768px) {
+  .know-before-you-go .volunteer-pdf-btn-container {
+    gap: 20px;
+    flex-direction: column;
+  }
+}
 
 .weekly-classes {
   padding-top: 30px;
