@@ -237,19 +237,38 @@ document.addEventListener("DOMContentLoaded", function () {
     const timepickerElement = document.getElementById('timepicker-general-admission');
 
     if (datepickerElement && timepickerElement) {
-        const availableDates = ["2024-07-10", "2024-07-12", "2024-07-15"].map(date => new Date(date));
         const datepickerInput = document.getElementById('selected-date-display');
         const changeDateLink = document.getElementById('change-date-link');
         const changeTimeLink = document.getElementById('change-time-link');
         const timepickerInput = document.getElementById('selected-time-display');
 
-        const nearestDate = availableDates[0];
-        datepickerInput.innerHTML = nearestDate ? nearestDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
+        function getNearestWorkingDate(date) {
+            const day = date.getDay();
+            if (day === 0) {
+                date.setDate(date.getDate() + 1);
+            } else if (day === 1) {
+                date.setDate(date.getDate() + 1);
+            }
+            return date;
+        }
 
+        function getDefaultDate() {
+            const today = new Date();
+            const nearestWorkingDate = getNearestWorkingDate(new Date(today));
+            if (today.getDay() !== 0 && today.getDay() !== 1) {
+                return today;
+            } else {
+                return nearestWorkingDate;
+            }
+        }
+
+        const defaultDate = getDefaultDate();
+
+        datepickerInput.innerHTML = defaultDate ? defaultDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
         const datepicker = new tempusDominus.TempusDominus(datepickerElement, {
-            defaultDate: nearestDate,
+            defaultDate: defaultDate,
             restrictions: {
-                enabledDates: availableDates,
+                minDate: new Date(),
                 daysOfWeekDisabled: [0, 1]
             },
             localization: {
@@ -275,12 +294,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const nearestTime = new Date();
-        nearestTime.setHours(10);
+        nearestTime.setHours(9);
         nearestTime.setMinutes(0);
         timepickerInput.innerHTML = nearestTime ? nearestTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '';
 
         const timepicker = new tempusDominus.TempusDominus(timepickerElement, {
             defaultDate: nearestTime,
+            restrictions: {
+                enabledHours: [9, 10, 11, 12, 13, 14, 15, 16],
+            },
             localization: {
                 locale: 'en',
                 format: 'hh:mm a'
@@ -369,7 +391,10 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             if (formGeneralAdmission1.checkValidity()) {
                 secondStep.classList.add('hidden');
-                thirdStep.classList.remove('hidden');
+
+                if (thirdStep) {
+                    thirdStep.classList.remove('hidden');
+                }
 
                 const formData = new FormData(formGeneralAdmission1);
                 /* for (let [key, value] of formData.entries()) {
@@ -452,29 +477,58 @@ document.addEventListener("DOMContentLoaded", function () {
                 familyPremiumSection.style.display = 'none';
                 acmSection.style.display = 'none';
 
-                basicGrandparentSection.querySelectorAll('input').forEach(input => input.required = false);
-                familyPremiumSection.querySelectorAll('input').forEach(input => input.required = false);
-                acmSection.querySelectorAll('input').forEach(input => input.required = false);
+                const clearRequired = (section) => {
+                    section.querySelectorAll('input').forEach(input => input.required = false);
+                };
+
+                clearRequired(basicGrandparentSection);
+                clearRequired(familyPremiumSection);
+                clearRequired(acmSection);
 
                 const selectedRadio = document.querySelector('input[name="membership-type"]:checked');
                 if (selectedRadio) {
                     if (selectedRadio.id === 'membership-type-basic' || selectedRadio.id === 'membership-type-grandparent') {
                         basicGrandparentSection.style.display = 'block';
-                        basicGrandparentSection.querySelectorAll('input').forEach(input => input.required = true);
                     } else if (selectedRadio.id === 'membership-type-family-premium') {
                         familyPremiumSection.style.display = 'block';
-                        familyPremiumSection.querySelectorAll('input').forEach(input => input.required = true);
                     } else if (selectedRadio.id === 'membership-type-acm') {
                         acmSection.style.display = 'block';
                     }
                 }
             }
 
+            function updateRequiredFields(section) {
+                section.querySelectorAll('tr').forEach(row => {
+                    const inputs = row.querySelectorAll('input');
+                    const isAnyInputFilled = Array.from(inputs).some(input => input.value.trim() !== '');
+
+                    if (isAnyInputFilled) {
+                        inputs.forEach(input => input.required = true);
+                    } else {
+                        inputs.forEach(input => input.required = false);
+                    }
+                });
+            }
+
+            function attachInputListeners(section) {
+                section.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('input', () => {
+                        updateRequiredFields(section);
+                    });
+                });
+            }
+
             membershipRadios.forEach(radio => {
-                radio.addEventListener('change', updateSections);
+                radio.addEventListener('change', () => {
+                    updateSections();
+                    attachInputListeners(basicGrandparentSection);
+                    attachInputListeners(familyPremiumSection);
+                });
             });
 
             updateSections();
+            attachInputListeners(basicGrandparentSection);
+            attachInputListeners(familyPremiumSection);
         }
     }
 });
