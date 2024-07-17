@@ -2237,6 +2237,40 @@ main p {
 .support .support-request-btn a:hover {
   background-color: #ec6b02;
 }
+.support .emp-match-container {
+  display: flex;
+  gap: 50px;
+}
+.support .emp-match-container div {
+  flex: 50%;
+  width: 100%;
+  max-width: 580px;
+}
+.support .emp-match-container div img {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .support .emp-match-container div {
+    margin-top: -100px;
+  }
+}
+.support .emp-match-container ol {
+  flex: 50%;
+  min-width: 400px;
+}
+@media (max-width: 900px) {
+  .support .emp-match-container ol {
+    min-width: none;
+  }
+}
+@media (max-width: 900px) {
+  .support .emp-match-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+}
 
 .volunteer {
   padding-top: 30px;

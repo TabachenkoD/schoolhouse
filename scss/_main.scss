@@ -739,7 +739,7 @@ main {
         gap: 15px;
         margin: 20px 0;
         flex-wrap: wrap;
-        
+
 
         .fc-event {
             cursor: default !important;
@@ -1695,6 +1695,41 @@ main {
             &:hover {
                 background-color: $orange-btn-hover;
             }
+        }
+    }
+
+    .emp-match-container {
+        display: flex;
+        gap: 50px;
+
+        div {
+            flex: 50%;
+            width: 100%;
+            max-width: 580px;
+
+            img {
+                width: 100%;
+            }
+
+            @media (max-width: 900px) {
+                margin-top: -100px;
+            }
+        }
+
+        ol {
+            flex: 50%;
+            min-width: 400px;
+
+            @media (max-width: 900px) {
+                min-width: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
         }
     }
 }
