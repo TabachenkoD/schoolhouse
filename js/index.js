@@ -533,19 +533,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* Calendar page */
-
     var calendarEl = document.getElementById('calendar');
     if (calendarEl) {
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             validRange: {
-                start: new Date().toISOString().split('T')[0] // Ограничение на прошедшие даты
+                start: new Date().toISOString().split('T')[0]
             },
             events: generateTestEvents(),
             eventClick: function (info) {
                 var eventObj = info.event;
-                alert('Clicked on event: ' + eventObj.title);
-                // Отправка запроса на бэкенд
+
+                document.getElementById('eventTitle').innerText = eventObj.title;
+                document.getElementById('eventDate').innerText = eventObj.start.toLocaleDateString();
+                document.getElementById('eventDescription').innerText = 'Description of the event';
+                const eventCategory = document.getElementById('eventCategory');
+                eventCategory.classList.add('color-picker')
+                eventCategory.classList.add('fc-event');
+                eventCategory.classList.add(`${eventObj.classNames[0]}`);
+                eventCategory.innerText = eventObj.classNames[0];
+
+                var modal = new bootstrap.Modal(document.getElementById('eventModal'));
+                modal.show();
+
                 /* fetch('https://example.com/api/event', {
                     method: 'POST',
                     headers: {
@@ -563,37 +573,43 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         calendar.render();
-    }
 
-    function generateTestEvents() {
-        var events = [];
-        var today = new Date();
-        var startMonth = today.getMonth();
-        var startYear = today.getFullYear();
-        var eventTypes = ['Infants-and-Toddlers', 'Ages-2-5yrs', 'Ages-3-5yrs', 'Ages-3-7-Years', 'Grade-2', 'All-Ages'];
+        function generateTestEvents() {
+            var events = [];
+            var today = new Date();
+            var startMonth = today.getMonth();
+            var startYear = today.getFullYear();
+            var eventTypes = ['Infants-and-Toddlers', 'Ages-2-5yrs', 'Ages-3-5yrs', 'Ages-3-7-Years', 'Grade-2', 'All-Ages'];
 
-        for (var monthOffset = 0; monthOffset < 2; monthOffset++) {
-            var currentMonth = startMonth + monthOffset;
-            var daysInMonth = new Date(startYear, currentMonth + 1, 0).getDate();
+            for (var monthOffset = 0; monthOffset < 2; monthOffset++) {
+                var currentMonth = startMonth + monthOffset;
+                var daysInMonth = new Date(startYear, currentMonth + 1, 0).getDate();
 
-            for (var day = 1; day <= daysInMonth; day++) {
-                var date = new Date(startYear, currentMonth, day);
-                var dayOfWeek = date.getDay();
+                for (var day = 1; day <= daysInMonth; day++) {
+                    var date = new Date(startYear, currentMonth, day);
+                    var dayOfWeek = date.getDay();
 
-                if (dayOfWeek !== 0 && dayOfWeek !== 1) { // Exclude Sundays (0) and Mondays (1)
-                    for (var eventIndex = 1; eventIndex <= 3; eventIndex++) {
-                        var eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
-                        events.push({
-                            id: 'event-' + startYear + '-' + currentMonth + '-' + day + '-' + eventIndex,
-                            title: `Event ${eventIndex}`,
-                            start: date.toISOString().split('T')[0],
-                            className: eventType
-                        });
+                    if (dayOfWeek !== 0 && dayOfWeek !== 1) { // Exclude Sundays (0) and Mondays (1)
+                        for (var eventIndex = 1; eventIndex <= 3; eventIndex++) {
+                            var eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+                            events.push({
+                                id: 'event-' + startYear + '-' + currentMonth + '-' + day + '-' + eventIndex,
+                                title: `Event ${eventIndex}`,
+                                start: date.toISOString().split('T')[0],
+                                className: eventType
+                            });
+                        }
                     }
                 }
             }
+            return events;
         }
-        return events;
+
+        var eventModal = document.getElementById('eventModal');
+        eventModal.addEventListener('hidden.bs.modal', function () {
+            var eventCategory = document.getElementById('eventCategory');
+            eventCategory.className = ''; 
+        });
     }
 });
 

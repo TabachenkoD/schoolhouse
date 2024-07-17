@@ -1344,6 +1344,10 @@ main p {
   display: flex;
   gap: 15px;
   margin: 20px 0;
+  flex-wrap: wrap;
+}
+.calendar .color-picker-container .fc-event {
+  cursor: default !important;
 }
 .calendar .fc-toolbar-title {
   color: #008CD2;
@@ -1356,6 +1360,10 @@ main p {
 .calendar .fc-button:hover {
   background-color: #ED7A1F !important;
   border-color: #ED7A1F !important;
+}
+.calendar .fc-event {
+  cursor: pointer;
+  margin-bottom: 3px;
 }
 .calendar .fc-event.Infants-and-Toddlers {
   background-color: #00BFFF;
@@ -1386,6 +1394,11 @@ main p {
   background-color: #32CD32;
   /* LimeGreen */
   border-color: #32CD32;
+}
+.calendar .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .rsvp {

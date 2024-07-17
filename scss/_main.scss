@@ -738,6 +738,12 @@ main {
         display: flex;
         gap: 15px;
         margin: 20px 0;
+        flex-wrap: wrap;
+        
+
+        .fc-event {
+            cursor: default !important;
+        }
     }
 
     .fc-toolbar-title {
@@ -753,6 +759,11 @@ main {
     .fc-button:hover {
         background-color: $orange !important;
         border-color: $orange !important;
+    }
+
+    .fc-event {
+        cursor: pointer;
+        margin-bottom: 3px;
     }
 
     .fc-event.Infants-and-Toddlers {
@@ -789,6 +800,12 @@ main {
         background-color: #32CD32;
         /* LimeGreen */
         border-color: #32CD32;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 }
 

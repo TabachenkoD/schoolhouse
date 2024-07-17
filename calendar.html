@@ -15,6 +15,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Schoolhouse Children's Museum - Calendar</title>
+    <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -135,7 +136,32 @@
             </div>
 
             <div id='calendar'></div>
+            <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eventModalLabel" style="color: #008CD2;">Class Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div><span><b>Class: </b></span> <span id="eventTitle" style="color: #ED7A1F;"></span></div>
+                            <div><span><b>Date: </b></span> <span id="eventDate"></span></div>
+                            <div><span><b>Category: </b></span> <span id="eventCategory"></span></div>
+                            <div><span><b>Recurs: </b></span> <span>will come from server</span></div>
+    
+                            <p id="eventDescription"></p>
+                            All data for Classes must come from the server. This is only for the test<br>
+                            I will also add calendar events only after it is implemented on the server
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+       
     </main>
     <footer>
         <div class="container flex-container">
@@ -188,6 +214,7 @@
         </div>
     </footer>
     <script src="js/index.js"></script>
+    <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgk8Ee-HvT6XIFkzcQJWy4cLU-Y1OtAVo&callback=initMap"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
