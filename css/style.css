@@ -1335,6 +1335,58 @@ main p {
   font-weight: bold;
   color: #008CD2;
 }
+.calendar .color-picker {
+  color: white;
+  border-radius: 5px;
+  padding: 8px 14px;
+}
+.calendar .color-picker-container {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+.calendar .fc-toolbar-title {
+  color: #008CD2;
+}
+.calendar .fc-button {
+  background-color: #008CD2 !important;
+  border-color: #008CD2 !important;
+  color: white !important;
+}
+.calendar .fc-button:hover {
+  background-color: #ED7A1F !important;
+  border-color: #ED7A1F !important;
+}
+.calendar .fc-event.Infants-and-Toddlers {
+  background-color: #00BFFF;
+  /* SkyBlue */
+  border-color: #00BFFF;
+}
+.calendar .fc-event.Ages-2-5yrs {
+  background-color: #FFA500;
+  /* Orange */
+  border-color: #FFA500;
+}
+.calendar .fc-event.Ages-3-5yrs {
+  background-color: #800080;
+  /* Purple */
+  border-color: #800080;
+}
+.calendar .fc-event.Ages-3-7-Years {
+  background-color: #FF69B4;
+  /* HotPink */
+  border-color: #FF69B4;
+}
+.calendar .fc-event.Grade-2 {
+  background-color: #f2de0a;
+  /* Yellow */
+  border-color: #f2de0a;
+}
+.calendar .fc-event.All-Ages {
+  background-color: #32CD32;
+  /* LimeGreen */
+  border-color: #32CD32;
+}
 
 .rsvp {
   padding-top: 30px;

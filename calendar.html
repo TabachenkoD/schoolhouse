@@ -125,6 +125,14 @@
 
             <p> To check availability and Register for a Specific Class, Please call 561.742.6780 <br />
                 When you check in at the front desk, please don't forget to ask for your wristband!</p>
+            <div class="color-picker-container">
+                <div class="color-picker fc-event Infants-and-Toddlers">Infants and Toddlers</div>
+                <div class="color-picker fc-event Ages-2-5yrs">Ages 2 - 5yrs</div>
+                <div class="color-picker fc-event Ages-3-5yrs">Ages 3 - 5yrs</div>
+                <div class="color-picker fc-event Ages-3-7-Years">Ages 3 - 7 Years</div>
+                <div class="color-picker fc-event Grade-2">Grade 2</div>
+                <div class="color-picker fc-event All-Ages">All Ages</div>
+            </div>
 
             <div id='calendar'></div>
         </div>
@@ -183,17 +191,7 @@
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgk8Ee-HvT6XIFkzcQJWy4cLU-Y1OtAVo&callback=initMap"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-    <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
-            });
-            calendar.render();
-        });
-
-    </script>
 </body>
 
 </html>

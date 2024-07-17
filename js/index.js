@@ -531,6 +531,70 @@ document.addEventListener("DOMContentLoaded", function () {
             attachInputListeners(familyPremiumSection);
         }
     }
+
+    /* Calendar page */
+
+    var calendarEl = document.getElementById('calendar');
+    if (calendarEl) {
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            validRange: {
+                start: new Date().toISOString().split('T')[0] // Ограничение на прошедшие даты
+            },
+            events: generateTestEvents(),
+            eventClick: function (info) {
+                var eventObj = info.event;
+                alert('Clicked on event: ' + eventObj.title);
+                // Отправка запроса на бэкенд
+                /* fetch('https://example.com/api/event', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: eventObj.id })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    }); */
+            }
+        });
+        calendar.render();
+    }
+
+    function generateTestEvents() {
+        var events = [];
+        var today = new Date();
+        var startMonth = today.getMonth();
+        var startYear = today.getFullYear();
+        var eventTypes = ['Infants-and-Toddlers', 'Ages-2-5yrs', 'Ages-3-5yrs', 'Ages-3-7-Years', 'Grade-2', 'All-Ages'];
+
+        for (var monthOffset = 0; monthOffset < 2; monthOffset++) {
+            var currentMonth = startMonth + monthOffset;
+            var daysInMonth = new Date(startYear, currentMonth + 1, 0).getDate();
+
+            for (var day = 1; day <= daysInMonth; day++) {
+                var date = new Date(startYear, currentMonth, day);
+                var dayOfWeek = date.getDay();
+
+                if (dayOfWeek !== 0 && dayOfWeek !== 1) { // Exclude Sundays (0) and Mondays (1)
+                    for (var eventIndex = 1; eventIndex <= 3; eventIndex++) {
+                        var eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+                        events.push({
+                            id: 'event-' + startYear + '-' + currentMonth + '-' + day + '-' + eventIndex,
+                            title: `Event ${eventIndex}`,
+                            start: date.toISOString().split('T')[0],
+                            className: eventType
+                        });
+                    }
+                }
+            }
+        }
+        return events;
+    }
 });
 
 window.addEventListener('scroll', function () {

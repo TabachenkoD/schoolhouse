@@ -727,6 +727,69 @@ main {
         font-weight: bold;
         color: $dark-blue;
     }
+
+    .color-picker {
+        color: white;
+        border-radius: 5px;
+        padding: 8px 14px;
+    }
+
+    .color-picker-container {
+        display: flex;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .fc-toolbar-title {
+        color: $dark-blue;
+    }
+
+    .fc-button {
+        background-color: $dark-blue !important;
+        border-color: $dark-blue !important;
+        color: white !important;
+    }
+
+    .fc-button:hover {
+        background-color: $orange !important;
+        border-color: $orange !important;
+    }
+
+    .fc-event.Infants-and-Toddlers {
+        background-color: #00BFFF;
+        /* SkyBlue */
+        border-color: #00BFFF;
+    }
+
+    .fc-event.Ages-2-5yrs {
+        background-color: #FFA500;
+        /* Orange */
+        border-color: #FFA500;
+    }
+
+    .fc-event.Ages-3-5yrs {
+        background-color: #800080;
+        /* Purple */
+        border-color: #800080;
+    }
+
+    .fc-event.Ages-3-7-Years {
+        background-color: #FF69B4;
+        /* HotPink */
+        border-color: #FF69B4;
+    }
+
+    .fc-event.Grade-2 {
+        background-color: #f2de0a;
+        /* Yellow */
+        border-color: #f2de0a;
+    }
+
+    .fc-event.All-Ages {
+        background-color: #32CD32;
+        /* LimeGreen */
+        border-color: #32CD32;
+    }
 }
 
 .rsvp {
