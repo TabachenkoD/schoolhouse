@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, false);
     });
 
-    const nameFields = document.querySelectorAll('#primary-adult-firstName, #primary-adult-lastName, #second-adult-firstName, #second-adult-lastName, #third-adult-firstName, #third-adult-lastName, #billing-firstName, #billing-lastName, #billing-city, #billing-country-other, #billing-region-other, #mailing-address-city, #sign-full-name');
+    const nameFields = document.querySelectorAll('#primary-adult-firstName, #primary-adult-lastName, #second-adult-firstName, #second-adult-lastName, #third-adult-firstName, #third-adult-lastName, #billing-firstName, #billing-lastName, #billing-city, #billing-country-other, #billing-region-other, #mailing-address-city, #sign-full-name', '#firstName', '#lastName');
     nameFields.forEach(field => {
         field.addEventListener('input', event => {
             const regex = /^[a-zA-Za\s]+$/;
@@ -570,6 +570,69 @@ document.addEventListener("DOMContentLoaded", function () {
                     .catch((error) => {
                         console.error('Error:', error);
                     }); */
+
+                document.getElementById('amount-of-children').addEventListener('change', function () {
+                    var container = document.getElementById('children-details-container');
+                    container.innerHTML = ''; // Clear previous children details
+
+                    var numberOfChildren = parseInt(this.value);
+
+                    for (var i = 1; i <= numberOfChildren; i++) {
+                        var childDetails = document.createElement('div');
+                        childDetails.className = 'children-details d-flex flex-column gap-3';
+
+                        var childNameDiv = document.createElement('div');
+                        childNameDiv.className = 'd-flex justify-content-between align-items-center gap-3';
+                        var childNameLabel = document.createElement('label');
+                        childNameLabel.className = 'form-label register-form-inpits';
+                        childNameLabel.setAttribute('for', 'childName' + i);
+                        childNameLabel.textContent = 'Child name';
+                        var childNameInput = document.createElement('input');
+                        childNameInput.type = 'text';
+                        childNameInput.className = 'form-control';
+                        childNameInput.id = 'childName' + i;
+                        childNameInput.setAttribute('name', 'childName' + i);
+                        childNameInput.required = true;
+                        childNameDiv.appendChild(childNameLabel);
+                        childNameDiv.appendChild(childNameInput);
+
+                        var childAgeDiv = document.createElement('div');
+                        childAgeDiv.className = 'd-flex justify-content-between align-items-center gap-3';
+                        var childAgeLabel = document.createElement('label');
+                        childAgeLabel.className = 'form-label register-form-inpits';
+                        childAgeLabel.setAttribute('for', 'childAge' + i);
+                        childAgeLabel.textContent = 'Child Age';
+                        var childAgeInput = document.createElement('input');
+                        childAgeInput.type = 'text';
+                        childAgeInput.className = 'form-control';
+                        childAgeInput.id = 'childAge' + i;
+                        childAgeInput.setAttribute('name', 'childAge' + i);
+                        childAgeInput.required = true;
+                        childAgeDiv.appendChild(childAgeLabel);
+                        childAgeDiv.appendChild(childAgeInput);
+
+                        childDetails.appendChild(childNameDiv);
+                        childDetails.appendChild(childAgeDiv);
+                        container.appendChild(childDetails);
+                    }
+                });
+
+                const addToCartBtn = document.getElementById('add-to-cart-btn');
+                addToCartBtn.addEventListener('click', event => {
+                    const registerToClass = document.getElementById('register-to-classes-form');
+                    if (!registerToClass.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    } else {
+                        const formData = new FormData(registerToClass);
+                        const formValues = {};
+                        formData.forEach((value, key) => {
+                            formValues[key] = value;
+                        });
+                        console.log(formValues);
+                    }
+                    registerToClass.classList.add('was-validated');
+                }, false);
             }
         });
         calendar.render();
@@ -589,7 +652,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     var date = new Date(startYear, currentMonth, day);
                     var dayOfWeek = date.getDay();
 
-                    if (dayOfWeek !== 0 && dayOfWeek !== 1) { // Exclude Sundays (0) and Mondays (1)
+                    if (dayOfWeek !== 1 && dayOfWeek !== 2) { // Exclude Sundays (0) and Mondays (1)
                         for (var eventIndex = 1; eventIndex <= 3; eventIndex++) {
                             var eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
                             events.push({
@@ -605,11 +668,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return events;
         }
 
-        var eventModal = document.getElementById('eventModal');
-        eventModal.addEventListener('hidden.bs.modal', function () {
+        const eventModal = document.getElementById('eventModal');
+        const registerModal = document.getElementById('registerModal');
+
+        eventModal.addEventListener('hidden.bs.modal', () => {
             var eventCategory = document.getElementById('eventCategory');
-            eventCategory.className = ''; 
+            eventCategory.className = '';
         });
+
+        registerModal.addEventListener('hidden.bs.modal', () => {
+            const registerForm = registerModal.querySelector('#register-to-classes-form');
+            registerForm.querySelector('#children-details-container').innerHTML = "";
+            registerForm.reset();
+            registerForm.classList.remove('was-validated');
+        });
+
     }
 });
 

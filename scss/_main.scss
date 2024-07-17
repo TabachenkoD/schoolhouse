@@ -807,6 +807,11 @@ main {
         flex-direction: column;
         gap: 15px;
     }
+
+    .register-form-inpits {
+        display: block;
+        min-width: 120px !important;
+    }
 }
 
 .rsvp {

@@ -1400,6 +1400,10 @@ main p {
   flex-direction: column;
   gap: 15px;
 }
+.calendar .register-form-inpits {
+  display: block;
+  min-width: 120px !important;
+}
 
 .rsvp {
   padding-top: 30px;
