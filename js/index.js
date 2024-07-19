@@ -241,6 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const changeDateLink = document.getElementById('change-date-link');
         const changeTimeLink = document.getElementById('change-time-link');
         const timepickerInput = document.getElementById('selected-time-display');
+        const timeRadios = document.querySelectorAll('input[name="scheduleTime"]');
 
         function getNearestWorkingDate(date) {
             const day = date.getDay();
@@ -293,42 +294,16 @@ document.addEventListener("DOMContentLoaded", function () {
             datepickerInput.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
         });
 
-        const nearestTime = new Date();
-        nearestTime.setHours(9);
-        nearestTime.setMinutes(0);
-        timepickerInput.innerHTML = nearestTime ? nearestTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '';
-
-        const timepicker = new tempusDominus.TempusDominus(timepickerElement, {
-            defaultDate: nearestTime,
-            restrictions: {
-                enabledHours: [9, 10, 11, 12, 13, 14, 15, 16],
-            },
-            localization: {
-                locale: 'en',
-                format: 'hh:mm a'
-            },
-            display: {
-                inline: true,
-                components: {
-                    calendar: false,
-                    date: false,
-                    month: false,
-                    year: false,
-                    decades: false,
-                    clock: true,
-                    hours: true,
-                    minutes: true,
-                    seconds: false,
-                    useTwentyfourHour: false
-                }
-            }
+        function updateTimeDisplay() {
+            const selectedTime = document.querySelector('input[name="scheduleTime"]:checked');
+            const selectedLabel = selectedTime.closest('label').querySelector('span');
+            timepickerInput.textContent = selectedLabel.textContent;
+        }
+    
+        timeRadios.forEach(radio => {
+            radio.addEventListener('change', updateTimeDisplay);
         });
-
-        timepicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
-            const selectedTime = e.date;
-            timepickerInput.innerHTML = selectedTime ? selectedTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '';
-        });
-
+        updateTimeDisplay()
         changeDateLink.addEventListener('click', (event) => {
             event.preventDefault();
             datepickerElement.style.display = datepickerElement.style.display === 'none' ? 'block' : 'none';

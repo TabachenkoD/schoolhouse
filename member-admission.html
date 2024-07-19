@@ -183,8 +183,25 @@
                             <div id="selected-time-display">Select a time</div>
                         </div>
                         <a href="#" id="change-time-link" style="position: relative;">Other times...</a>
-                        <div class="log-event" id="timepicker-general-admission"
-                            style="position: absolute; display: none; z-index: 999;"></div>
+                        <div class="log-event" id="timepicker-general-admission" style="position: absolute; display: none; z-index: 999; background-color: white; border-radius: 4px;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);">
+                            <div class="d-flex flex-column flex-md-row p-3 gap-4 ">
+                                <div class="list-group list-group-checkable border-0 d-flex flex-row gap-4">
+                                    <label class="list-group-item rounded-3 py-2 d-flex justify-content-between gap-4"
+                                        for="scheduleTime-9">
+                                        <span>9am - 12:30pm</span>
+                                        <input class="list-group-item-check pe-none form-check-input" type="radio"
+                                            name="scheduleTime" id="scheduleTime-9" value="9" checked>
+                                    </label>
+                                    <label class="list-group-item rounded-3 py-2 d-flex justify-content-between gap-4"
+                                        for="scheduleTime-13">
+                                        <span>1pm - 4:30pm</span>
+                                        <input class="list-group-item-check pe-none form-check-input" type="radio"
+                                            name="scheduleTime" id="scheduleTime-13" value="13">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <span><a href="#" class="rsvp-action-btn general-admission-hide-btn mt-4">Next</a></span>
