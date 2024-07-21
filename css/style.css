@@ -438,6 +438,7 @@ header .header-btn-container {
   flex-direction: column;
   justify-content: center;
   align-items: end;
+  gap: 5px;
 }
 @media (max-width: 1024px) {
   header .header-btn-container {
@@ -446,6 +447,12 @@ header .header-btn-container {
     align-items: center;
     width: 100%;
     margin-right: 20px;
+    gap: 15px;
+  }
+}
+@media (max-width: 550px) {
+  header .header-btn-container div {
+    display: none;
   }
 }
 header .btn-buy-tickets {
@@ -471,11 +478,34 @@ header .btn-buy-tickets:hover {
     margin-bottom: 3px;
   }
 }
+@media (min-width: 1024px) and (max-width: 1090px) {
+  header .btn-buy-tickets {
+    padding: 0.375rem 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1040px) {
+  header .btn-buy-tickets {
+    padding: 0.375rem 4px;
+  }
+}
 header .header-divider {
   opacity: 0;
   height: 3px;
   width: 100%;
   background-image: linear-gradient(to right, #ED7A1F 30%, #008CD2 30% 80%, #ba2c36 80%);
+}
+header .social-icons-mobile-container {
+  display: flex;
+}
+header .social-icons-mobile {
+  display: none;
+}
+@media (max-width: 550px) {
+  header .social-icons-mobile {
+    display: block;
+  }
 }
 
 .logo {

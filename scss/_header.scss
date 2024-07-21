@@ -6,7 +6,7 @@ header {
     top: 0;
     background-color: $white;
     z-index: 1000;
-    transition: box-shadow 0.3s ease-in-out; 
+    transition: box-shadow 0.3s ease-in-out;
 
     .header-wrapper {
         display: flex;
@@ -31,6 +31,8 @@ header {
         flex-direction: column;
         justify-content: center;
         align-items: end;
+        gap: 5px;
+
 
         @media (max-width: 1024px) {
             flex-direction: row;
@@ -38,6 +40,13 @@ header {
             align-items: center;
             width: 100%;
             margin-right: 20px;
+            gap: 15px;
+        }
+
+        @media (max-width: 550px) {
+            div {
+                display: none;
+            }
         }
     }
 
@@ -62,13 +71,35 @@ header {
         @media (min-width: 1024px) {
             margin-bottom: 3px;
         }
+
+        @media (min-width: 1024px) and (max-width: 1090px) {
+            padding: .375rem 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) and (max-width: 1040px) {
+            padding: .375rem 4px;
+        }
     }
 
-    .header-divider{
+    .header-divider {
         opacity: 0;
         height: 3px;
         width: 100%;
         background-image: linear-gradient(to right, #ED7A1F 30%, #008CD2 30% 80%, #ba2c36 80%);
+    }
+
+    .social-icons-mobile-container {
+        display: flex;
+    }
+
+    .social-icons-mobile {
+        display: none;
+
+        @media (max-width: 550px) {
+            display: block;
+        }
     }
 }
 
@@ -282,5 +313,4 @@ body._pc .menu-list>li:hover .menu-sub-list {
         transform: rotate(45deg);
         transform-origin: center;
     }
-
 }
