@@ -189,6 +189,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    const emailInputs = document.querySelectorAll('input[type="email"]');
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    emailInputs.forEach(function (input) {
+        input.addEventListener('input', function () {
+            if (emailPattern.test(input.value)) {
+                input.setCustomValidity('');
+            } else {
+                input.setCustomValidity('Please enter a valid email address.');
+            }
+        });
+    });
+
     /* donation page */
     const donationAmountSelect = document.getElementById('donation-amount');
     if (donationAmountSelect) {
@@ -299,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedLabel = selectedTime.closest('label').querySelector('span');
             timepickerInput.textContent = selectedLabel.textContent;
         }
-    
+
         timeRadios.forEach(radio => {
             radio.addEventListener('change', updateTimeDisplay);
         });
@@ -344,13 +357,71 @@ document.addEventListener("DOMContentLoaded", function () {
         const toggleBtn = document.getElementsByClassName('general-admission-hide-btn')
         toggleBtn[0].addEventListener('click', (e) => {
             e.preventDefault();
-            const firstStep = document.getElementById('general-admission-first-step');
-            const secondStep = document.getElementById('general-admission-second-step');
+            const form = document.getElementById('quantity-person-form');
 
-            firstStep.classList.add('hidden');
-            secondStep.classList.remove('hidden');
+            const quantityInputs = document.querySelectorAll('.quantity');
+            function checkInputs() {
+                let allEmpty = true;
+
+                quantityInputs.forEach(input => {
+                    if (input.value.trim() !== '') {
+                        allEmpty = false;
+                    }
+                });
+
+                quantityInputs.forEach(input => {
+                    if (allEmpty) {
+                        input.setAttribute('required', 'required');
+                    } else {
+                        input.removeAttribute('required');
+                    }
+                });
+            }
+
+            quantityInputs.forEach(input => {
+                input.addEventListener('input', checkInputs);
+            });
+
+            checkInputs();
+
+            if (form) {
+                const firstStep = document.getElementById('general-admission-first-step');
+                const secondStep = document.getElementById('general-admission-second-step');
+
+                if (form.checkValidity()) {
+                    firstStep.classList.add('hidden');
+                    secondStep.classList.remove('hidden');
+
+                    const selectedDate = document.getElementById('selected-date-display').innerText;
+                    const selectedTime = document.querySelector('input[name="scheduleTime"]:checked').value;
+
+                    const quantities = Array.from(document.querySelectorAll('.quantity')).reduce((acc, input) => {
+                        if (input.value) {
+                            acc[input.name] = input.value;
+                        }
+                        return acc;
+                    }, {});
+
+                    const formData = {
+                        date: selectedDate,
+                        time: selectedTime,
+                        quantities: quantities
+                    };
+
+                    console.log(formData);
+                } else {
+                    form.classList.add('was-validated');
+                }
+            } else {
+                const firstStep = document.getElementById('general-admission-first-step');
+                const secondStep = document.getElementById('general-admission-second-step');
+
+                firstStep.classList.add('hidden');
+                secondStep.classList.remove('hidden');
+            }
+
+            
         });
-
 
         const nextBtn = document.querySelector('.continue-to-payment-btn');
         const formGeneralAdmission1 = document.getElementById('general-admission-form-1');
@@ -426,7 +497,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         }
-
 
         const finalGeneralAdmSbt = document.querySelector('.final-submit-btn');
         if (finalGeneralAdmSbt) {
@@ -504,6 +574,24 @@ document.addEventListener("DOMContentLoaded", function () {
             updateSections();
             attachInputListeners(basicGrandparentSection);
             attachInputListeners(familyPremiumSection);
+        }
+
+        const backBtnStep2 = document.getElementById('back-step-2');
+        if (backBtnStep2) {
+            backBtnStep2.addEventListener('click', function (event) {
+                event.preventDefault();
+                document.getElementById('general-admission-second-step').classList.add('hidden');
+                document.getElementById('general-admission-first-step').classList.remove('hidden');
+            });
+        }
+
+        const backBtnStep3 = document.getElementById('back-step-3');
+        if (backBtnStep3) {
+            backBtnStep3.addEventListener('click', function (event) {
+                event.preventDefault();
+                document.getElementById('general-admission-third-step').classList.add('hidden');
+                document.getElementById('general-admission-second-step').classList.remove('hidden');
+            });
         }
     }
 
