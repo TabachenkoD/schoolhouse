@@ -1886,8 +1886,20 @@ main p {
 .about .history-line-container {
   display: flex;
   justify-content: center;
-  gap: 100px;
+  gap: 80px;
   padding: 80px 0 20px 0;
+  /*  @media (max-width: 1450px) {
+       .history-line-item div::before,
+       .history-line-item:last-child div::after {
+           width: calc(100vw - 50px);
+       }
+   } */
+}
+.about .history-line-container .history-line-item {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .about .history-line-container .history-line-item div {
   cursor: pointer;
@@ -1897,24 +1909,43 @@ main p {
   background-color: #008CD2;
   position: relative;
   margin-bottom: 15px;
+  z-index: 10;
 }
 .about .history-line-container .history-line-item div::before {
   content: "";
-  height: 2px;
-  width: 100px;
-  background-color: #95CDE7;
+  height: 3px;
+  width: 245px;
+  background-color: #008CD2;
+  opacity: 0.3;
   position: absolute;
   top: 50%;
+  left: -245px;
+  z-index: 1;
+}
+.about .history-line-container .history-line-item:first-child div::before {
+  width: 100px;
   left: -100px;
 }
 .about .history-line-container .history-line-item:last-child div::after {
   content: "";
-  height: 2px;
+  height: 3px;
   width: 100px;
-  background-color: #95CDE7;
+  background-color: #008CD2;
+  opacity: 0.3;
   position: absolute;
   top: 50%;
   right: -100px;
+  z-index: 1;
+}
+@media (max-width: 1100px) {
+  .about .history-line-container {
+    gap: 60px;
+  }
+}
+@media (max-width: 1000px) {
+  .about .history-line-container {
+    gap: 40px;
+  }
 }
 
 .join,
