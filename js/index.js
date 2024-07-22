@@ -56,6 +56,45 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
+    /* classes */
+    var carouselInner = document.getElementById('carousel-inner');
+
+    if (carouselInner) {
+        function setupCarousel(images) {
+            var carouselIndicators = document.getElementById('carousel-indicators');
+            carouselInner.innerHTML = '';
+            carouselIndicators.innerHTML = '';
+
+            images.forEach(function (src, index) {
+                var div = document.createElement('div');
+                div.className = 'carousel-item' + (index === 0 ? ' active' : '');
+                var img = document.createElement('img');
+                img.src = src;
+                img.className = 'd-block w-100';
+                div.appendChild(img);
+                carouselInner.appendChild(div);
+
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.dataset.bsTarget = '#carouselExampleIndicators';
+                button.dataset.bsSlideTo = index;
+                if (index === 0) {
+                    button.className = 'active';
+                    button.setAttribute('aria-current', 'true');
+                }
+                button.setAttribute('aria-label', 'Slide ' + (index + 1));
+                carouselIndicators.appendChild(button);
+            });
+        }
+
+        document.querySelectorAll('.classes-thumbnail-container, .btn-gallery').forEach(function (element) {
+            element.addEventListener('click', function () {
+                var images = JSON.parse(this.getAttribute('data-images'));
+                setupCarousel(images);
+            });
+        });
+    }
+    
     /* page Join.html and Know before you go*/
     const collapses = document.querySelectorAll('.collapse');
     if (collapses.length > 0) {
@@ -420,7 +459,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 secondStep.classList.remove('hidden');
             }
 
-            
+
         });
 
         const nextBtn = document.querySelector('.continue-to-payment-btn');

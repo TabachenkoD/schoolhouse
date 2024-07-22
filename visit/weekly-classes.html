@@ -17,6 +17,12 @@
     <title>Schoolhouse Children's Museum - Weekly Classes</title>
     <link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+    <style>
+        .carousel-inner img {
+            max-height: 80vh;
+            object-fit: contain;
+        }
+    </style>
 </head>
 
 <body>
@@ -141,7 +147,7 @@
                 <div class="header-btn-container">
                     <div>
                         <a href="https://www.instagram.com/schoolhouse_childrens_museum" target="_blank">
-                             <svg width="28px" height="28px" viewBox="0 0 32 32" fill="none"
+                            <svg width="28px" height="28px" viewBox="0 0 32 32" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint0_radial_87_7153)" />
                                 <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint1_radial_87_7153)" />
@@ -215,6 +221,59 @@
                 <span><a href="../calendar.html">Link to Calendar for booking</a></span>
             </div>
 
+            <div class="row mb-2">
+                <div class="col-lg-6 classes-item-container">
+                    <div
+                        class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2">Classes for All Ages</strong>
+                            <h3 class="mb-0">Kid's Music Circle with Noam Brown</h3>
+                            <p class="card-text mb-auto">Music Specialist Noam Brown leads the fully participatory class
+                                with live guitar and joyful singing, rhythm, and movement.</p>
+                            <button type="button" class="btn-gallery" data-bs-toggle="modal"
+                                data-bs-target="#imageModal"
+                                data-images='["../img/classes/Kid_s Music Circle.1.jpg", "../img/classes/Kid_s Music Circle.2.jpg", "../img/classes/Kid_s Music Circle.3.jpg"]'>Gallery</button>
+                        </div>
+                        <div class="col-auto d-none d-sm-block classes-thumbnail-container" alt="Kid's Music Circle 2"
+                            class="main-img" data-bs-toggle="modal" data-bs-target="#imageModal"
+                            data-images='["../img/classes/Kid_s Music Circle.2.jpg", "../img/classes/Kid_s Music Circle.1.jpg", "../img/classes/Kid_s Music Circle.3.jpg"]'>
+                            <img style="width: 200px; height: 100%;" src="../img/classes/Kid_s Music Circle.2.jpg" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#008CD2"
+                                viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path
+                                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 classes-item-container">
+                    <div
+                        class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2">Classes for All Ages</strong>
+                            <h3 class="mb-0">Fabulous Fun Fridays</h3>
+                            <p class="card-text mb-auto">Join us for some special visits from area organizations with
+                                exciting programs
+                                for children of all ages!</p>
+                            <button type="button" class="btn-gallery" data-bs-toggle="modal"
+                                data-bs-target="#imageModal"
+                                data-images='["../img/classes/Fabulous Fun Friday.3.jpg", "../img/classes/Fabulous Fun Friday.1.jpg", "../img/classes/Fabulous Fun Friday.2.jpg"]'>Gallery</button>
+                        </div>
+                        <div class="col-auto d-none d-sm-block classes-thumbnail-container" alt="Kid's Music Circle 2"
+                            class="main-img" data-bs-toggle="modal" data-bs-target="#imageModal"
+                            data-images='["../img/classes/Fabulous Fun Friday.3.jpg", "../img/classes/Fabulous Fun Friday.1.jpg", "../img/classes/Fabulous Fun Friday.2.jpg"]'>
+                            <img style="width: 200px; height: 100%;" src="../img/classes/Fabulous Fun Friday.3.jpg" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#008CD2"
+                                viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path
+                                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="weekly-classes-items">
                 <div class="weekly-classes-item-container mb-5">
                     <p><b>Classes for All Ages</b></p>
@@ -249,7 +308,8 @@
                                     </div> -->
                                 </div>
                                 <p class="p-underline">Kid's Music Circle with Noam Brown</p>
-                                <span>Music Specialist Noam Brown leads the fully participatory class with live guitar
+                                <span>Music Specialist Noam Brown leads the fully participatory class with live
+                                    guitar
                                     and
                                     joyful singing, rhythm, and movement.
                                 </span>
@@ -282,7 +342,8 @@
                                     </div>
                                 </div>
                                 <p class="p-underline">Fabulous Fun Fridays</p>
-                                <span>Join us for some special visits from area organizations with exciting programs for
+                                <span>Join us for some special visits from area organizations with exciting programs
+                                    for
                                     children of all ages!
                                 </span>
                             </div>
@@ -322,7 +383,8 @@
                     </div>
                     <div>
                         <p class="p-underline collapse-title pb-3" data-bs-toggle="collapse" href="#suzy-hammer"
-                            role="button" aria-expanded="false" aria-controls="suzy-hammer">Suzy Hammer, Professional
+                            role="button" aria-expanded="false" aria-controls="suzy-hammer">Suzy Hammer,
+                            Professional
                             Storyteller
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                 width="16px"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -454,7 +516,8 @@
                                     </div>
                                 </div>
                                 <p class="p-underline">Sensational Story ‘n More</p>
-                                <span>Instructors bring children’s books to life through interactive performance, song,
+                                <span>Instructors bring children’s books to life through interactive performance,
+                                    song,
                                     movement &
                                     props. An engaging art activity complements every class.</span>
                             </div>
@@ -491,7 +554,8 @@
                                     </div> -->
                                 </div>
                                 <p class="p-underline">Messy Play</p>
-                                <span> Let your little ones explore while developing important sensory skills - skills
+                                <span> Let your little ones explore while developing important sensory skills -
+                                    skills
                                     that
                                     build
                                     early
@@ -504,7 +568,8 @@
                     </div>
                     <div>
                         <p class="p-underline collapse-title pb-3" data-bs-toggle="collapse" href="#tots-in-tutus"
-                            role="button" aria-expanded="false" aria-controls="tots-in-tutus">Tots in Tutus with First
+                            role="button" aria-expanded="false" aria-controls="tots-in-tutus">Tots in Tutus with
+                            First
                             Steps Dance & Tumbling
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                 width="16px"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -539,7 +604,8 @@
                     </div>
                     <div>
                         <p class="p-underline collapse-title pb-3" data-bs-toggle="collapse" href="#tumble-tots"
-                            role="button" aria-expanded="false" aria-controls="tumble-tots">Tumble Tots with First Steps
+                            role="button" aria-expanded="false" aria-controls="tumble-tots">Tumble Tots with First
+                            Steps
                             Dance & Tumbling
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
                                 width="16px"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -679,7 +745,8 @@
                                 </div>
                                 <p class="p-underline">ABC's & 123's</p>
                                 <span>
-                                    A preschool/kindergarten readiness class for young children. Must sign up for whole
+                                    A preschool/kindergarten readiness class for young children. Must sign up for
+                                    whole
                                     series.
                                 </span>
                             </div>
@@ -745,7 +812,8 @@
                                     </div>
                                 </div>
                                 <p class="p-underline">The Art of the Story</p>
-                                <span>Featuring one author/illustrator at each class, children will create their own art
+                                <span>Featuring one author/illustrator at each class, children will create their own
+                                    art
                                     in the
                                     style of the featured book.</span>
                             </div>
@@ -776,7 +844,8 @@
                                 <p class="p-underline">Summer Science</p>
                                 <span>Join us for hands on, super science fun matching the theme of the week as we
                                     explore a
-                                    variety of experiments and activities designed to bring out the scientist in your
+                                    variety of experiments and activities designed to bring out the scientist in
+                                    your
                                     little
                                     one!</span>
                             </div>
@@ -786,6 +855,36 @@
             </div>
         </div>
     </main>
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators" id="carousel-indicators">
+
+                        </div>
+                        <div class="carousel-inner" id="carousel-inner">
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <footer>
         <div class="container flex-container">
