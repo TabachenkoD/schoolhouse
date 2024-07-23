@@ -1,6 +1,6 @@
-/* function isTouchDevice() {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-} */
+var SERVER_URL = "https://shm.sheynpartners.com/api";
+var SERVER_IMG_EXHIBITS_URL = "http://shm.sheynpartners.com/api/Content/Images/Exhibits";
+
 
 if (window.innerWidth <= 768) {
     document.body.classList.add('_touch');
@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
+    /* index.html */
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+        fetchMainPageData();
+    }
+
     /* classes */
     var carouselInner = document.getElementById('carousel-inner');
 
@@ -94,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-    
+
     /* page Join.html and Know before you go*/
     const collapses = document.querySelectorAll('.collapse');
     if (collapses.length > 0) {
@@ -829,4 +834,88 @@ function initMap() {
     });
 }
 
+/* index.js Classes and Exhibits */
+async function fetchMainPageData() {
+    showSkeleton(true, 'classes-content', 'skeleton-events');
+    showSkeleton(true, 'exhibits-content', 'skeleton-exhibits-item');
 
+    fetchEvents();
+    fetchExhibits();
+}
+
+async function fetchEvents() {
+    try {
+        const response = await fetch(`${SERVER_URL}/events`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        displayEvents(data);
+    } catch (error) {
+        displayEvents([]);
+    } finally {
+        showSkeleton(false, 'classes-content', 'skeleton-events');
+    }
+}
+
+async function fetchExhibits() {
+    try {
+        const response = await fetch(`${SERVER_URL}/exhibits`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        displayExhibits(data);
+    } catch (error) {
+        displayExhibits([]);
+    } finally {
+        showSkeleton(false, 'exhibits-content', 'skeleton-exhibits-item');
+    }
+}
+
+function showSkeleton(show, containerId, skeletonClass) {
+    const container = document.getElementById(containerId);
+    const skeletons = container.querySelectorAll(`.${skeletonClass}`);
+    skeletons.forEach(skeleton => {
+        skeleton.style.display = show ? 'block' : 'none';
+    });
+}
+
+function displayEvents(data) {
+    const container = document.getElementById('classes-content');
+    container.innerHTML = '';
+
+    if (data.length > 0) {
+        data.forEach(item => {
+            const div = document.createElement('div');
+            div.classList.add('events-item');
+            div.innerHTML = `<a href="calendar.html"><span>${item.Title}</span><p>${item.Description}</p></a>`;
+            container.appendChild(div);
+        });
+    } else {
+        const div = document.createElement('div');
+        div.innerHTML = `<p>No classes or events available now</p>`;
+        container.appendChild(div);
+    }
+}
+
+function displayExhibits(data) {
+    const container = document.getElementById('exhibits-content');
+    container.innerHTML = '';
+
+    if (data.length > 0) {
+        data.forEach(item => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+            <div class="exhibits-content-img_container">
+                <img src="${SERVER_IMG_EXHIBITS_URL}/${item.ExhibitImageName}" alt="${item.Title}" />
+            </div>
+            <span>${item.Title}</span>`;
+            container.appendChild(div);
+        });
+    } else {
+        const div = document.createElement('div');
+        div.innerHTML = `<p>No exhibits available now</p>`;
+        container.appendChild(div);
+    }
+}

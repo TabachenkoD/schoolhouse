@@ -184,9 +184,25 @@ main {
             .classes-content {
                 color: $orange;
 
+                .events-item {
+                    width: fit-content;
+
+                    a {
+                        span {
+                            display: block;
+                            font-size: 30px;
+                        }
+                    }
+                }
+
                 div {
                     cursor: pointer;
                     margin-bottom: 36px;
+
+                    a {
+                        text-decoration: none;
+                        color: $orange;
+                    }
 
                     span {
                         font-size: $font-size-medium;
@@ -196,6 +212,7 @@ main {
                     p {
                         font-size: 1.2rem;
                         margin: 0;
+                        cursor: default;
                     }
                 }
             }
@@ -212,6 +229,13 @@ main {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
+
+                p {
+                    color: $dark-blue;
+                    font-size: 1.2rem;
+                    margin: 0;
+                    cursor: default;
+                }
 
                 div {
                     overflow: hidden;
@@ -234,6 +258,8 @@ main {
                         transition: color 0.3s ease-in-out;
                     }
 
+                    
+
                     &:hover {
                         img {
                             transform: scale(1.05);
@@ -245,8 +271,108 @@ main {
                     }
                 }
 
+                .skeleton-exhibits-item {
+                    display: none;
+
+                    & div:first-child {
+                        background-color: $dark-blue;
+                        height: 200px;
+                        max-width: 100%;
+                        margin-bottom: 15px !important;
+                        animation: pulse-blue 1.5s infinite;
+
+                        @keyframes pulse-blue {
+                            0% {
+                                background-color: $dark-blue;
+                            }
+
+                            50% {
+                                background-color: $light-blue;
+                            }
+
+                            100% {
+                                background-color: $dark-blue;
+                            }
+                        }
+                    }
+
+                    & div:nth-child(2) {
+                        background-color: $dark-blue;
+                        height: 35px;
+                        max-width: 100%;
+                        animation: pulse-blue 1.5s infinite;
+
+                        @keyframes pulse-blue {
+                            0% {
+                                background-color: $dark-blue;
+                            }
+
+                            50% {
+                                background-color: $light-blue;
+                            }
+
+                            100% {
+                                background-color: $dark-blue;
+                            }
+                        }
+                    }
+                }
+
                 @media (max-width: 768px) {
                     gap: 1rem;
+                }
+            }
+        }
+
+        .skeleton-events {
+            display: none;
+
+            .skeleton-events-item {
+                margin: 10px 0;
+
+                & div:first-child {
+                    background-color: $orange;
+                    height: 35px;
+                    max-width: 150px;
+                    margin-bottom: 15px !important;
+                    border-radius: 5px;
+                    animation: pulse 1.5s infinite;
+
+                    @keyframes pulse {
+                        0% {
+                            background-color: $orange;
+                        }
+
+                        50% {
+                            background-color: #ed7c1f46;
+                        }
+
+                        100% {
+                            background-color: $orange;
+                        }
+                    }
+                }
+
+                & div:nth-child(2) {
+                    background-color: $orange;
+                    height: 22px;
+                    max-width: 300px;
+                    border-radius: 5px;
+                    animation: pulse 1.5s infinite;
+
+                    @keyframes pulse {
+                        0% {
+                            background-color: $orange;
+                        }
+
+                        50% {
+                            background-color: #ed7c1f46;
+                        }
+
+                        100% {
+                            background-color: $orange;
+                        }
+                    }
                 }
             }
         }
