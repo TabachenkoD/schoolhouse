@@ -889,6 +889,12 @@ function displayEvents(data) {
     const container = document.getElementById('classes-content');
     container.innerHTML = '';
 
+    const div = document.createElement('div');
+    div.classList.add('events-item');
+    data.forEach(item => {
+        div.innerHTML = `<span>${item.Title}</span>`;
+    })
+    container.appendChild(div);
     if (data.length > 0) {
         data.forEach(item => {
             const div = document.createElement('div');
@@ -897,6 +903,7 @@ function displayEvents(data) {
             container.appendChild(div);
         });
     } else {
+        console.log(data)
         const div = document.createElement('div');
         div.innerHTML = `<p>No classes or events available now</p>`;
         container.appendChild(div);
