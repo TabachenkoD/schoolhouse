@@ -141,7 +141,7 @@
                 <div class="header-btn-container">
                     <div>
                         <a href="https://www.instagram.com/schoolhouse_childrens_museum" target="_blank">
-                             <svg width="28px" height="28px" viewBox="0 0 32 32" fill="none"
+                            <svg width="28px" height="28px" viewBox="0 0 32 32" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint0_radial_87_7153)" />
                                 <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint1_radial_87_7153)" />
@@ -220,7 +220,7 @@
             <div class="d-flex justify-content-center mb-5">
                 <div class="col-md-11 col-lg-7">
                     <p class="mb-3"><b>Donate Now:</b></p>
-                    <form class="needs-validation" id="join-form" novalidate>
+                    <form class="needs-validation" id="donation-form" novalidate>
                         <div class="row g-3">
                             <div class="member-section-form pb-3">
                                 <div>
@@ -257,7 +257,7 @@
                                         <input type="email" class="form-control" id="primary-adult-email"
                                             placeholder="example@example.com" required name="Email">
                                         <div class="invalid-feedback">
-                                            Please enter a valid email address for shipping updates.
+                                            Please enter a valid email address.
                                         </div>
                                     </div>
                                 </div>
@@ -283,7 +283,7 @@
                                 <div class="col-12 pt-3 other-amount">
                                     <label for="other-amount" class="form-label">Other Amount</label>
                                     <input type="text" class="form-control" id="other-amount" placeholder="" value=""
-                                        required>
+                                        required name="other-amount">
                                     <div class="invalid-feedback">
                                         Valid amount is required.
                                     </div>
@@ -322,13 +322,15 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-address-2" class="form-label">Billing Address Line 2<span
                                                 class="text-body-secondary">(Optional)</span></label>
-                                        <input type="text" class="form-control" id="billing-address-2" placeholder="" name="BillingAddress2">
+                                        <input type="text" class="form-control" id="billing-address-2" placeholder=""
+                                            name="BillingAddress2">
                                     </div>
                                 </div>
                                 <div>
                                     <div class="col-12 pt-3">
                                         <label for="billing-country" class="form-label">Billing Country</label>
-                                        <select class="form-select billing-country-select" id="billing-country" required name="BillingCountry">
+                                        <select class="form-select billing-country-select" id="billing-country" required
+                                            name="BillingCountry">
                                             <option value="United States" label="United States">United States</option>
                                             <option value="Canada" label="Canada">Canada</option>
                                             <option value="Other" label="Other">Other</option>
@@ -445,7 +447,8 @@
                                     </div>
                                     <div class="col-12 pt-3 billing-province">
                                         <label for="billing-province" class="form-label">Billing Province</label>
-                                        <select class="form-select" id="billing-province" required name="BillingProvince">
+                                        <select class="form-select" id="billing-province" required
+                                            name="BillingProvince">
                                             <option value="">Choose...</option>
                                             <optgroup label="Canadian Provinces">
                                                 <option value="AB" label="AB - Alberta">AB - Alberta</option>
@@ -507,14 +510,14 @@
                                 <div class="card-type-container py-2">
                                     <div class="form-check">
                                         <input id="card-type-visa" name="card-type" type="radio"
-                                            class="form-check-input" required>
+                                            class="form-check-input" required value="Visa">
                                         <label class="form-check-label" for="card-type-visa">
                                             <img src="img/card-types/visa.png" alt="visa" loading="lazy" title="Visa" />
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input id="card-type-master" name="card-type" type="radio"
-                                            class="form-check-input" required>
+                                            class="form-check-input" required value="MasterCard">
                                         <label class="form-check-label" for="card-type-master">
                                             <img src="img/card-types/master.png" alt="master card" loading="lazy"
                                                 title="Master Card" />
@@ -522,7 +525,7 @@
                                     </div>
                                     <div class="form-check">
                                         <input id="card-type-discover" name="card-type" type="radio"
-                                            class="form-check-input" required>
+                                            class="form-check-input" required value="Discover">
                                         <label class="form-check-label" for="card-type-discover">
                                             <img src="img/card-types/discover.png" alt="discover" loading="lazy"
                                                 title="Discover" />
@@ -530,7 +533,7 @@
                                     </div>
                                     <div class="form-check">
                                         <input id="card-type-american-express" name="card-type" type="radio"
-                                            class="form-check-input" required>
+                                            class="form-check-input" required value="AmericanExpress">
                                         <label class="form-check-label" for="card-type-american-express">
                                             <img src="img/card-types/american.png" alt="American Express" loading="lazy"
                                                 title="American Express" />

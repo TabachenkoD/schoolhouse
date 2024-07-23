@@ -8,10 +8,6 @@ if (window.innerWidth <= 768) {
     document.body.classList.add('_pc');
 }
 
-if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-    fetchMainPageData();
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     /* Header */
     const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
@@ -61,9 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* index.html */
-    /* if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
         fetchMainPageData();
-    } */
+    }
 
     /* classes */
     var carouselInner = document.getElementById('carousel-inner');
@@ -265,6 +261,81 @@ document.addEventListener("DOMContentLoaded", function () {
                 otherAmountInput.value = '';
             }
         });
+
+        const form = document.getElementById('donation-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (form.checkValidity()) {
+                const formData = new FormData(event.target);
+                const jsonObject = {
+                    Donor: {
+                        DonorId: 0,
+                        FirstName: formData.get('FirstName'),
+                        LastName: formData.get('LastName'),
+                        Phone: formData.get('Phone'),
+                        Email: formData.get('Email'),
+                        BillingFirstName: formData.get('BillingFirstName'),
+                        BillingLastName: formData.get('BillingLastName'),
+                        BillingAddress1: formData.get('BillingAddress1'),
+                        BillingAddress2: formData.get('BillingAddress2'),
+                        BillingCity: formData.get('BillingCity'),
+                    },
+                    DonationAmount: formData.get('DonationAmount') === 'other' ? parseFloat(formData.get('other-amount')) : parseFloat(formData.get('DonationAmount')),
+                    CardType: formData.get('card-type'),
+                    CardNumber: formData.get('CardNumber'),
+                    CardVerificationNumber: parseInt(formData.get('CardVerificationNumber')),
+                    CardExpMonth: formData.get('CardExpMonth'),
+                    CardExpYear: parseInt(formData.get('CardExpYear'))
+                };
+
+                const selectedCountry = formData.get('BillingCountry');
+                jsonObject.Donor.BillingCountry = selectedCountry;
+
+                if (selectedCountry === 'United States') {
+                    jsonObject.Donor.BillingState = formData.get('BillingState');
+                    jsonObject.Donor.BillingZip = formData.get('BillingZip');
+                } else if (selectedCountry === 'Canada') {
+                    jsonObject.Donor.BillingProvince = formData.get('BillingProvince');
+                    jsonObject.Donor.BillingPostalCode = formData.get('BillingPostalCode');
+                } else if (selectedCountry === 'Other') {
+                    jsonObject.Donor.BillingCountryOther = formData.get('BillingCountryOther');
+                    jsonObject.Donor.BillingRegion = formData.get('BillingRegion');
+                    jsonObject.Donor.BillingPostalCodeOther = formData.get('BillingPostalCodeOther');
+                }
+
+                const jsonString = JSON.stringify(jsonObject);
+                console.log(jsonObject)
+
+                fetch(`${SERVER_URL}/donations`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonString
+                })
+                    .then(async response => {
+                        if (!response.ok) {
+                            const error = await response.json();
+                            throw new Error(error.Message);
+                        }
+                        return response.json();
+                    })
+                    .then(data => { form.reset(); })
+                    .catch((error) => { console.error('Error:', error); });
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+        /* showErrorToast("TEST");
+        function showErrorToast(message) {
+            const toastElement = document.getElementById('error-toast');
+            const toastBody = document.getElementById('error-toast-body');
+            toastBody.textContent = message;
+    
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        } */
     }
 
     /* exhibits page */
@@ -869,24 +940,9 @@ async function fetchExhibits() {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        /* displayExhibits(data); */
-
-        const test = JSON.stringify(data)
-        const container = document.getElementById('exhibits-content');
-        container.innerHTML = '';
-        const div = document.createElement('div');
-        div.innerHTML = `<a href="calendar.html">${test}</a>`;
-        container.appendChild(div);
+        displayExhibits(data);
     } catch (error) {
-        /* displayExhibits([]);
-         */
-
-        /* const test = JSON.stringify(data) */
-        const container = document.getElementById('exhibits-content');
-        container.innerHTML = '';
-        const div = document.createElement('div');
-        div.innerHTML = `<a href="calendar.html">${error}</a>`;
-        container.appendChild(div);
+        displayExhibits([]);
     } finally {
         showSkeleton(false, 'exhibits-content', 'skeleton-exhibits-item');
     }
