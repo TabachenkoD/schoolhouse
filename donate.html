@@ -227,7 +227,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="primary-adult-firstName" class="form-label">First name</label>
                                         <input type="text" class="form-control" id="primary-adult-firstName"
-                                            placeholder="" value="" required>
+                                            placeholder="" value="" required name="FirstName">
                                         <div class="invalid-feedback">
                                             Valid first name is required.
                                         </div>
@@ -236,7 +236,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="primary-adult-lastName" class="form-label">Last name</label>
                                         <input type="text" class="form-control" id="primary-adult-lastName"
-                                            placeholder="" value="" required>
+                                            placeholder="" value="" required name="LastName">
                                         <div class="invalid-feedback">
                                             Valid last name is required.
                                         </div>
@@ -246,7 +246,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="primary-adult-phone" class="form-label">Phone Number</label>
                                         <input type="text" class="form-control" id="primary-adult-phone" placeholder=""
-                                            value="" required>
+                                            value="" required name="Phone">
                                         <div class="invalid-feedback">
                                             Valid phone number is required.
                                         </div>
@@ -255,7 +255,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="primary-adult-email" class="form-label">Email Address</label>
                                         <input type="email" class="form-control" id="primary-adult-email"
-                                            placeholder="example@example.com" required>
+                                            placeholder="example@example.com" required name="Email">
                                         <div class="invalid-feedback">
                                             Please enter a valid email address for shipping updates.
                                         </div>
@@ -267,14 +267,14 @@
                             <p class="p-underline">Payment Information</p>
                             <div class="col-sm-12 col-lg-6 membership-type">
                                 <label for="donation-amount" class="form-label">Donation Amount</label>
-                                <select class="form-select" id="donation-amount" required>
+                                <select class="form-select" id="donation-amount" required name="DonationAmount">
                                     <option value="">Choose...</option>
-                                    <option value="25.00" label="$25.00">$25.00</option>
-                                    <option value="50.00" label="$50.00">$50.00</option>
-                                    <option value="75.00" label="$75.00">$75.00</option>
-                                    <option value="100.00" label="$100.00">$100.00</option>
-                                    <option value="150.00" label="$150.00">$150.00</option>
-                                    <option value="250.00" label="$250.00">$250.00</option>
+                                    <option value="25" label="$25.00">$25.00</option>
+                                    <option value="50" label="$50.00">$50.00</option>
+                                    <option value="75" label="$75.00">$75.00</option>
+                                    <option value="100" label="$100.00">$100.00</option>
+                                    <option value="150" label="$150.00">$150.00</option>
+                                    <option value="250" label="$250.00">$250.00</option>
                                     <option value="other" label="Other Amount">Other Amount</option>
                                 </select>
                                 <div class="invalid-feedback">
@@ -295,7 +295,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-firstName" class="form-label">Billing First Name</label>
                                         <input type="text" class="form-control" id="billing-firstName" placeholder=""
-                                            value="" required>
+                                            value="" required name="BillingFirstName">
                                         <div class="invalid-feedback">
                                             Valid first name is required.
                                         </div>
@@ -304,7 +304,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-lastName" class="form-label">Billing Last Name</label>
                                         <input type="text" class="form-control" id="billing-lastName" placeholder=""
-                                            value="" required>
+                                            value="" required name="BillingLastName">
                                         <div class="invalid-feedback">
                                             Valid last name is required.
                                         </div>
@@ -313,7 +313,7 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-address-1" class="form-label">Billing Address Line 1</label>
                                         <input type="text" class="form-control" id="billing-address-1" placeholder=""
-                                            value="" required>
+                                            value="" required name="BillingAddress1">
                                         <div class="invalid-feedback">
                                             Valid billing address is required.
                                         </div>
@@ -322,13 +322,13 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-address-2" class="form-label">Billing Address Line 2<span
                                                 class="text-body-secondary">(Optional)</span></label>
-                                        <input type="text" class="form-control" id="billing-address-2" placeholder="">
+                                        <input type="text" class="form-control" id="billing-address-2" placeholder="" name="BillingAddress2">
                                     </div>
                                 </div>
                                 <div>
                                     <div class="col-12 pt-3">
                                         <label for="billing-country" class="form-label">Billing Country</label>
-                                        <select class="form-select billing-country-select" id="billing-country" required>
+                                        <select class="form-select billing-country-select" id="billing-country" required name="BillingCountry">
                                             <option value="United States" label="United States">United States</option>
                                             <option value="Canada" label="Canada">Canada</option>
                                             <option value="Other" label="Other">Other</option>
@@ -340,14 +340,14 @@
                                     <div class="col-12 pt-3">
                                         <label for="billing-city" class="form-label">Billing City</label>
                                         <input type="text" class="form-control" id="billing-city" placeholder=""
-                                            value="" required>
+                                            value="" required name="BillingCity">
                                         <div class="invalid-feedback">
                                             Valid billing city is required.
                                         </div>
                                     </div>
                                     <div class="col-12 pt-3 billing-state">
                                         <label for="billing-state" class="form-label">Billing State</label>
-                                        <select class="form-select" id="billing-state" required>
+                                        <select class="form-select" id="billing-state" required name="BillingState">
                                             <option value="">Choose...</option>
                                             <optgroup label="States and Federal Districts">
                                                 <option value="AK" label="AK - Alaska">AK - Alaska</option>
@@ -437,7 +437,7 @@
                                         <div class="col-12 pt-3">
                                             <label for="billing-zip" class="form-label">Billing Zip</label>
                                             <input type="text" class="form-control" id="billing-zip" placeholder=""
-                                                value="" required>
+                                                value="" required name="BillingZip">
                                             <div class="invalid-feedback">
                                                 Valid billing zip is required.
                                             </div>
@@ -445,7 +445,7 @@
                                     </div>
                                     <div class="col-12 pt-3 billing-province">
                                         <label for="billing-province" class="form-label">Billing Province</label>
-                                        <select class="form-select" id="billing-province" required>
+                                        <select class="form-select" id="billing-province" required name="BillingProvince">
                                             <option value="">Choose...</option>
                                             <optgroup label="Canadian Provinces">
                                                 <option value="AB" label="AB - Alberta">AB - Alberta</option>
@@ -470,7 +470,7 @@
                                         <div class="col-12 pt-3">
                                             <label for="billing-code" class="form-label">Billing Postal Code</label>
                                             <input type="text" class="form-control" id="billing-code" placeholder=""
-                                                value="" required>
+                                                value="" required name="BillingPostalCode">
                                             <div class="invalid-feedback">
                                                 Valid billing code is required.
                                             </div>
@@ -480,13 +480,13 @@
                                         <label for="billing-country-other" class="form-label">Billing Country -
                                             Other</label>
                                         <input type="text" class="form-control" id="billing-country-other"
-                                            placeholder="" value="" required>
+                                            placeholder="" value="" required name="BillingCountryOther">
                                         <div class="invalid-feedback">
                                             Valid billing country is required.
                                         </div>
                                         <label for="billing-region-other" class="form-label pt-3">Billing Region</label>
                                         <input type="text" class="form-control" id="billing-region-other" placeholder=""
-                                            value="" required>
+                                            value="" required name="BillingRegion">
                                         <div class="invalid-feedback">
                                             Valid billing region is required.
                                         </div>
@@ -494,7 +494,7 @@
                                             <label for="billing-code-other" class="form-label">Billing Postal
                                                 Code</label>
                                             <input type="text" class="form-control" id="billing-code-other"
-                                                placeholder="" value="" required>
+                                                placeholder="" value="" required name="BillingPostalCodeOther">
                                             <div class="invalid-feedback">
                                                 Valid billing code is required.
                                             </div>
@@ -543,7 +543,7 @@
                                     <div>
                                         <label for="card-number" class="form-label">Card Number</label>
                                         <input type="text" class="form-control" id="card-number" placeholder="" value=""
-                                            required>
+                                            required name="CardNumber">
                                         <div class="invalid-feedback">
                                             Valid card number is required.
                                         </div>
@@ -568,7 +568,7 @@
                                             </div>
                                         </div>
                                         <input type="text" class="form-control" id="card-verification" placeholder=""
-                                            value="" maxlength="4" required>
+                                            value="" maxlength="4" required name="CardVerificationNumber">
                                         <div class="invalid-feedback">
                                             Valid card verification is required.
                                         </div>
@@ -577,7 +577,7 @@
                                 <div>
                                     <div class="col-12">
                                         <label for="exp-month" class="form-label">Exp Month</label>
-                                        <select class="form-select" id="exp-month" required>
+                                        <select class="form-select" id="exp-month" required name="CardExpMonth">
                                             <option value="">Choose...</option>
                                             <option value="01" label="01 - January">01 - January</option>
                                             <option value="02" label="02 - February">02 - February</option>
@@ -595,7 +595,7 @@
                                     </div>
                                     <div class="col-12 pt-3">
                                         <label for="exp-year" class="form-label">Exp Year</label>
-                                        <select class="form-select" id="exp-year" required>
+                                        <select class="form-select" id="exp-year" required name="CardExpYear">
                                             <option value="">Choose...</option>
                                             <option value="2024" label="2024">2024</option>
                                             <option value="2025" label="2025">2025</option>

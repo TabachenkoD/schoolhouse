@@ -8,6 +8,10 @@ if (window.innerWidth <= 768) {
     document.body.classList.add('_pc');
 }
 
+if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    fetchMainPageData();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     /* Header */
     const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
@@ -57,9 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* index.html */
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    /* if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
         fetchMainPageData();
-    }
+    } */
 
     /* classes */
     var carouselInner = document.getElementById('carousel-inner');
