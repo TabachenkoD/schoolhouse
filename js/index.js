@@ -869,9 +869,24 @@ async function fetchExhibits() {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        displayExhibits(data);
+        /* displayExhibits(data); */
+
+        const test = JSON.stringify(data)
+        const container = document.getElementById('exhibits-content');
+        container.innerHTML = '';
+        const div = document.createElement('div');
+        div.innerHTML = `<a href="calendar.html">${test}</a>`;
+        container.appendChild(div);
     } catch (error) {
-        displayExhibits([]);
+        /* displayExhibits([]);
+         */
+
+        /* const test = JSON.stringify(data) */
+        const container = document.getElementById('exhibits-content');
+        container.innerHTML = '';
+        const div = document.createElement('div');
+        div.innerHTML = `<a href="calendar.html">${error}</a>`;
+        container.appendChild(div);
     } finally {
         showSkeleton(false, 'exhibits-content', 'skeleton-exhibits-item');
     }
@@ -889,12 +904,6 @@ function displayEvents(data) {
     const container = document.getElementById('classes-content');
     container.innerHTML = '';
 
-    const div = document.createElement('div');
-    div.classList.add('events-item');
-    data.forEach(item => {
-        div.innerHTML = `<span>${item.Title}</span>`;
-    })
-    container.appendChild(div);
     if (data.length > 0) {
         data.forEach(item => {
             const div = document.createElement('div');
@@ -903,9 +912,8 @@ function displayEvents(data) {
             container.appendChild(div);
         });
     } else {
-        
         const div = document.createElement('div');
-        div.innerHTML = `<p>No classes or events available now</p><span>${data}</span>`;
+        div.innerHTML = `<p>No classes or events available now</p>`;
         container.appendChild(div);
     }
 }
