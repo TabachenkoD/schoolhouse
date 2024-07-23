@@ -903,9 +903,9 @@ function displayEvents(data) {
             container.appendChild(div);
         });
     } else {
-        console.log(data)
+        
         const div = document.createElement('div');
-        div.innerHTML = `<p>No classes or events available now</p>`;
+        div.innerHTML = `<p>No classes or events available now</p><span>${data}</span>`;
         container.appendChild(div);
     }
 }
