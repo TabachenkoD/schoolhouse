@@ -2723,6 +2723,13 @@ main p {
   max-width: 400px;
   text-align: left;
 }
+.general-admission .msg-red {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #dc3545;
+  color: #FBFDFB;
+  border-radius: 8px;
+}
 
 footer {
   background-color: #008CD2;

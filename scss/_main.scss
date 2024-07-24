@@ -2228,4 +2228,12 @@ main {
             text-align: left;
         }
     }
+
+    .msg-red {
+        margin-top: 20px;
+        padding: 10px 15px;
+        background-color: #dc3545;
+        color: $white;
+        border-radius: 8px;
+    }
 }

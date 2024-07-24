@@ -530,6 +530,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const secondStep = document.getElementById('general-admission-second-step');
         const thirdStep = document.getElementById('general-admission-third-step');
         const formGeneralAdmission2 = document.getElementById('general-admission-form-2');
+        const backBtnStep2 = document.getElementById('back-step-2');
+        const backBtnStep3 = document.getElementById('back-step-3');
 
         formGeneralAdmission1.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -563,12 +565,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     const formData = new FormData(formGeneralAdmission1);
-                    /* for (let [key, value] of formData.entries()) {
-                        console.log(key, value);
-                    } */
-                    /* formData.forEach((value, key) => { */
+
                     console.log(formData, "memberSubmitBtn")
-                    /* }); */
                 } else {
                     formGeneralAdmission1.classList.add('was-validated');
                 }
@@ -594,10 +592,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     formGeneralAdmission2.querySelector('#billing-code-other').value = formGeneralAdmission1.querySelector('#billing-code-other').value;
                     formGeneralAdmission2.querySelector('#billing-code').value = formGeneralAdmission1.querySelector('#billing-code').value;
 
-
+                    updateBillingFields(formGeneralAdmission1.querySelector('#country'));
                     updateBillingFields(formGeneralAdmission2.querySelector('#billing-country'));
 
-                    formGeneralAdmission2.querySelectorAll('input, textarea, select').forEach(field => {
+                    formGeneralAdmission2.querySelectorAll('#billing-firstName, #billing-lastName, #billing-email, #billing-address-1, #billing-country, #billing-city, #billing-state, #billing-zip, #billing-province, #billing-code, #billing-country-other, #billing-region-other, #billing-code-other').forEach(field => {
                         if (field.value !== '' && field.id !== 'address-same-personal') {
                             field.setAttribute('readonly', true);
                             field.classList.add('input-disabled');
@@ -625,6 +623,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (formGeneralAdmission2.checkValidity()) {
                     const formData1 = new FormData(formGeneralAdmission1);
                     const formData2 = new FormData(formGeneralAdmission2);
+
+                    formData2.set('BillingCountry', formGeneralAdmission2.querySelector('#billing-country').value);
+                    formData2.set('BillingState', formGeneralAdmission2.querySelector('#billing-state').value);
+                    formData2.set('BillingProvince', formGeneralAdmission2.querySelector('#billing-province').value)
+
                     const selectedTime = document.querySelector('input[name="scheduleTime"]:checked').value;
 
                     const options = {
@@ -722,10 +725,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     const jsonString = JSON.stringify(jsonObject);
                     console.log(jsonObject)
 
-                    /* submitButton.disabled = true;
-                    resetButton.disabled = true;
- */
-                    fetch(`${SERVER_URL}/reservations/visitor `, {
+                    finalGeneralAdmSbt.disabled = true;
+                    backBtnStep3.disabled = true;
+
+                    fetch(`${SERVER_URL}/reservations/visitor`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -749,14 +752,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                         .catch((error) => {
                             console.log(error)
-                           /*  msgElem.classList.remove('hidden');
-                            msgElem.classList.add('msg-red');
-                            msgElem.innerHTML = `<span>${error}</span>`; */
+                            const msgElem = document.getElementById('general-server-messege');
+                            msgElem.classList.remove('hidden');
+                            /* msgElem.classList.add('msg-red'); */
+                            msgElem.innerHTML = `<span>${error}</span>`;
                         })
-                        /* .finally(() => {
-                            submitButton.disabled = false;
-                            resetButton.disabled = false;
-                        }); */
+                        .finally(() => {
+                            finalGeneralAdmSbt.disabled = false;
+                            backBtnStep3.disabled = false;
+                        });
 
                 } else {
                     formGeneralAdmission2.classList.add('was-validated');
@@ -829,7 +833,6 @@ document.addEventListener("DOMContentLoaded", function () {
             attachInputListeners(familyPremiumSection);
         }
 
-        const backBtnStep2 = document.getElementById('back-step-2');
         if (backBtnStep2) {
             backBtnStep2.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -838,7 +841,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        const backBtnStep3 = document.getElementById('back-step-3');
         if (backBtnStep3) {
             backBtnStep3.addEventListener('click', function (event) {
                 event.preventDefault();
