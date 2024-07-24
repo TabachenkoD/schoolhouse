@@ -263,6 +263,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const form = document.getElementById('donation-form');
+        const submitButton = document.querySelector('.btn-submit');
+        const resetButton = document.querySelector('.btn-reset');
+        const msgElem = document.getElementById('donate-server-messege');
+
+        resetButton.addEventListener('click', () => msgElem.classList.add('hidden'));
+
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -270,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const formData = new FormData(event.target);
                 const jsonObject = {
                     Donor: {
-                        DonorId: 0,
+                        /*  DonorId: 0, */
                         FirstName: formData.get('FirstName'),
                         LastName: formData.get('LastName'),
                         Phone: formData.get('Phone'),
@@ -305,7 +311,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 const jsonString = JSON.stringify(jsonObject);
-                console.log(jsonObject)
+
+                submitButton.disabled = true;
+                resetButton.disabled = true;
 
                 fetch(`${SERVER_URL}/donations`, {
                     method: 'POST',
@@ -321,21 +329,26 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         return response.json();
                     })
-                    .then(data => { form.reset(); })
-                    .catch((error) => { console.error('Error:', error); });
+                    .then(() => {
+                        form.reset();
+                        form.classList.remove('was-validated');
+                        msgElem.classList.remove('hidden');
+                        msgElem.classList.add('msg-green');
+                        msgElem.innerHTML = `<span>Donation successfully created</span>`;
+                    })
+                    .catch((error) => {
+                        msgElem.classList.remove('hidden');
+                        msgElem.classList.add('msg-red');
+                        msgElem.innerHTML = `<span>${error}</span>`;
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        resetButton.disabled = false;
+                    });
             } else {
                 form.classList.add('was-validated');
             }
         });
-        /* showErrorToast("TEST");
-        function showErrorToast(message) {
-            const toastElement = document.getElementById('error-toast');
-            const toastBody = document.getElementById('error-toast-body');
-            toastBody.textContent = message;
-    
-            const toast = new bootstrap.Toast(toastElement);
-            toast.show();
-        } */
     }
 
     /* exhibits page */
@@ -358,12 +371,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* about page */
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    const popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
-
     /* general admission */
     const datepickerElement = document.getElementById('datepicker-general-admission');
     const timepickerElement = document.getElementById('timepicker-general-admission');
@@ -374,6 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const changeTimeLink = document.getElementById('change-time-link');
         const timepickerInput = document.getElementById('selected-time-display');
         const timeRadios = document.querySelectorAll('input[name="scheduleTime"]');
+        var sheduleDateObj;
 
         function getNearestWorkingDate(date) {
             const day = date.getDay();
@@ -396,6 +404,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const defaultDate = getDefaultDate();
+        sheduleDateObj = defaultDate;
 
         datepickerInput.innerHTML = defaultDate ? defaultDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
         const datepicker = new tempusDominus.TempusDominus(datepickerElement, {
@@ -423,6 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         datepicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
             const selectedDate = e.date;
+            sheduleDateObj = e.date;
             datepickerInput.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
         });
 
@@ -477,6 +487,8 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleBtn[0].addEventListener('click', (e) => {
             e.preventDefault();
             const form = document.getElementById('quantity-person-form');
+            const firstStep = document.getElementById('general-admission-first-step');
+            const secondStep = document.getElementById('general-admission-second-step');
 
             const quantityInputs = document.querySelectorAll('.quantity');
             function checkInputs() {
@@ -503,46 +515,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             checkInputs();
 
-            if (form) {
-                const firstStep = document.getElementById('general-admission-first-step');
-                const secondStep = document.getElementById('general-admission-second-step');
-
-                if (form.checkValidity()) {
-                    firstStep.classList.add('hidden');
-                    secondStep.classList.remove('hidden');
-
-                    const selectedDate = document.getElementById('selected-date-display').innerText;
-                    const selectedTime = document.querySelector('input[name="scheduleTime"]:checked').value;
-
-                    const quantities = Array.from(document.querySelectorAll('.quantity')).reduce((acc, input) => {
-                        if (input.value) {
-                            acc[input.name] = input.value;
-                        }
-                        return acc;
-                    }, {});
-
-                    const formData = {
-                        date: selectedDate,
-                        time: selectedTime,
-                        quantities: quantities
-                    };
-
-                    console.log(formData);
-                } else {
-                    form.classList.add('was-validated');
-                }
-            } else {
-                const firstStep = document.getElementById('general-admission-first-step');
-                const secondStep = document.getElementById('general-admission-second-step');
-
-                firstStep.classList.add('hidden');
-                secondStep.classList.remove('hidden');
+            if (form && !form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
             }
 
-
+            firstStep.classList.add('hidden');
+            secondStep.classList.remove('hidden');
         });
 
         const nextBtn = document.querySelector('.continue-to-payment-btn');
+        const memberSubmitBtn = document.querySelector('.continue-btn-member');
         const formGeneralAdmission1 = document.getElementById('general-admission-form-1');
         const secondStep = document.getElementById('general-admission-second-step');
         const thirdStep = document.getElementById('general-admission-third-step');
@@ -552,27 +535,45 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
         });
 
-        nextBtn.addEventListener('click', function (event) {
-            event.preventDefault();
-            if (formGeneralAdmission1.checkValidity()) {
-                secondStep.classList.add('hidden');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (formGeneralAdmission1.checkValidity()) {
+                    secondStep.classList.add('hidden');
 
-                if (thirdStep) {
-                    thirdStep.classList.remove('hidden');
+                    if (thirdStep) {
+                        thirdStep.classList.remove('hidden');
+                    }
+
+                } else {
+                    formGeneralAdmission1.classList.add('was-validated');
                 }
+            });
+        }
 
-                const formData = new FormData(formGeneralAdmission1);
-                /* for (let [key, value] of formData.entries()) {
-                    console.log(key, value);
-                } */
-                /* formData.forEach((value, key) => { */
-                console.log(formData)
-                /* }); */
-            } else {
-                formGeneralAdmission1.classList.add('was-validated');
-            }
-        });
+        /* member admission submit */
+        if (memberSubmitBtn) {
+            memberSubmitBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (formGeneralAdmission1.checkValidity()) {
+                    secondStep.classList.add('hidden');
 
+                    if (thirdStep) {
+                        thirdStep.classList.remove('hidden');
+                    }
+
+                    const formData = new FormData(formGeneralAdmission1);
+                    /* for (let [key, value] of formData.entries()) {
+                        console.log(key, value);
+                    } */
+                    /* formData.forEach((value, key) => { */
+                    console.log(formData, "memberSubmitBtn")
+                    /* }); */
+                } else {
+                    formGeneralAdmission1.classList.add('was-validated');
+                }
+            });
+        }
 
         const checkbox = document.getElementById('address-same-personal');
         if (checkbox) {
@@ -622,8 +623,141 @@ document.addEventListener("DOMContentLoaded", function () {
             finalGeneralAdmSbt.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (formGeneralAdmission2.checkValidity()) {
-                    const formData = new FormData(formGeneralAdmission2);
-                    console.log(formData)
+                    const formData1 = new FormData(formGeneralAdmission1);
+                    const formData2 = new FormData(formGeneralAdmission2);
+                    const selectedTime = document.querySelector('input[name="scheduleTime"]:checked').value;
+
+                    const options = {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                    };
+                    const formattedDate = sheduleDateObj.toLocaleString('en-US', options);
+
+                    function collectTickets() {
+                        const tickets = [];
+                        const rows = document.querySelectorAll('.table-custom tbody tr');
+
+                        rows.forEach(row => {
+                            const ticketType = row.querySelector('th').innerText.trim();
+                            const quantityInput = row.querySelector('input.quantity');
+                            const ticketQuantity = parseInt(quantityInput.value, 10) || 0;
+                            const ticketPriceText = row.querySelector('.price-column').innerText.trim();
+                            const ticketPrice = parseFloat(ticketPriceText.replace('$', '')) || 0.00;
+
+                            if (ticketQuantity > 0) {
+                                tickets.push({
+                                    "TicketType": ticketType,
+                                    "TicketQuantity": ticketQuantity,
+                                    "TicketPrice": ticketPrice
+                                });
+                            }
+                        });
+
+                        return tickets;
+                    }
+
+                    const ticketsArray = collectTickets();
+
+                    const jsonObject = {
+                        ScheduleDate: formattedDate,
+                        ScheduleTime: selectedTime,
+                        Tickets: ticketsArray,
+                        VisitorInfo: {
+                            FirstName: formData1.get('FirstName'),
+                            LastName: formData1.get('LastName'),
+                            Phone: formData1.get('Phone'),
+                            Email: formData1.get('Email'),
+                            Address1: formData1.get('Address'),
+                            City: formData1.get('City'),
+                        },
+                        VisitorBillingInfo: {
+                            FirstName: formData2.get('FirstName'),
+                            LastName: formData2.get('LastName'),
+                            Phone: formData2.get('Phone'),
+                            Email: formData2.get('Email'),
+                            Company: formData2.get('Company'),
+                            Address1: formData2.get('Address1'),
+                            Address2: formData2.get('Address2'),
+                            City: formData2.get('City'),
+                        },
+                        VisitorPaymentInfo: {
+                            CardType: formData2.get('card-type'),
+                            CardNumber: formData2.get('CardNumber'),
+                            CardExpMonth: formData2.get('CardExpMonth'),
+                            CardExpYear: parseInt(formData2.get('CardExpYear')),
+                            CardCvv: parseInt(formData2.get('CardVerificationNumber')),
+                        }
+                    };
+
+                    const selectedCountry = formData1.get('BillingCountry');
+                    const selectBillingCountry = formData2.get('BillingCountry');
+                    jsonObject.VisitorInfo.Country = selectedCountry;
+                    jsonObject.VisitorBillingInfo.Country = selectBillingCountry;
+
+                    if (selectedCountry === 'United States') {
+                        jsonObject.VisitorInfo.State = formData1.get('BillingState');
+                        jsonObject.VisitorInfo.Zip = formData1.get('BillingZip');
+                    } else if (selectedCountry === 'Canada') {
+                        jsonObject.VisitorInfo.BillingProvince = formData1.get('BillingProvince');
+                        jsonObject.VisitorInfo.BillingPostalCode = formData1.get('BillingPostalCode');
+                    } else if (selectedCountry === 'Other') {
+                        jsonObject.VisitorInfo.BillingCountryOther = formData1.get('BillingCountryOther');
+                        jsonObject.VisitorInfo.BillingRegion = formData1.get('BillingRegion');
+                        jsonObject.VisitorInfo.BillingPostalCodeOther = formData1.get('BillingPostalCodeOther');
+                    }
+
+                    if (selectBillingCountry === 'United States') {
+                        jsonObject.VisitorBillingInfo.State = formData2.get('BillingState');
+                        jsonObject.VisitorBillingInfo.Zip = formData2.get('BillingZip');
+                    } else if (selectBillingCountry === 'Canada') {
+                        jsonObject.VisitorBillingInfo.BillingProvince = formData2.get('BillingProvince');
+                        jsonObject.VisitorBillingInfo.BillingPostalCode = formData2.get('BillingPostalCode');
+                    } else if (selectBillingCountry === 'Other') {
+                        jsonObject.VisitorBillingInfo.BillingCountryOther = formData2.get('BillingCountryOther');
+                        jsonObject.VisitorBillingInfo.BillingRegion = formData2.get('BillingRegion');
+                        jsonObject.VisitorBillingInfo.BillingPostalCodeOther = formData2.get('BillingPostalCodeOther');
+                    }
+
+                    const jsonString = JSON.stringify(jsonObject);
+                    console.log(jsonObject)
+
+                    /* submitButton.disabled = true;
+                    resetButton.disabled = true;
+ */
+                    fetch(`${SERVER_URL}/reservations/visitor `, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: jsonString
+                    })
+                        .then(async response => {
+                            if (!response.ok) {
+                                const error = await response.json();
+                                throw new Error(error.Message);
+                            }
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log(data)
+                            /* form.reset();
+                            form.classList.remove('was-validated');
+                            msgElem.classList.remove('hidden');
+                            msgElem.classList.add('msg-green');
+                            msgElem.innerHTML = `<span>Donation successfully created</span>`; */
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                           /*  msgElem.classList.remove('hidden');
+                            msgElem.classList.add('msg-red');
+                            msgElem.innerHTML = `<span>${error}</span>`; */
+                        })
+                        /* .finally(() => {
+                            submitButton.disabled = false;
+                            resetButton.disabled = false;
+                        }); */
+
                 } else {
                     formGeneralAdmission2.classList.add('was-validated');
                 }
@@ -738,24 +872,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 var modal = new bootstrap.Modal(document.getElementById('eventModal'));
                 modal.show();
 
-                /* fetch('https://example.com/api/event', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: eventObj.id })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    }); */
-
                 document.getElementById('amount-of-children').addEventListener('change', function () {
                     var container = document.getElementById('children-details-container');
-                    container.innerHTML = ''; // Clear previous children details
+                    container.innerHTML = '';
 
                     var numberOfChildren = parseInt(this.value);
 
