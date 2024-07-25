@@ -219,30 +219,6 @@
             </div>
 
             <div id='calendar'></div>
-            <!-- <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eventModalLabel" style="color: #008CD2;">Class Details</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div><span><b>Class: </b></span> <span id="eventTitle" style="color: #ED7A1F;"></span></div>
-                            <div><span><b>Date: </b></span> <span id="eventDate"></span></div>
-                            <div><span><b>Category: </b></span> <span id="eventCategory"></span></div>
-                            <div><span><b>Recurs: </b></span> <span>will come from server</span></div>
-
-                            <p id="eventDescription"></p>
-                            All data for Classes must come from the server. This is only for the test<br>
-                            I will also add calendar events only after it is implemented on the server
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="registerButton">Register</button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
@@ -321,17 +297,17 @@
                                             <option value="6">6</option>
                                         </select>
                                     </div>
-                                    <div class="d-flex flex-column ">
-                                        <label for="purchasing-daily-visitor-pass" class="form-label">Will you
-                                            be purchasing a daily visitor pass?
-                                        </label>
-                                        <select class="form-select" id="purchasing-daily-visitor-pass">
-                                            <option value="">Choose...</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                        </select>
-                                    </div>
                                     <div id="children-details-container" class="d-flex flex-column gap-3"></div>
+                                    <div class="counter-before-cart" id="counter-before-cart">
+                                        <div>
+                                            <div>With paid admission</div>
+                                            <div></div>
+                                        </div>
+                                        <div>
+                                            <div>Regular</div>
+                                            <div></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

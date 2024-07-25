@@ -775,7 +775,15 @@ main p {
   margin-bottom: 0;
 }
 
-.hr-divider {
+.hr-divider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hr-divider-container .hr-divider {
+  display: block;
+  height: 1px;
+  background-color: rgba(222, 226, 230, 0.8745098039);
   color: rgba(222, 226, 230, 0.8745098039);
   width: calc(100vw - 25%);
 }
@@ -1538,7 +1546,7 @@ main p {
 .calendar .color-picker {
   color: white;
   border-radius: 5px;
-  padding: 8px 14px;
+  padding: 5px 10px;
 }
 .calendar .color-picker-container {
   display: flex;
@@ -2761,6 +2769,20 @@ main p {
   color: #FBFDFB;
   border-radius: 5px;
   padding: 5px 10px;
+}
+
+#registerModal .register-form-inpits {
+  display: flex;
+  gap: 20px;
+}
+@media (max-width: 500px) {
+  #registerModal .register-form-inpits {
+    display: flex;
+    flex-direction: column;
+  }
+}
+#registerModal #amount-of-children {
+  max-width: 352px;
 }
 
 footer {

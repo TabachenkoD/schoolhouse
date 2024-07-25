@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchMainPageData();
     }
 
+
     /* classes */
     var carouselInner = document.getElementById('carousel-inner');
 
@@ -696,35 +697,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const selectedCountry = formData1.get('BillingCountry');
                     const selectBillingCountry = formData2.get('BillingCountry');
-                    jsonObject.VisitorInfo.Country = selectedCountry;
-                    jsonObject.VisitorBillingInfo.Country = selectBillingCountry;
+
 
                     if (selectedCountry === 'United States') {
+                        jsonObject.VisitorInfo.Country = selectedCountry;
                         jsonObject.VisitorInfo.State = formData1.get('BillingState');
                         jsonObject.VisitorInfo.Zip = formData1.get('BillingZip');
                     } else if (selectedCountry === 'Canada') {
-                        jsonObject.VisitorInfo.BillingProvince = formData1.get('BillingProvince');
-                        jsonObject.VisitorInfo.BillingPostalCode = formData1.get('BillingPostalCode');
+                        jsonObject.VisitorInfo.Country = selectedCountry;
+                        jsonObject.VisitorInfo.State = formData1.get('BillingProvince');
+                        jsonObject.VisitorInfo.Zip = formData1.get('BillingPostalCode');
                     } else if (selectedCountry === 'Other') {
-                        jsonObject.VisitorInfo.BillingCountryOther = formData1.get('BillingCountryOther');
-                        jsonObject.VisitorInfo.BillingRegion = formData1.get('BillingRegion');
-                        jsonObject.VisitorInfo.BillingPostalCodeOther = formData1.get('BillingPostalCodeOther');
+                        jsonObject.VisitorInfo.Country = formData1.get('BillingCountryOther');
+                        jsonObject.VisitorInfo.State = formData1.get('BillingRegion');
+                        jsonObject.VisitorInfo.Zip = formData1.get('BillingPostalCodeOther');
                     }
 
                     if (selectBillingCountry === 'United States') {
+                        jsonObject.VisitorBillingInfo.Country = selectBillingCountry;
                         jsonObject.VisitorBillingInfo.State = formData2.get('BillingState');
                         jsonObject.VisitorBillingInfo.Zip = formData2.get('BillingZip');
                     } else if (selectBillingCountry === 'Canada') {
-                        jsonObject.VisitorBillingInfo.BillingProvince = formData2.get('BillingProvince');
-                        jsonObject.VisitorBillingInfo.BillingPostalCode = formData2.get('BillingPostalCode');
+                        jsonObject.VisitorBillingInfo.Country = selectBillingCountry;
+                        jsonObject.VisitorBillingInfo.State = formData2.get('BillingProvince');
+                        jsonObject.VisitorBillingInfo.Zip = formData2.get('BillingPostalCode');
                     } else if (selectBillingCountry === 'Other') {
-                        jsonObject.VisitorBillingInfo.BillingCountryOther = formData2.get('BillingCountryOther');
-                        jsonObject.VisitorBillingInfo.BillingRegion = formData2.get('BillingRegion');
-                        jsonObject.VisitorBillingInfo.BillingPostalCodeOther = formData2.get('BillingPostalCodeOther');
+                        jsonObject.VisitorBillingInfo.Country = formData2.get('BillingCountryOther');
+                        jsonObject.VisitorBillingInfo.State = formData2.get('BillingRegion');
+                        jsonObject.VisitorBillingInfo.Zip = formData2.get('BillingPostalCodeOther');
                     }
 
                     const jsonString = JSON.stringify(jsonObject);
-                    console.log(jsonObject)
 
                     finalGeneralAdmSbt.disabled = true;
                     backBtnStep3.disabled = true;
@@ -1085,18 +1088,167 @@ function displayEvents(data) {
     const container = document.getElementById('classes-content');
     container.innerHTML = '';
 
+    const maxEvents = 7;
+    let count = 0;
+
     if (data.length > 0) {
         data.forEach(item => {
-            const div = document.createElement('div');
-            div.classList.add('events-item');
-            div.innerHTML = `<a href="calendar.html"><span>${item.Title}</span><p>${item.Description}</p></a>`;
-            container.appendChild(div);
+            if (count < maxEvents) {
+                const div = document.createElement('div');
+                div.classList.add('events-item');
+                div.innerHTML = `<a href="#" data-id="${item.ClassEventId}"><span>${item.Title}</span><p>${item.Description}</p></a>`;
+                container.appendChild(div);
+
+                div.querySelector('a').addEventListener('click', async (event) => {
+                    event.preventDefault();
+                    const eventId = event.currentTarget.getAttribute('data-id');
+                    const eventDetails = await fetchEventDetails(eventId);
+
+                    if (eventDetails) {
+                        document.getElementById('eventTitle').textContent = eventDetails.Title;
+                        document.getElementById('eventCategory').textContent = eventDetails.Category;
+                        document.getElementById('eventDescription').textContent = eventDetails.Description;
+                        document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
+                        if (eventDetails.RequirePayment) document.getElementById('requirePayment').textContent = 'Free with paid admission.'
+                        const startDate = new Date(eventDetails.EventStartDate);
+                        const endDate = new Date(eventDetails.EventEndDate);
+                        const recurrencyDays = eventDetails.EventRecurrency.split(',').map(day => day.trim());
+
+                        const datePicker = new tempusDominus.TempusDominus(document.getElementById('eventDatePicker'), {
+                            display: {
+                                components: {
+                                    decades: false,
+                                    year: true,
+                                    month: true,
+                                    date: true,
+                                    hours: false,
+                                    minutes: false,
+                                    seconds: false
+                                },
+                                buttons: {
+                                    today: false,
+                                    clear: false,
+                                    close: false
+                                }
+                            },
+                            restrictions: {
+                                minDate: startDate,
+                                maxDate: endDate,
+                                daysOfWeekDisabled: [0, 1, 2, 3, 4, 5, 6].filter(day => !recurrencyDays.includes(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]))
+                            },
+                            localization: {
+                                locale: 'en',
+                                format: 'MM/dd/yyyy'
+                            },
+                        });
+
+                        const selectedDateSpan = document.getElementById('selected-date');
+                        datePicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
+                            const selectedDate = e.date;
+                            selectedDateSpan.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
+                            selectedDateSpan.style.color = '';
+                        });
+
+                        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+                        eventModal.show();
+
+                        document.getElementById('eventModal').addEventListener('hidden.bs.modal', () => {
+                            const selectedDateSpan = document.getElementById('selected-date');
+                            selectedDateSpan.textContent = 'Choose a date...';
+                            selectedDateSpan.style.color = '';
+                        });
+                    }
+                });
+
+                count++;
+            }
         });
     } else {
         const div = document.createElement('div');
         div.innerHTML = `<p>No classes or events available now</p>`;
         container.appendChild(div);
     }
+
+    document.getElementById('registerButton').addEventListener('click', function (event) {
+        const selectedDateSpan = document.getElementById('selected-date');
+        const selectedDateText = selectedDateSpan.textContent.trim();
+
+        if (selectedDateText === 'Choose a date...') {
+            event.preventDefault();
+            selectedDateSpan.style.color = 'red';
+        } else {
+            selectedDateSpan.style.color = '';
+
+            const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+
+            eventModal.hide();
+            registerModal.show();
+        }
+    });
+
+    document.getElementById('amount-of-children').addEventListener('change', function () {
+        var container = document.getElementById('children-details-container');
+        container.innerHTML = '';
+
+        var numberOfChildren = parseInt(this.value);
+
+        for (var i = 1; i <= numberOfChildren; i++) {
+            var childDetails = document.createElement('div');
+            childDetails.className = 'children-details register-form-inpits';
+
+            var childNameDiv = document.createElement('div');
+            childNameDiv.className = '';
+            var childNameLabel = document.createElement('label');
+            childNameLabel.className = 'form-label register-form-inpits';
+            childNameLabel.setAttribute('for', 'childName' + i);
+            childNameLabel.textContent = 'Child name';
+            var childNameInput = document.createElement('input');
+            childNameInput.type = 'text';
+            childNameInput.className = 'form-control';
+            childNameInput.id = 'childName' + i;
+            childNameInput.setAttribute('name', 'childName' + i);
+            childNameInput.required = true;
+            childNameDiv.appendChild(childNameLabel);
+            childNameDiv.appendChild(childNameInput);
+
+            var childAgeDiv = document.createElement('div');
+            childAgeDiv.className = '';
+            var childAgeLabel = document.createElement('label');
+            childAgeLabel.className = 'form-label register-form-inpits';
+            childAgeLabel.setAttribute('for', 'childAge' + i);
+            childAgeLabel.textContent = 'Child Age';
+            var childAgeInput = document.createElement('input');
+            childAgeInput.type = 'text';
+            childAgeInput.className = 'form-control';
+            childAgeInput.id = 'childAge' + i;
+            childAgeInput.setAttribute('name', 'childAge' + i);
+            childAgeInput.required = true;
+            childAgeDiv.appendChild(childAgeLabel);
+            childAgeDiv.appendChild(childAgeInput);
+
+            childDetails.appendChild(childNameDiv);
+            childDetails.appendChild(childAgeDiv);
+            container.appendChild(childDetails);
+        }
+    });
+
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    addToCartBtn.addEventListener('click', event => {
+        const registerToClass = document.getElementById('register-to-classes-form');
+        if (!registerToClass.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            const formData = new FormData(registerToClass);
+            const formValues = {};
+            formData.forEach((value, key) => {
+                formValues[key] = value;
+            });
+            console.log(formValues);
+        }
+        registerToClass.classList.add('was-validated');
+    }, false);
 }
 
 function displayExhibits(data) {
@@ -1117,5 +1269,19 @@ function displayExhibits(data) {
         const div = document.createElement('div');
         div.innerHTML = `<p>No exhibits available now</p>`;
         container.appendChild(div);
+    }
+}
+
+async function fetchEventDetails(eventId) {
+    try {
+        const response = await fetch(`${SERVER_URL}/events/${eventId}/details`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching event details:', error);
+        return null;
     }
 }

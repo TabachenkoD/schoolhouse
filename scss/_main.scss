@@ -29,10 +29,20 @@ main {
     margin-bottom: 0;
 }
 
-.hr-divider {
-    color: #dee2e6df;
-    width: calc(100vw - 25%);
+.hr-divider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .hr-divider {
+        display: block;
+        height: 1px;
+        background-color: #dee2e6df;
+        color: #dee2e6df;
+        width: calc(100vw - 25%);
+    }
 }
+
 
 .fullscreen-slider .slick-slide {
     height: 100vh;
@@ -905,7 +915,7 @@ main {
     .color-picker {
         color: white;
         border-radius: 5px;
-        padding: 8px 14px;
+        padding: 5px 10px;
     }
 
     .color-picker-container {
@@ -940,7 +950,7 @@ main {
         margin-bottom: 3px;
     }
 
-    
+
 
     .modal-body {
         display: flex;
@@ -2232,5 +2242,24 @@ main {
             border-radius: 5px;
             padding: 5px 10px;
         }
+    }
+}
+
+#registerModal {
+    .register-form-inpits {
+        display: flex;
+        gap: 20px;
+    }
+
+    @media (max-width: 500px) {
+        .register-form-inpits {
+            display: flex;
+            flex-direction: column;
+        }
+
+    }
+
+    #amount-of-children {
+        max-width: 352px;
     }
 }
