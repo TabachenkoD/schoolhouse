@@ -250,7 +250,7 @@ main {
                         transition: color 0.3s ease-in-out;
                     }
 
-                    
+
 
                     &:hover {
                         img {
@@ -940,41 +940,7 @@ main {
         margin-bottom: 3px;
     }
 
-    .fc-event.Infants-and-Toddlers {
-        background-color: #00BFFF;
-        /* SkyBlue */
-        border-color: #00BFFF;
-    }
-
-    .fc-event.Ages-2-5yrs {
-        background-color: #FFA500;
-        /* Orange */
-        border-color: #FFA500;
-    }
-
-    .fc-event.Ages-3-5yrs {
-        background-color: #800080;
-        /* Purple */
-        border-color: #800080;
-    }
-
-    .fc-event.Ages-3-7-Years {
-        background-color: #FF69B4;
-        /* HotPink */
-        border-color: #FF69B4;
-    }
-
-    .fc-event.Grade-2 {
-        background-color: #f2de0a;
-        /* Yellow */
-        border-color: #f2de0a;
-    }
-
-    .fc-event.All-Ages {
-        background-color: #32CD32;
-        /* LimeGreen */
-        border-color: #32CD32;
-    }
+    
 
     .modal-body {
         display: flex;
@@ -2235,5 +2201,36 @@ main {
         background-color: #dc3545;
         color: $white;
         border-radius: 8px;
+    }
+
+    .general-admission-fourth-step {
+        margin-top: 30px;
+
+        .selected-date {
+            font-size: 30px;
+            color: $dark-blue;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .general-thanks-message {
+            padding: 8px 15px;
+            background-color: #e6ffcc;
+            border-radius: 8px;
+            border: 1px solid #8dc652;
+            margin-bottom: 20px;
+
+            svg {
+                margin-right: 5px;
+            }
+        }
+
+        .Infants-and-Toddlers {
+            color: $white;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
     }
 }

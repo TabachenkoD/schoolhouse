@@ -408,6 +408,42 @@ a {
     padding: 0 4rem;
   }
 }
+.fc-event.Infants-and-Toddlers {
+  background-color: #00BFFF;
+  /* SkyBlue */
+  border-color: #00BFFF;
+}
+
+.fc-event.Ages-2-5yrs {
+  background-color: #FFA500;
+  /* Orange */
+  border-color: #FFA500;
+}
+
+.fc-event.Ages-3-5yrs {
+  background-color: #800080;
+  /* Purple */
+  border-color: #800080;
+}
+
+.fc-event.Ages-3-7-Years {
+  background-color: #FF69B4;
+  /* HotPink */
+  border-color: #FF69B4;
+}
+
+.fc-event.Grade-2 {
+  background-color: #f2de0a;
+  /* Yellow */
+  border-color: #f2de0a;
+}
+
+.fc-event.All-Ages {
+  background-color: #32CD32;
+  /* LimeGreen */
+  border-color: #32CD32;
+}
+
 header {
   width: 100%;
   position: fixed;
@@ -1528,36 +1564,6 @@ main p {
 .calendar .fc-event {
   cursor: pointer;
   margin-bottom: 3px;
-}
-.calendar .fc-event.Infants-and-Toddlers {
-  background-color: #00BFFF;
-  /* SkyBlue */
-  border-color: #00BFFF;
-}
-.calendar .fc-event.Ages-2-5yrs {
-  background-color: #FFA500;
-  /* Orange */
-  border-color: #FFA500;
-}
-.calendar .fc-event.Ages-3-5yrs {
-  background-color: #800080;
-  /* Purple */
-  border-color: #800080;
-}
-.calendar .fc-event.Ages-3-7-Years {
-  background-color: #FF69B4;
-  /* HotPink */
-  border-color: #FF69B4;
-}
-.calendar .fc-event.Grade-2 {
-  background-color: #f2de0a;
-  /* Yellow */
-  border-color: #f2de0a;
-}
-.calendar .fc-event.All-Ages {
-  background-color: #32CD32;
-  /* LimeGreen */
-  border-color: #32CD32;
 }
 .calendar .modal-body {
   display: flex;
@@ -2729,6 +2735,32 @@ main p {
   background-color: #dc3545;
   color: #FBFDFB;
   border-radius: 8px;
+}
+.general-admission .general-admission-fourth-step {
+  margin-top: 30px;
+}
+.general-admission .general-admission-fourth-step .selected-date {
+  font-size: 30px;
+  color: #008CD2;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.general-admission .general-admission-fourth-step .general-thanks-message {
+  padding: 8px 15px;
+  background-color: #e6ffcc;
+  border-radius: 8px;
+  border: 1px solid #8dc652;
+  margin-bottom: 20px;
+}
+.general-admission .general-admission-fourth-step .general-thanks-message svg {
+  margin-right: 5px;
+}
+.general-admission .general-admission-fourth-step .Infants-and-Toddlers {
+  color: #FBFDFB;
+  border-radius: 5px;
+  padding: 5px 10px;
 }
 
 footer {

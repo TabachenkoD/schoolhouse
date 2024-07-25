@@ -627,6 +627,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     formData2.set('BillingCountry', formGeneralAdmission2.querySelector('#billing-country').value);
                     formData2.set('BillingState', formGeneralAdmission2.querySelector('#billing-state').value);
                     formData2.set('BillingProvince', formGeneralAdmission2.querySelector('#billing-province').value)
+                    formData2.set('BillingRegion', formGeneralAdmission2.querySelector('#billing-region-other').value)
 
                     const selectedTime = document.querySelector('input[name="scheduleTime"]:checked').value;
 
@@ -742,19 +743,22 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                             return response.json();
                         })
-                        .then((data) => {
-                            console.log(data)
-                            /* form.reset();
-                            form.classList.remove('was-validated');
-                            msgElem.classList.remove('hidden');
-                            msgElem.classList.add('msg-green');
-                            msgElem.innerHTML = `<span>Donation successfully created</span>`; */
+                        .then(() => {
+                            const timepicker = document.querySelector('#selected-time-display').innerText;
+                            const reservedTime = document.getElementById('general-reserved-time');
+                            reservedTime.innerHTML = `${timepicker}`;
+                            const scheduledDateTime = document.getElementById('general-sheduled-time');
+                            scheduledDateTime.innerHTML = `${datepickerInput.innerText}, ${timepicker}`
+                            thirdStep.classList.add('hidden');
+                            const genAdmissionStep4 = document.getElementById('general-admission-fourth-step');
+                            genAdmissionStep4.classList.remove('hidden');
+
+                            formGeneralAdmission1.reset();
+                            formGeneralAdmission2.reset();
                         })
                         .catch((error) => {
-                            console.log(error)
                             const msgElem = document.getElementById('general-server-messege');
                             msgElem.classList.remove('hidden');
-                            /* msgElem.classList.add('msg-red'); */
                             msgElem.innerHTML = `<span>${error}</span>`;
                         })
                         .finally(() => {
