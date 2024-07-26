@@ -732,7 +732,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     finalGeneralAdmSbt.disabled = true;
                     backBtnStep3.disabled = true;
 
-                    fetch(`${SERVER_URL}/reservations/visitor`, {
+                    fetch(`${SERVER_URL}/reservations/generaladmission`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
