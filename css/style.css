@@ -2785,6 +2785,12 @@ main p {
   max-width: 352px;
 }
 
+#eventModal .fc-event {
+  color: #FBFDFB;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
 footer {
   background-color: #008CD2;
   width: 100%;

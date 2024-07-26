@@ -2263,3 +2263,11 @@ main {
         max-width: 352px;
     }
 }
+
+#eventModal {
+    .fc-event {
+        color: $white;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+}

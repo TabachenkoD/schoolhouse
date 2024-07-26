@@ -132,6 +132,23 @@
                                             </svg>
                                         </a>
                                     </div>
+                                    <div class="social-icons-mobile">
+                                        <a class="cart-icon hidden position-relative" id="cart-icon-mobile"
+                                            data-bs-toggle="offcanvas" href="#offcanvasRight" role="button"
+                                            aria-controls="offcanvasRight">
+                                            <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"
+                                                    stroke="#008CD2" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                            <span
+                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                id="cart-items-count-mobile" style="font-size: 10px;">
+                                            </span>
+                                        </a>
+                                    </div>
                                 </li>
                             </ul>
                         </nav>
@@ -140,7 +157,7 @@
                 <div class="header-btn-container">
                     <div>
                         <a href="https://www.instagram.com/schoolhouse_childrens_museum" target="_blank">
-                             <svg width="28px" height="28px" viewBox="0 0 32 32" fill="none"
+                            <svg width="28px" height="28px" viewBox="0 0 32 32" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint0_radial_87_7153)" />
                                 <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#paint1_radial_87_7153)" />
@@ -189,6 +206,19 @@
                                 </path>
                             </svg>
                         </a>
+                        <a class="cart-icon hidden position-relative" id="cart-icon" data-bs-toggle="offcanvas"
+                            href="#offcanvasRight" role="button" aria-controls="offcanvasRight">
+                            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"
+                                    stroke="#008CD2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="cart-items-count" style="font-size: 10px;">
+                            </span>
+                        </a>
                     </div>
                     <a href="rsvp.html" class="btn-buy-tickets">BUY TICKETS</a>
                 </div>
@@ -216,7 +246,7 @@
                     <span><a href="general-admission.html" class="rsvp-action-btn">GENERAL ADMISSION</a></span>
                 </div>
             </div>
-            
+
             <h4 class="rsvp-subtitles">SCHOOLHOUSE CHILDREN’S MUSEUM ADMISSION POLICY</h4>
             <p> We appreciate your patience and understanding as we continue to strive for the safety of our patrons.
                 The
@@ -290,7 +320,16 @@
                 advance the overall mission of the Museum. Please notify the Front Desk or call (561) 742-6780 if you do
                 not
                 consent to this policy.</p>
-            
+
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel" style="color: #008CD2;">Registered classes and events</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+            </div>
         </div>
     </main>
     <footer>

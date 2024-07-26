@@ -10,6 +10,7 @@ if (window.innerWidth <= 768) {
 
 document.addEventListener("DOMContentLoaded", function () {
     /* Header */
+
     const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
     menuItemsWithSubmenu.forEach(item => {
         const submenu = item.querySelector('.menu-sub-list');
@@ -31,8 +32,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const slider = document.querySelector('.fullscreen-slider');
-    if (slider) {
+    const iconMenu = document.querySelector('.menu-icon');
+    if (iconMenu) {
+        const menuWrapper = document.querySelector('.menu-wrapper');
+        iconMenu.addEventListener("click", function (e) {
+            document.body.classList.toggle('_lock');
+            iconMenu.classList.toggle('_active');
+            menuWrapper.classList.toggle('_active');
+        })
+    }
+
+    updateCart();
+
+    /* index.html */
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+        /*  const slider = document.querySelector('.fullscreen-slider');
+         if (slider) { */
         $('.fullscreen-slider').slick({
             dots: true,
             arrows: true,
@@ -44,20 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
             autoplaySpeed: 3000,
             adaptiveHeight: false
         });
-    }
+        /* } */
 
-    const iconMenu = document.querySelector('.menu-icon');
-    if (iconMenu) {
-        const menuWrapper = document.querySelector('.menu-wrapper');
-        iconMenu.addEventListener("click", function (e) {
-            document.body.classList.toggle('_lock');
-            iconMenu.classList.toggle('_active');
-            menuWrapper.classList.toggle('_active');
-        })
-    }
-
-    /* index.html */
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
         fetchMainPageData();
     }
 
@@ -1088,8 +1091,10 @@ function displayEvents(data) {
     const container = document.getElementById('classes-content');
     container.innerHTML = '';
 
-    const maxEvents = 7;
+    const maxEvents = 5;
     let count = 0;
+
+    var selectedDate;
 
     if (data.length > 0) {
         data.forEach(item => {
@@ -1109,7 +1114,21 @@ function displayEvents(data) {
                         document.getElementById('eventCategory').textContent = eventDetails.Category;
                         document.getElementById('eventDescription').textContent = eventDetails.Description;
                         document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
-                        if (eventDetails.RequirePayment) document.getElementById('requirePayment').textContent = 'Free with paid admission.'
+                        if (eventDetails.RequirePayment) {
+                            document.getElementById('requirePayment').textContent = 'Free with paid admission.';
+                            document.getElementById('free-admission-container').classList.remove('hidden');
+                        }
+
+                        const categoryClass = eventDetails.Category
+                            .replace(/\s+/g, '-')
+                            .replace(/[^a-zA-Z0-9-]/g, '')
+                            .replace(/-+/g, '-')
+                            .replace(/^-/, '');
+
+                        const eventCategoryElement = document.getElementById('eventCategory');
+                        eventCategoryElement.className = '';
+                        eventCategoryElement.classList.add('fc-event', categoryClass);
+
                         const startDate = new Date(eventDetails.EventStartDate);
                         const endDate = new Date(eventDetails.EventEndDate);
                         const recurrencyDays = eventDetails.EventRecurrency.split(',').map(day => day.trim());
@@ -1144,9 +1163,12 @@ function displayEvents(data) {
 
                         const selectedDateSpan = document.getElementById('selected-date');
                         datePicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
-                            const selectedDate = e.date;
+                            selectedDate = e.date;
                             selectedDateSpan.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
                             selectedDateSpan.style.color = '';
+
+                            document.getElementById('price-for-member').textContent = `$0`;
+                            document.getElementById('price-for-non-member').textContent = `$0`;
                         });
 
                         const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
@@ -1156,6 +1178,15 @@ function displayEvents(data) {
                             const selectedDateSpan = document.getElementById('selected-date');
                             selectedDateSpan.textContent = 'Choose a date...';
                             selectedDateSpan.style.color = '';
+                        });
+
+                        document.getElementById('registerModal').addEventListener('hidden.bs.modal', () => {
+                            const registerToClass = document.getElementById('register-to-classes-form');
+                            registerToClass.reset();
+                            registerToClass.classList.remove('was-validated');
+
+                            document.getElementById('requirePayment').textContent = '';
+                            document.getElementById('free-admission-container').classList.add('hidden');
                         });
                     }
                 });
@@ -1192,6 +1223,10 @@ function displayEvents(data) {
         container.innerHTML = '';
 
         var numberOfChildren = parseInt(this.value);
+
+        const prices = calculatePrices(selectedDate, numberOfChildren || 0);
+        document.getElementById('price-for-member').textContent = `$${prices.memberPrice}`;
+        document.getElementById('price-for-non-member').textContent = `$${prices.nonMemberPrice}`;
 
         for (var i = 1; i <= numberOfChildren; i++) {
             var childDetails = document.createElement('div');
@@ -1240,12 +1275,48 @@ function displayEvents(data) {
             event.preventDefault();
             event.stopPropagation();
         } else {
+            const eventTitle = document.getElementById('eventTitle').textContent;
+            const eventDate = selectedDate.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            });
+
             const formData = new FormData(registerToClass);
             const formValues = {};
+
             formData.forEach((value, key) => {
                 formValues[key] = value;
             });
-            console.log(formValues);
+
+            const childrens = [];
+            const numberOfChildren = parseInt(document.getElementById('amount-of-children').value);
+
+            for (let i = 1; i <= numberOfChildren; i++) {
+                const childName = formData.get(`childName${i}`);
+                const childAge = formData.get(`childAge${i}`);
+                if (childName && childAge) {
+                    childrens.push({
+                        name: childName,
+                        age: childAge
+                    });
+
+                    delete formValues[`childName${i}`];
+                    delete formValues[`childAge${i}`];
+                }
+            }
+
+            formValues['childrens'] = childrens;
+            formValues['eventTitle'] = eventTitle;
+            formValues['eventDate'] = eventDate;
+
+            let registredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
+            registredToClasses.push(formValues);
+            localStorage.setItem('registredToClasses', JSON.stringify(registredToClasses));
+
+            const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            registerModal.hide();
+            updateCart();
         }
         registerToClass.classList.add('was-validated');
     }, false);
@@ -1283,5 +1354,42 @@ async function fetchEventDetails(eventId) {
     } catch (error) {
         console.error('Error fetching event details:', error);
         return null;
+    }
+}
+
+function calculatePrices(selectedDate, numberOfChildren) {
+    const month = selectedDate.getMonth() + 1;
+    let priceForMember = 0;
+    let priceForNonMember = 0;
+
+    if ([6, 7, 8].includes(month)) {
+        priceForMember = 8;
+        priceForNonMember = 10;
+    } else {
+        priceForMember = 10;
+        priceForNonMember = 12;
+    }
+
+    return {
+        memberPrice: priceForMember * numberOfChildren,
+        nonMemberPrice: priceForNonMember * numberOfChildren
+    };
+}
+
+function updateCart() {
+    const cardIcon = document.getElementById('cart-icon');
+    const cardIconBadge = document.getElementById('cart-items-count');
+    const cardIconMob = document.getElementById('cart-icon-mobile');
+    const cardIconBadgeMob = document.getElementById('cart-items-count-mobile');
+    let checkRegistredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
+
+    if (checkRegistredToClasses.length > 0) {
+        let cartItemsCount = 0;
+        checkRegistredToClasses.forEach(item => cartItemsCount += item.childrens.length);
+
+        cardIconBadge.innerHTML = `${cartItemsCount}`;
+        cardIconBadgeMob.innerHTML = `${cartItemsCount}`;
+        cardIcon.classList.remove('hidden');
+        cardIconMob.classList.remove('hidden');
     }
 }

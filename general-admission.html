@@ -136,6 +136,23 @@
                                             </svg>
                                         </a>
                                     </div>
+                                    <div class="social-icons-mobile">
+                                        <a class="cart-icon hidden position-relative" id="cart-icon-mobile"
+                                            data-bs-toggle="offcanvas" href="#offcanvasRight" role="button"
+                                            aria-controls="offcanvasRight">
+                                            <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"
+                                                    stroke="#008CD2" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                            <span
+                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                id="cart-items-count-mobile" style="font-size: 10px;">
+                                            </span>
+                                        </a>
+                                    </div>
                                 </li>
                             </ul>
                         </nav>
@@ -192,6 +209,19 @@
                                     d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z">
                                 </path>
                             </svg>
+                        </a>
+                        <a class="cart-icon hidden position-relative" id="cart-icon" data-bs-toggle="offcanvas"
+                            href="#offcanvasRight" role="button" aria-controls="offcanvasRight">
+                            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"
+                                    stroke="#008CD2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="cart-items-count" style="font-size: 10px;">
+                            </span>
                         </a>
                     </div>
                     <a href="rsvp.html" class="btn-buy-tickets">BUY TICKETS</a>
@@ -1002,6 +1032,15 @@
                         id="general-sheduled-time"></span></div>
                 <div><span><b>Category: </b></span><span class="fc-event Infants-and-Toddlers">General Admission</span>
                 </div>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel" style="color: #008CD2;">Registered classes and events</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
             </div>
         </div>
     </main>
