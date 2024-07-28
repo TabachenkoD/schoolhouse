@@ -1572,6 +1572,15 @@ main p {
 .calendar .fc-event {
   cursor: pointer;
   margin-bottom: 3px;
+  color: #FBFDFB;
+  padding-left: 4px;
+}
+.calendar .fc-daygrid-event-dot {
+  display: none !important;
+}
+.calendar .fc-event-title {
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
 }
 .calendar .modal-body {
   display: flex;
@@ -2789,6 +2798,30 @@ main p {
   color: #FBFDFB;
   border-radius: 5px;
   padding: 5px 10px;
+}
+
+.cart-continue-action-btn {
+  font-size: 18px;
+  font-family: "Kozuka Gothic Pro H", sans-serif;
+  color: #FBFDFB;
+  background-color: #008CD2;
+  border: 1px solid #95CDE7;
+  border-radius: 8px;
+  padding: 8px 14px;
+  transition: background-color 0.7s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.cart-continue-action-btn:hover {
+  background-color: #ED7A1F;
+}
+@media (max-width: 768px) {
+  .cart-continue-action-btn {
+    padding: 16px 22px;
+    width: 100%;
+  }
 }
 
 footer {

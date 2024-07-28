@@ -948,10 +948,19 @@ main {
     .fc-event {
         cursor: pointer;
         margin-bottom: 3px;
+        color: $white;
+        padding-left: 4px;
     }
 
+    .fc-daygrid-event-dot {
+        display: none !important;
+    }
 
-
+    .fc-event-title {
+        white-space: normal !important;
+        overflow-wrap: break-word !important;
+    }
+    
     .modal-body {
         display: flex;
         flex-direction: column;
@@ -2269,5 +2278,29 @@ main {
         color: $white;
         border-radius: 5px;
         padding: 5px 10px;
+    }
+}
+
+.cart-continue-action-btn {
+    font-size: 18px;
+    font-family: $font-secondary;
+    color: $white;
+    background-color: $dark-blue;
+    border: 1px solid $light-blue;
+    border-radius: 8px;
+    padding: 8px 14px;
+    transition: background-color 0.7s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    &:hover {
+        background-color: $orange;
+    }
+
+    @media (max-width: 768px) {
+        padding: 16px 22px;
+        width: 100%;
     }
 }

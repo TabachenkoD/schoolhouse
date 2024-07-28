@@ -526,7 +526,8 @@
                 always welcome the opportunity to discover talented individuals who are passionate about what we do.
                 Please feel free to submit your application, and we will keep it on file for future opportunities.</p>
             <div>
-                <span class="employ-app-form"><a href="https://forms.gle/EnddzfiFbvPjuGq29" target="_blank">Employment application form</a></span>
+                <span class="employ-app-form"><a href="https://forms.gle/EnddzfiFbvPjuGq29" target="_blank">Employment
+                        application form</a></span>
             </div>
             <h4 class="common-title h4-margin">Contact us</h4>
             <div class="visit-location-map-container">
@@ -602,7 +603,16 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body" id="offcanvas-body"></div>
+            <div class="offcanvas-header d-flex flex-column align-items-start">
+                <h5 id="offcanvasRightLabel" style="color: #ED7A1F;">Total:</h5>
+                <div class="w-100 d-flex justify-content-between">
+                    <div>Member: $<span id="cart-total-price-member"></span></div>
+                    <div>Non-member: $<span id="cart-total-price-non-member"></span></div>
+                </div>
+                <button type="button" class="cart-continue-action-btn" data-bs-dismiss="offcanvas">
+                    Continue to Payment
+                </button>
             </div>
         </div>
     </main>

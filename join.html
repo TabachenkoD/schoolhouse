@@ -256,7 +256,9 @@
             <ol class="pb-3">
                 <li>Online: Use the buttons below to sign up today.</li>
                 <li>Over the Phone: Call our membership team at 561-742-6785.</li>
-                <li>In-Person: Download the registration form and bring it to the front desk on your next visit.</li>
+                <li>In-Person: <a href="https://docs.google.com/document/d/1QCwnhjEovy68OJj0ebn-fBEbhI7aH5R5/edit"
+                        target="_blank" style="color: #008CD2;">Download the
+                        registration form</a> and bring it to the front desk on your next visit.</li>
             </ol>
             <h4 class="common-title py-4">Family</h4>
             <p>A family membership allows for unlimited play for one year for the family! Review the options below to
@@ -1126,6 +1128,7 @@
                     </form>
                 </div>
             </div>
+
             <p class="mt-5"><strong>Looking to share the museum with others?</strong> Consider Gift Memberships — the
                 perfect present
                 that keeps giving for a full year!</p>
@@ -1133,16 +1136,25 @@
                     href="mailto:memberships@schoolhousemuseum.org">memberships@schoolhousemuseum.org</a>, or by phone
                 at 561-742-6785
             </p>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                aria-labelledby="offcanvasRightLabel">
-                <div class="offcanvas-header">
-                    <h5 id="offcanvasRightLabel" style="color: #008CD2;">Registered classes and events</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                </div>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel" style="color: #008CD2;">Registered classes and events</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
             </div>
+            <div class="offcanvas-body" id="offcanvas-body"></div>
+            <div class="offcanvas-header d-flex flex-column align-items-start">
+                <h5 id="offcanvasRightLabel" style="color: #ED7A1F;">Total:</h5>
+                <div class="w-100 d-flex justify-content-between">
+                    <div>Member: $<span id="cart-total-price-member"></span></div>
+                    <div>Non-member: $<span id="cart-total-price-non-member"></span></div>
+                </div>
+                <button type="button" class="cart-continue-action-btn" data-bs-dismiss="offcanvas">
+                    Continue to Payment
+                </button>
+            </div>
+        </div>
     </main>
     <footer>
         <div class="container flex-container">

@@ -1,5 +1,6 @@
 var SERVER_URL = "https://shm.sheynpartners.com/api";
 var SERVER_IMG_EXHIBITS_URL = "http://shm.sheynpartners.com/api/Content/Images/Exhibits";
+var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
 
 
 if (window.innerWidth <= 768) {
@@ -868,134 +869,242 @@ document.addEventListener("DOMContentLoaded", function () {
             validRange: {
                 start: new Date().toISOString().split('T')[0]
             },
-            events: generateTestEvents(),
+            displayEventTime: false,
             eventClick: function (info) {
                 var eventObj = info.event;
 
                 document.getElementById('eventTitle').innerText = eventObj.title;
-                document.getElementById('eventDate').innerText = eventObj.start.toLocaleDateString();
-                document.getElementById('eventDescription').innerText = 'Description of the event';
-                const eventCategory = document.getElementById('eventCategory');
-                eventCategory.classList.add('color-picker')
-                eventCategory.classList.add('fc-event');
-                eventCategory.classList.add(`${eventObj.classNames[0]}`);
-                eventCategory.innerText = eventObj.classNames[0];
+                document.getElementById('eventDate').innerText = eventObj.start.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                document.getElementById('eventDescription').innerText = eventObj.extendedProps.description;
+                document.getElementById('eventRecurrency').innerText = eventObj.extendedProps.eventRecurrency;
+                const categoryClass = eventObj.extendedProps.category
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-zA-Z0-9-]/g, '')
+                    .replace(/-+/g, '-')
+                    .replace(/^-/, '');
+                const eventCategoryElement = document.getElementById('eventCategory');
+                eventCategoryElement.innerText = eventObj.extendedProps.category;
+                eventCategoryElement.className = '';
+                eventCategoryElement.classList.add('fc-event', categoryClass);
+
+                if (eventObj.extendedProps.requirePayment) {
+                    document.getElementById('requirePayment').innerHTML = `<span class="badge bg-danger" style="font-size: 14px;">FREE</span> with paid admission.`;
+                    document.getElementById('free-admission-container').classList.remove('hidden');
+                }
 
                 var modal = new bootstrap.Modal(document.getElementById('eventModal'));
                 modal.show();
-
-                document.getElementById('amount-of-children').addEventListener('change', function () {
-                    var container = document.getElementById('children-details-container');
-                    container.innerHTML = '';
-
-                    var numberOfChildren = parseInt(this.value);
-
-                    for (var i = 1; i <= numberOfChildren; i++) {
-                        var childDetails = document.createElement('div');
-                        childDetails.className = 'children-details d-flex flex-column gap-3';
-
-                        var childNameDiv = document.createElement('div');
-                        childNameDiv.className = 'd-flex justify-content-between align-items-center gap-3';
-                        var childNameLabel = document.createElement('label');
-                        childNameLabel.className = 'form-label register-form-inpits';
-                        childNameLabel.setAttribute('for', 'childName' + i);
-                        childNameLabel.textContent = 'Child name';
-                        var childNameInput = document.createElement('input');
-                        childNameInput.type = 'text';
-                        childNameInput.className = 'form-control';
-                        childNameInput.id = 'childName' + i;
-                        childNameInput.setAttribute('name', 'childName' + i);
-                        childNameInput.required = true;
-                        childNameDiv.appendChild(childNameLabel);
-                        childNameDiv.appendChild(childNameInput);
-
-                        var childAgeDiv = document.createElement('div');
-                        childAgeDiv.className = 'd-flex justify-content-between align-items-center gap-3';
-                        var childAgeLabel = document.createElement('label');
-                        childAgeLabel.className = 'form-label register-form-inpits';
-                        childAgeLabel.setAttribute('for', 'childAge' + i);
-                        childAgeLabel.textContent = 'Child Age';
-                        var childAgeInput = document.createElement('input');
-                        childAgeInput.type = 'text';
-                        childAgeInput.className = 'form-control';
-                        childAgeInput.id = 'childAge' + i;
-                        childAgeInput.setAttribute('name', 'childAge' + i);
-                        childAgeInput.required = true;
-                        childAgeDiv.appendChild(childAgeLabel);
-                        childAgeDiv.appendChild(childAgeInput);
-
-                        childDetails.appendChild(childNameDiv);
-                        childDetails.appendChild(childAgeDiv);
-                        container.appendChild(childDetails);
-                    }
-                });
-
-                const addToCartBtn = document.getElementById('add-to-cart-btn');
-                addToCartBtn.addEventListener('click', event => {
-                    const registerToClass = document.getElementById('register-to-classes-form');
-                    if (!registerToClass.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    } else {
-                        const formData = new FormData(registerToClass);
-                        const formValues = {};
-                        formData.forEach((value, key) => {
-                            formValues[key] = value;
-                        });
-                        console.log(formValues);
-                    }
-                    registerToClass.classList.add('was-validated');
-                }, false);
             }
         });
         calendar.render();
 
-        function generateTestEvents() {
-            var events = [];
-            var today = new Date();
-            var startMonth = today.getMonth();
-            var startYear = today.getFullYear();
-            var eventTypes = ['Infants-and-Toddlers', 'Ages-2-5yrs', 'Ages-3-5yrs', 'Ages-3-7-Years', 'Grade-2', 'All-Ages'];
-
-            for (var monthOffset = 0; monthOffset < 2; monthOffset++) {
-                var currentMonth = startMonth + monthOffset;
-                var daysInMonth = new Date(startYear, currentMonth + 1, 0).getDate();
-
-                for (var day = 1; day <= daysInMonth; day++) {
-                    var date = new Date(startYear, currentMonth, day);
-                    var dayOfWeek = date.getDay();
-
-                    if (dayOfWeek !== 1 && dayOfWeek !== 2) { // Exclude Sundays (0) and Mondays (1)
-                        for (var eventIndex = 1; eventIndex <= 3; eventIndex++) {
-                            var eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
-                            events.push({
-                                id: 'event-' + startYear + '-' + currentMonth + '-' + day + '-' + eventIndex,
-                                title: `Event ${eventIndex}`,
-                                start: date.toISOString().split('T')[0],
-                                className: eventType
-                            });
-                        }
-                    }
+        const fetchCalendarEvent = async () => {
+            try {
+                const response = await fetch(`${SERVER_URL}/events`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
+                const data = await response.json();
+                const events = generateEvents(data);
+                calendar.addEventSource(events);
+            } catch (error) {
+                console.error(error);
             }
+        }
+
+        fetchCalendarEvent();
+
+        function generateEvents(data) {
+            const events = [];
+            data.forEach(item => {
+                const startDate = new Date(item.EventStartDate);
+                const endDate = new Date(item.EventEndDate);
+                const recurrencyDays = item.EventRecurrency.split(',').map(day => day.trim());
+
+                const recurrencyDayIndexes = recurrencyDays.map(day => {
+                    switch (day) {
+                        case 'Sunday':
+                            return 0;
+                        case 'Monday':
+                            return 1;
+                        case 'Tuesday':
+                            return 2;
+                        case 'Wednesday':
+                            return 3;
+                        case 'Thursday':
+                            return 4;
+                        case 'Friday':
+                            return 5;
+                        case 'Saturday':
+                            return 6;
+                    }
+                });
+
+                let currentDate = new Date(startDate);
+                while (currentDate <= endDate) {
+                    if (recurrencyDayIndexes.includes(currentDate.getDay())) {
+                        events.push({
+                            title: item.Title,
+                            start: new Date(currentDate),
+                            end: new Date(currentDate),
+                            classNames: [item.Category.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').replace(/-+/g, '-').replace(/^-/, '')],
+                            description: item.Description,
+                            requirePayment: item.RequirePayment,
+                            eventRecurrency: item.EventRecurrency,
+                            category: item.Category
+                        });
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+            });
             return events;
         }
 
-        const eventModal = document.getElementById('eventModal');
-        const registerModal = document.getElementById('registerModal');
-
-        eventModal.addEventListener('hidden.bs.modal', () => {
-            var eventCategory = document.getElementById('eventCategory');
-            eventCategory.className = '';
+        document.getElementById('eventModal').addEventListener('hidden.bs.modal', () => {
+            document.getElementById('requirePayment').textContent = '';
+            document.getElementById('price-for-member').textContent = 0;
+            document.getElementById('price-for-non-member').textContent = 0;
         });
 
-        registerModal.addEventListener('hidden.bs.modal', () => {
-            const registerForm = registerModal.querySelector('#register-to-classes-form');
-            registerForm.querySelector('#children-details-container').innerHTML = "";
-            registerForm.reset();
-            registerForm.classList.remove('was-validated');
+        document.getElementById('registerModal').addEventListener('hidden.bs.modal', () => {
+            const registerToClass = document.getElementById('register-to-classes-form');
+            registerToClass.reset();
+            registerToClass.classList.remove('was-validated');
+
+            document.getElementById('requirePayment').innerHTML = '';
+            document.getElementById('free-admission-container').classList.add('hidden');
+
+            const container = document.getElementById('children-details-container');
+            container.innerHTML = '';
         });
 
+        document.getElementById('registerButton').addEventListener('click', function (event) {
+            const eventDate = document.getElementById('eventDate').textContent;
+            const eventTitle = document.getElementById('eventTitle').textContent;
+
+            let checkRegistredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
+
+            const isRegistered = checkRegistredToClasses.some(item =>
+                item.eventTitle === eventTitle && item.eventDate === eventDate
+            );
+
+            if (isRegistered) {
+                event.preventDefault();
+                alert('You are already registered in this class on the selected date.');
+            } else {
+                const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
+                const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+
+                eventModal.hide();
+                registerModal.show();
+            }
+        });
+
+        document.getElementById('amount-of-children').addEventListener('change', function () {
+            const container = document.getElementById('children-details-container');
+            container.innerHTML = '';
+            const eventDate = new Date(document.getElementById('eventDate').textContent)
+
+            var numberOfChildren = parseInt(this.value);
+
+            const prices = calculatePrices(eventDate, numberOfChildren || 0);
+            document.getElementById('price-for-member').textContent = prices.memberPrice;
+            document.getElementById('price-for-non-member').textContent = prices.nonMemberPrice;
+
+            for (var i = 1; i <= numberOfChildren; i++) {
+                var childDetails = document.createElement('div');
+                childDetails.className = 'children-details register-form-inpits';
+
+                var childNameDiv = document.createElement('div');
+                childNameDiv.className = '';
+                var childNameLabel = document.createElement('label');
+                childNameLabel.className = 'form-label register-form-inpits';
+                childNameLabel.setAttribute('for', 'childName' + i);
+                childNameLabel.textContent = 'Child name';
+                var childNameInput = document.createElement('input');
+                childNameInput.type = 'text';
+                childNameInput.className = 'form-control';
+                childNameInput.id = 'childName' + i;
+                childNameInput.setAttribute('name', 'childName' + i);
+                childNameInput.required = true;
+                childNameDiv.appendChild(childNameLabel);
+                childNameDiv.appendChild(childNameInput);
+
+                var childAgeDiv = document.createElement('div');
+                childAgeDiv.className = '';
+                var childAgeLabel = document.createElement('label');
+                childAgeLabel.className = 'form-label register-form-inpits';
+                childAgeLabel.setAttribute('for', 'childAge' + i);
+                childAgeLabel.textContent = 'Child Age';
+                var childAgeInput = document.createElement('input');
+                childAgeInput.type = 'text';
+                childAgeInput.className = 'form-control';
+                childAgeInput.id = 'childAge' + i;
+                childAgeInput.setAttribute('name', 'childAge' + i);
+                childAgeInput.required = true;
+                childAgeDiv.appendChild(childAgeLabel);
+                childAgeDiv.appendChild(childAgeInput);
+
+                childDetails.appendChild(childNameDiv);
+                childDetails.appendChild(childAgeDiv);
+                container.appendChild(childDetails);
+            }
+        });
+
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        addToCartBtn.addEventListener('click', event => {
+            const registerToClass = document.getElementById('register-to-classes-form');
+            if (!registerToClass.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                const eventTitle = document.getElementById('eventTitle').textContent;
+                const eventDate = document.getElementById('eventDate').textContent;
+
+                const formData = new FormData(registerToClass);
+                const formValues = {};
+
+                formData.forEach((value, key) => {
+                    formValues[key] = value;
+                });
+
+                const children = [];
+                const numberOfChildren = parseInt(document.getElementById('amount-of-children').value);
+
+                for (let i = 1; i <= numberOfChildren; i++) {
+                    const childName = formData.get(`childName${i}`);
+                    const childAge = formData.get(`childAge${i}`);
+                    if (childName && childAge) {
+                        children.push({
+                            name: childName,
+                            age: childAge
+                        });
+
+                        delete formValues[`childName${i}`];
+                        delete formValues[`childAge${i}`];
+                    }
+                }
+
+                formValues['children'] = children;
+                formValues['eventTitle'] = eventTitle;
+                formValues['eventDate'] = eventDate;
+                formValues['memberPrice'] = document.getElementById('price-for-member').textContent;
+                formValues['nonMemberPrice'] = document.getElementById('price-for-non-member').textContent;
+                if (!document.getElementById('free-admission-container').classList.contains('hidden')) formValues['requirePayment'] = true;
+
+                let registredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
+                registredToClasses.push(formValues);
+                localStorage.setItem('registredToClasses', JSON.stringify(registredToClasses));
+
+                const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                registerModal.hide();
+                updateCart();
+                document.getElementById('amount-of-children').value = "";
+                const container = document.getElementById('children-details-container');
+                container.innerHTML = '';
+            }
+            registerToClass.classList.add('was-validated');
+        }, false);
     }
 });
 
@@ -1115,7 +1224,7 @@ function displayEvents(data) {
                         document.getElementById('eventDescription').textContent = eventDetails.Description;
                         document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
                         if (eventDetails.RequirePayment) {
-                            document.getElementById('requirePayment').textContent = 'Free with paid admission.';
+                            document.getElementById('requirePayment').innerHTML = `<span class="badge bg-danger" style="font-size: 14px;">FREE</span> with paid admission.`;
                             document.getElementById('free-admission-container').classList.remove('hidden');
                         }
 
@@ -1167,8 +1276,8 @@ function displayEvents(data) {
                             selectedDateSpan.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
                             selectedDateSpan.style.color = '';
 
-                            document.getElementById('price-for-member').textContent = `$0`;
-                            document.getElementById('price-for-non-member').textContent = `$0`;
+                            document.getElementById('price-for-member').textContent = 0;
+                            document.getElementById('price-for-non-member').textContent = 0;
                         });
 
                         const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
@@ -1178,6 +1287,8 @@ function displayEvents(data) {
                             const selectedDateSpan = document.getElementById('selected-date');
                             selectedDateSpan.textContent = 'Choose a date...';
                             selectedDateSpan.style.color = '';
+
+                            document.getElementById('requirePayment').innerHTML = '';
                         });
 
                         document.getElementById('registerModal').addEventListener('hidden.bs.modal', () => {
@@ -1185,8 +1296,11 @@ function displayEvents(data) {
                             registerToClass.reset();
                             registerToClass.classList.remove('was-validated');
 
-                            document.getElementById('requirePayment').textContent = '';
+                            document.getElementById('requirePayment').innerHTML = '';
                             document.getElementById('free-admission-container').classList.add('hidden');
+
+                            const container = document.getElementById('children-details-container');
+                            container.innerHTML = '';
                         });
                     }
                 });
@@ -1203,6 +1317,7 @@ function displayEvents(data) {
     document.getElementById('registerButton').addEventListener('click', function (event) {
         const selectedDateSpan = document.getElementById('selected-date');
         const selectedDateText = selectedDateSpan.textContent.trim();
+        const eventTitle = document.getElementById('eventTitle').textContent;
 
         if (selectedDateText === 'Choose a date...') {
             event.preventDefault();
@@ -1210,23 +1325,34 @@ function displayEvents(data) {
         } else {
             selectedDateSpan.style.color = '';
 
-            const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
-            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+            let checkRegistredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
 
-            eventModal.hide();
-            registerModal.show();
+            const isRegistered = checkRegistredToClasses.some(item =>
+                item.eventTitle === eventTitle && item.eventDate === selectedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })
+            );
+
+            if (isRegistered) {
+                event.preventDefault();
+                alert('You are already registered in this class on the selected date.');
+            } else {
+                const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
+                const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+
+                eventModal.hide();
+                registerModal.show();
+            }
         }
     });
 
     document.getElementById('amount-of-children').addEventListener('change', function () {
-        var container = document.getElementById('children-details-container');
+        const container = document.getElementById('children-details-container');
         container.innerHTML = '';
 
         var numberOfChildren = parseInt(this.value);
 
         const prices = calculatePrices(selectedDate, numberOfChildren || 0);
-        document.getElementById('price-for-member').textContent = `$${prices.memberPrice}`;
-        document.getElementById('price-for-non-member').textContent = `$${prices.nonMemberPrice}`;
+        document.getElementById('price-for-member').textContent = prices.memberPrice;
+        document.getElementById('price-for-non-member').textContent = prices.nonMemberPrice;
 
         for (var i = 1; i <= numberOfChildren; i++) {
             var childDetails = document.createElement('div');
@@ -1289,14 +1415,14 @@ function displayEvents(data) {
                 formValues[key] = value;
             });
 
-            const childrens = [];
+            const children = [];
             const numberOfChildren = parseInt(document.getElementById('amount-of-children').value);
 
             for (let i = 1; i <= numberOfChildren; i++) {
                 const childName = formData.get(`childName${i}`);
                 const childAge = formData.get(`childAge${i}`);
                 if (childName && childAge) {
-                    childrens.push({
+                    children.push({
                         name: childName,
                         age: childAge
                     });
@@ -1306,9 +1432,12 @@ function displayEvents(data) {
                 }
             }
 
-            formValues['childrens'] = childrens;
+            formValues['children'] = children;
             formValues['eventTitle'] = eventTitle;
             formValues['eventDate'] = eventDate;
+            formValues['memberPrice'] = document.getElementById('price-for-member').textContent;
+            formValues['nonMemberPrice'] = document.getElementById('price-for-non-member').textContent;
+            if (!document.getElementById('free-admission-container').classList.contains('hidden')) formValues['requirePayment'] = true;
 
             let registredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
             registredToClasses.push(formValues);
@@ -1317,6 +1446,9 @@ function displayEvents(data) {
             const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
             registerModal.hide();
             updateCart();
+            document.getElementById('amount-of-children').value = "";
+            const container = document.getElementById('children-details-container');
+            container.innerHTML = '';
         }
         registerToClass.classList.add('was-validated');
     }, false);
@@ -1381,15 +1513,89 @@ function updateCart() {
     const cardIconBadge = document.getElementById('cart-items-count');
     const cardIconMob = document.getElementById('cart-icon-mobile');
     const cardIconBadgeMob = document.getElementById('cart-items-count-mobile');
+    const cartTotalPriceMember = document.getElementById('cart-total-price-member');
+    const cartTotalPriceNonMember = document.getElementById('cart-total-price-non-member');
+
+    const container = document.getElementById('offcanvas-body');
+    container.innerHTML = '';
+
     let checkRegistredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
+
+    var summMemberPrice = 0;
+    var summNonMemberPrice = 0;
 
     if (checkRegistredToClasses.length > 0) {
         let cartItemsCount = 0;
-        checkRegistredToClasses.forEach(item => cartItemsCount += item.childrens.length);
+        checkRegistredToClasses.forEach(item => {
+            cartItemsCount += item.children.length;
 
-        cardIconBadge.innerHTML = `${cartItemsCount}`;
-        cardIconBadgeMob.innerHTML = `${cartItemsCount}`;
-        cardIcon.classList.remove('hidden');
-        cardIconMob.classList.remove('hidden');
+            cardIconBadge.innerHTML = `${cartItemsCount}`;
+            cardIconBadgeMob.innerHTML = `${cartItemsCount}`;
+            cardIcon.classList.remove('hidden');
+            cardIconMob.classList.remove('hidden');
+
+            let freeAdmissionHtml = '';
+            if (item.requirePayment) {
+                freeAdmissionHtml = `
+                <div id="free-admission-container">With paid admission: 
+                    <span class="badge bg-danger" style="font-size: 14px;">
+                        FREE
+                    </span>
+                </div>`;
+            }
+
+            const div = document.createElement('div');
+            div.innerHTML = `
+                    <hr>
+                    <div class="w-100 d-flex justify-content-between align-items-center" style="color: #ED7A1F;">
+                        <div>${item.eventTitle}</div>
+                        <button type="button" class="delete-from-cart-btn" data-title="${item.eventTitle}" data-date="${item.eventDate}" style="all: unset; cursor: pointer;">
+                            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 12V17" stroke="#ba2c36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 12V17" stroke="#ba2c36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4 7H20" stroke="#ba2c36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#ba2c36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#ba2c36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Date: ${item.eventDate}</div>
+                        <div>Children: ${item.children.length}</div>
+                    </div>
+                        <div class="d-flex flex-column ">
+                            ${freeAdmissionHtml}
+                            <div class="d-flex flex-wrap justify-content-between">
+                            <div>Member: $${item.memberPrice}</div>
+                            <div>Non-Member: $${item.nonMemberPrice}</div>
+                            </div>
+                        </div>
+                    <hr>`;
+            container.appendChild(div);
+
+            summMemberPrice += parseInt(item.memberPrice);
+            summNonMemberPrice += parseInt(item.nonMemberPrice);
+
+            const deleteButton = div.querySelector('.delete-from-cart-btn');
+            deleteButton.addEventListener('click', () => {
+                const title = deleteButton.getAttribute('data-title');
+                const date = deleteButton.getAttribute('data-date');
+                checkRegistredToClasses = checkRegistredToClasses.filter((el) => !(el.eventTitle === title && el.eventDate === date));
+
+                localStorage.setItem('registredToClasses', JSON.stringify(checkRegistredToClasses));
+
+                updateCart();
+            });
+        });
+
+        cartTotalPriceMember.textContent = summMemberPrice;
+        cartTotalPriceNonMember.textContent = summNonMemberPrice;
+
+        document.querySelector('.cart-continue-action-btn').addEventListener('click', () => window.location.href = `${FRONTEND_REDIRECT_URL}/weekly-classes-signup.html`);
+    } else {
+        cardIcon.classList.add('hidden');
+        cardIconMob.classList.add('hidden');
+        cartTotalPriceMember.textContent = 0;
+        cartTotalPriceNonMember.textContent = 0;
     }
 }
