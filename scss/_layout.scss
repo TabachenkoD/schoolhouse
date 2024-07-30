@@ -105,3 +105,26 @@ a {
     /* LimeGreen */
     border-color: #32CD32;
 }
+
+.donate-btn-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    .btn-donate {
+        border-radius: 8px;
+        text-transform: uppercase;
+        padding: .375rem 1rem;
+        font-size: $font-size-medium;
+        font-family: $font-secondary;
+        color: $white;
+        line-height: 1.3;
+        background-color: $orange;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: $orange-btn-hover;
+        }
+    }
+}
