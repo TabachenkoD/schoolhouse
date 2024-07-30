@@ -333,7 +333,16 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body" id="offcanvas-body">
+            <div class="offcanvas-body" id="offcanvas-body"></div>
+            <div class="offcanvas-header d-flex flex-column align-items-start">
+                <h5 id="offcanvasRightLabel" style="color: #ED7A1F;">Total:</h5>
+                <div class="w-100 d-flex justify-content-between">
+                    <div>Member: $<span id="cart-total-price-member"></span></div>
+                    <div>Non-member: $<span id="cart-total-price-non-member"></span></div>
+                </div>
+                <button type="button" class="cart-continue-action-btn" data-bs-dismiss="offcanvas">
+                    Continue to Payment
+                </button>
             </div>
         </div>
     </main>

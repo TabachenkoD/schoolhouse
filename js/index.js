@@ -1106,6 +1106,28 @@ document.addEventListener("DOMContentLoaded", function () {
             registerToClass.classList.add('was-validated');
         }, false);
     }
+
+    const totalAmountDue = document.getElementById('total-amount-due');
+    if (totalAmountDue) {
+        const membershipYes = document.getElementById('membership-yes');
+        const membershipNo = document.getElementById('membership-no');
+        
+        membershipYes.addEventListener('change', function () {
+            if (membershipYes.checked) {
+                const memberPrice = document.getElementById('cart-total-price-member').textContent;
+                const memberPriceValue = memberPrice.replace(/[^\d]/g, '');
+                totalAmountDue.value = memberPriceValue;
+            }
+        });
+
+        membershipNo.addEventListener('change', function () {
+            if (membershipNo.checked) {
+                const nonMemberPrice = document.getElementById('cart-total-price-non-member').textContent;
+                const nonMemberPriceValue = nonMemberPrice.replace(/[^\d]/g, '');
+                totalAmountDue.value = nonMemberPriceValue;
+            }
+        });
+    }
 });
 
 window.addEventListener('scroll', function () {
@@ -1524,6 +1546,8 @@ function updateCart() {
     var summMemberPrice = 0;
     var summNonMemberPrice = 0;
 
+    let childClasses = {};
+
     if (checkRegistredToClasses.length > 0) {
         let cartItemsCount = 0;
         checkRegistredToClasses.forEach(item => {
@@ -1533,6 +1557,20 @@ function updateCart() {
             cardIconBadgeMob.innerHTML = `${cartItemsCount}`;
             cardIcon.classList.remove('hidden');
             cardIconMob.classList.remove('hidden');
+
+            item.children.forEach(child => {
+                const eventDate = new Date(item.eventDate);
+                const month = eventDate.getMonth() + 1;
+
+                if ([6, 7, 8].includes(month)) {
+                    return;
+                }
+
+                if (!childClasses[child.name]) {
+                    childClasses[child.name] = new Set();
+                }
+                childClasses[child.name].add(item.eventTitle);
+            });
 
             let freeAdmissionHtml = '';
             if (item.requirePayment) {
@@ -1588,6 +1626,18 @@ function updateCart() {
             });
         });
 
+        Object.keys(childClasses).forEach(childName => {
+            childClasses[childName] = Array.from(childClasses[childName]);
+        });
+
+        Object.keys(childClasses).forEach(childName => {
+            if (childClasses[childName].length >= 6) {
+                const discount = childClasses[childName].length * 2;
+                summMemberPrice -= discount;
+                summNonMemberPrice -= discount;
+            }
+        });
+
         cartTotalPriceMember.textContent = summMemberPrice;
         cartTotalPriceNonMember.textContent = summNonMemberPrice;
 
@@ -1599,3 +1649,7 @@ function updateCart() {
         cartTotalPriceNonMember.textContent = 0;
     }
 }
+
+
+
+
