@@ -1130,16 +1130,26 @@ main {
             padding: 0;
             border: 0;
             line-height: 0;
+            height: 200px;
 
             img {
                 width: 100%;
-                height: auto;
+                height: 100%;
+                object-fit: cover;
             }
         }
 
         @media (max-width: 768px) {
             flex-direction: column;
             gap: 20px;
+
+            .party-image-container {
+                height: auto;
+            }
+    
+            .party-image-container img {
+                height: auto;
+            }
         }
     }
 
@@ -1243,7 +1253,7 @@ main {
         @media (max-width: 768px) {
             flex-direction: column;
             max-width: 400px;
-            margin: 0 auto;
+            margin: 20px auto;
         }
     }
 }
@@ -1358,7 +1368,7 @@ main {
 .about {
     padding-top: 30px;
 
-    .blue{
+    .blue {
         color: $dark-blue;
     }
 

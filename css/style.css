@@ -1763,15 +1763,24 @@ main p {
   padding: 0;
   border: 0;
   line-height: 0;
+  height: 200px;
 }
 .party .party-images-section .party-image-container img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 @media (max-width: 768px) {
   .party .party-images-section {
     flex-direction: column;
     gap: 20px;
+  }
+  .party .party-images-section .party-image-container {
+    height: auto;
+  }
+  .party .party-images-section .party-image-container img {
+    height: auto;
   }
 }
 .party .party-subtitles {
@@ -1865,7 +1874,7 @@ main p {
   .party .birthday-party-item {
     flex-direction: column;
     max-width: 400px;
-    margin: 0 auto;
+    margin: 20px auto;
   }
 }
 
