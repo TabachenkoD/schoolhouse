@@ -52,6 +52,7 @@ header {
 
     .btn-buy-tickets {
         display: block;
+        border-radius: 8px;
         padding: .375rem 1rem;
         font-size: $font-size-base;
         font-family: $font-secondary;
@@ -312,5 +313,43 @@ body._pc .menu-list>li:hover .menu-sub-list {
     .menu-icon._active span:after {
         transform: rotate(45deg);
         transform-origin: center;
+    }
+}
+
+@media (min-width: 1024px) {
+    .menu-list > li:hover {
+        color: $white;
+
+        .menu-link {
+            color: $white;
+        }
+    }
+
+    .menu-list > li:nth-child(2):hover { // Calendar
+        background-color: $orange;
+    }
+
+    .menu-list > li:nth-child(3):hover { // Party
+        background-color: $light-blue;
+    }
+
+    .menu-list > li:nth-child(4):hover { // Education
+        background-color: $red;
+    }
+
+    .menu-list > li:nth-child(5):hover { // About
+        background-color: $dark-blue;
+    }
+
+    .menu-list > li:nth-child(6):hover { // Join
+        background-color: $orange;
+    }
+
+    .menu-list > li:nth-child(7):hover { // Support
+        background-color: $light-blue;
+    }
+
+    .menu-list > li:nth-child(8):hover { // Volunteer
+        background-color: $red;
     }
 }

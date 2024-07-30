@@ -69,6 +69,7 @@ footer {
     padding: 0;
 
     & li {
+        border-radius: 8px;
         font-size: $font-size-small;
         line-height: 1.75rem;
         list-style: none;
