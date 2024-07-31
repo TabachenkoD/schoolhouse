@@ -1177,7 +1177,7 @@ async function fetchMainPageData() {
     showSkeleton(true, 'exhibits-content', 'skeleton-exhibits-item');
 
     fetchEvents();
-    fetchExhibits();
+    /* fetchExhibits(); */
 }
 
 async function fetchEvents() {
