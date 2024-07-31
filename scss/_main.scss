@@ -358,92 +358,173 @@ main {
     }
 }
 
-.party-with-us,
-.field-trips {
+.middle-container {
     display: flex;
-    gap: 150px;
+    justify-content: space-between;
+
+    .party-with-us,
+    .field-trips {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+        gap: 30px;
+
+        .party-with-us-img-container {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+
+        h4 {
+            font-size: $font-size-large;
+            line-height: 2.5rem;
+            margin-bottom: 20px;
+            color: $dark-blue;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        a {
+            text-transform: uppercase;
+            padding: .375rem 1rem;
+            border-radius: 8px;
+            font-size: $font-size-small-medium;
+            font-family: $font-secondary;
+            color: $white;
+            line-height: 1.3;
+            background-color: $orange;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: $orange-btn-hover;
+            }
+
+            @media (min-width: 1024px) {
+                margin-bottom: 3px;
+            }
+        }
+
+        .party-right-section {
+            height: 100%;
+            min-width: 222px;
+
+            @media (max-width: 1024px) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .field-left-section {
+            padding-bottom: 8px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-width: 170px;
+        }
+
+        @media (max-width: 1024px) {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        gap: 15px;
+    }
+
+    @media (max-width: 550px) {
+        flex-direction: column;
+
+        .field-trips {
+            flex-direction: column-reverse;
+        }
+    }
+}
+
+.upcoming-events {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
 
-    .party-with-us-img-container {
-        max-width: 400px;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-    }
-
-    h4 {
+    h3 {
+        color: $dark-blue;
         font-size: $font-size-large;
         line-height: 2.5rem;
-        margin-bottom: 36px;
-        color: $dark-blue;
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-    }
+        margin-top: 50px;
 
-    a {
-        text-transform: uppercase;
-        padding: .375rem 1rem;
-        border-radius: 8px;
-        font-size: $font-size-small-medium;
-        font-family: $font-secondary;
-        color: $white;
-        line-height: 1.3;
-        background-color: $orange;
-        transition: background-color 0.3s;
-
-        &:hover {
-            background-color: $orange-btn-hover;
-        }
-
-        @media (min-width: 1024px) {
-            margin-bottom: 3px;
+        @media (max-width: 550px) {
+            font-size: 2rem;
         }
     }
 
-    @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 15px;
-        padding: 20px 10px;
-    }
-}
-
-.party-with-us>div {
-    flex: 50;
-
-    &:first-child {
+    .upcoming-events-container {
         display: flex;
-        justify-content: end;
-    }
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 40px 0;
 
-    &:last-child {
-        @media (max-width: 768px) {
+        .upcoming-events-img-container {
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+
+        .upcoming-events-btn-container {
+            height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+
+            div {
+                min-width: 161px;
+                height: 42px;
+                border-radius: 8px;
+                transition: background-color 0.3s;
+                background-color: $orange;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                a {
+                    display: block;
+                    text-transform: uppercase;
+                    font-size: $font-size-small-medium;
+                    font-family: $font-secondary;
+                    color: $white;
+                    padding: .450rem 1rem;
+                }
+
+                &:hover {
+                    background-color: $orange-btn-hover;
+                }
+            }
         }
-    }
-}
 
-.field-trips>div {
-    &:last-child {
-        display: flex;
-        justify-content: end;
-    }
-
-    &:first-child {
-        @media (max-width: 768px) {
-            display: flex;
+        @media (max-width: 550px) {
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+
+            h3 {
+                font-size: 2rem;
+            }
         }
     }
 }
@@ -517,7 +598,7 @@ main {
         font-size: $font-size-large;
         line-height: 2.5rem;
         text-align: center;
-        margin-bottom: 40px;
+        margin: 50px 0;
     }
 
     .sponsors-slider {
@@ -1117,7 +1198,7 @@ main {
             .party-image-container {
                 height: auto;
             }
-    
+
             .party-image-container img {
                 height: auto;
             }
