@@ -1111,7 +1111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (totalAmountDue) {
         const membershipYes = document.getElementById('membership-yes');
         const membershipNo = document.getElementById('membership-no');
-        
+
         membershipYes.addEventListener('change', function () {
             if (membershipYes.checked) {
                 const memberPrice = document.getElementById('cart-total-price-member').textContent;
@@ -1174,7 +1174,7 @@ function initMap() {
 /* index.js Classes and Exhibits */
 async function fetchMainPageData() {
     showSkeleton(true, 'classes-content', 'skeleton-events');
-    showSkeleton(true, 'exhibits-content', 'skeleton-exhibits-item');
+    /* showSkeleton(true, 'exhibits-content', 'skeleton-exhibits-item'); */
 
     fetchEvents();
     /* fetchExhibits(); */
@@ -1222,113 +1222,63 @@ function displayEvents(data) {
     const container = document.getElementById('classes-content');
     container.innerHTML = '';
 
-    const maxEvents = 5;
-    let count = 0;
-
     var selectedDate;
 
-    if (data.length > 0) {
-        data.forEach(item => {
-            if (count < maxEvents) {
-                const div = document.createElement('div');
-                div.classList.add('events-item');
-                div.innerHTML = `<a href="#" data-id="${item.ClassEventId}"><span>${item.Title}</span><p>${item.Description}</p></a>`;
-                container.appendChild(div);
+    const sortedEvents = getSortedEventsByClosestDate(data);
 
-                div.querySelector('a').addEventListener('click', async (event) => {
-                    event.preventDefault();
-                    const eventId = event.currentTarget.getAttribute('data-id');
-                    const eventDetails = await fetchEventDetails(eventId);
+    if (sortedEvents.length > 0) {
+        sortedEvents.forEach(item => {
+            const div = document.createElement('div');
+            div.classList.add('events-item');
+            div.innerHTML = `<a href="#" data-id="${item.ClassEventId}"><span>${item.Title}</span><p>${item.Description}</p></a>`;
+            container.appendChild(div);
 
-                    if (eventDetails) {
-                        document.getElementById('eventTitle').textContent = eventDetails.Title;
-                        document.getElementById('eventCategory').textContent = eventDetails.Category;
-                        document.getElementById('eventDescription').textContent = eventDetails.Description;
-                        document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
-                        if (eventDetails.RequirePayment) {
-                            document.getElementById('requirePayment').innerHTML = `<span class="badge bg-danger" style="font-size: 14px;">FREE</span> with paid admission.`;
-                            document.getElementById('free-admission-container').classList.remove('hidden');
-                        }
+            div.querySelector('a').addEventListener('click', async (event) => {
+                event.preventDefault();
+                const eventId = event.currentTarget.getAttribute('data-id');
+                const eventDetails = await fetchEventDetails(eventId);
 
-                        const categoryClass = eventDetails.Category
-                            .replace(/\s+/g, '-')
-                            .replace(/[^a-zA-Z0-9-]/g, '')
-                            .replace(/-+/g, '-')
-                            .replace(/^-/, '');
+                if (eventDetails) {
+                    document.getElementById('eventTitle').textContent = eventDetails.Title;
+                    document.getElementById('eventCategory').textContent = eventDetails.Category;
+                    document.getElementById('eventDescription').textContent = eventDetails.Description;
+                    document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
+                    selectedDate = item.closestDate;
+                    document.getElementById('selected-date').textContent = selectedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });;
 
-                        const eventCategoryElement = document.getElementById('eventCategory');
-                        eventCategoryElement.className = '';
-                        eventCategoryElement.classList.add('fc-event', categoryClass);
-
-                        const startDate = new Date(eventDetails.EventStartDate);
-                        const endDate = new Date(eventDetails.EventEndDate);
-                        const recurrencyDays = eventDetails.EventRecurrency.split(',').map(day => day.trim());
-
-                        const datePicker = new tempusDominus.TempusDominus(document.getElementById('eventDatePicker'), {
-                            display: {
-                                components: {
-                                    decades: false,
-                                    year: true,
-                                    month: true,
-                                    date: true,
-                                    hours: false,
-                                    minutes: false,
-                                    seconds: false
-                                },
-                                buttons: {
-                                    today: false,
-                                    clear: false,
-                                    close: false
-                                }
-                            },
-                            restrictions: {
-                                minDate: startDate,
-                                maxDate: endDate,
-                                daysOfWeekDisabled: [0, 1, 2, 3, 4, 5, 6].filter(day => !recurrencyDays.includes(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day]))
-                            },
-                            localization: {
-                                locale: 'en',
-                                format: 'MM/dd/yyyy'
-                            },
-                        });
-
-                        const selectedDateSpan = document.getElementById('selected-date');
-                        datePicker.subscribe(tempusDominus.Namespace.events.change, (e) => {
-                            selectedDate = e.date;
-                            selectedDateSpan.innerHTML = selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
-                            selectedDateSpan.style.color = '';
-
-                            document.getElementById('price-for-member').textContent = 0;
-                            document.getElementById('price-for-non-member').textContent = 0;
-                        });
-
-                        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
-                        eventModal.show();
-
-                        document.getElementById('eventModal').addEventListener('hidden.bs.modal', () => {
-                            const selectedDateSpan = document.getElementById('selected-date');
-                            selectedDateSpan.textContent = 'Choose a date...';
-                            selectedDateSpan.style.color = '';
-
-                            document.getElementById('requirePayment').innerHTML = '';
-                        });
-
-                        document.getElementById('registerModal').addEventListener('hidden.bs.modal', () => {
-                            const registerToClass = document.getElementById('register-to-classes-form');
-                            registerToClass.reset();
-                            registerToClass.classList.remove('was-validated');
-
-                            document.getElementById('requirePayment').innerHTML = '';
-                            document.getElementById('free-admission-container').classList.add('hidden');
-
-                            const container = document.getElementById('children-details-container');
-                            container.innerHTML = '';
-                        });
+                    if (eventDetails.RequirePayment) {
+                        document.getElementById('requirePayment').innerHTML = `<span class="badge bg-danger" style="font-size: 14px;">FREE</span> with paid admission.`;
+                        document.getElementById('free-admission-container').classList.remove('hidden');
                     }
-                });
 
-                count++;
-            }
+                    const categoryClass = eventDetails.Category
+                        .replace(/\s+/g, '-')
+                        .replace(/[^a-zA-Z0-9-]/g, '')
+                        .replace(/-+/g, '-')
+                        .replace(/^-/, '');
+
+                    const eventCategoryElement = document.getElementById('eventCategory');
+                    eventCategoryElement.className = '';
+                    eventCategoryElement.classList.add('fc-event', categoryClass);
+
+                    const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+                    eventModal.show();
+
+                    document.getElementById('registerModal').addEventListener('hidden.bs.modal', () => {
+                        const registerToClass = document.getElementById('register-to-classes-form');
+                        registerToClass.reset();
+                        registerToClass.classList.remove('was-validated');
+
+                        document.getElementById('requirePayment').innerHTML = '';
+                        document.getElementById('free-admission-container').classList.add('hidden');
+                        document.getElementById('price-for-member').innerHTML= "";
+                        document.getElementById('price-for-non-member').innerHTML= "";
+
+                        const container = document.getElementById('children-details-container');
+                        container.innerHTML = '';
+                    });
+                }
+            });
         });
     } else {
         const div = document.createElement('div');
@@ -1337,32 +1287,23 @@ function displayEvents(data) {
     }
 
     document.getElementById('registerButton').addEventListener('click', function (event) {
-        const selectedDateSpan = document.getElementById('selected-date');
-        const selectedDateText = selectedDateSpan.textContent.trim();
         const eventTitle = document.getElementById('eventTitle').textContent;
 
-        if (selectedDateText === 'Choose a date...') {
+        let checkRegistredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
+
+        const isRegistered = checkRegistredToClasses.some(item =>
+            item.eventTitle === eventTitle && item.eventDate === selectedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })
+        );
+
+        if (isRegistered) {
             event.preventDefault();
-            selectedDateSpan.style.color = 'red';
+            alert('You are already registered in this class on the selected date.');
         } else {
-            selectedDateSpan.style.color = '';
+            const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
 
-            let checkRegistredToClasses = JSON.parse(localStorage.getItem('registredToClasses')) || [];
-
-            const isRegistered = checkRegistredToClasses.some(item =>
-                item.eventTitle === eventTitle && item.eventDate === selectedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })
-            );
-
-            if (isRegistered) {
-                event.preventDefault();
-                alert('You are already registered in this class on the selected date.');
-            } else {
-                const eventModal = bootstrap.Modal.getInstance(document.getElementById('eventModal'));
-                const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
-
-                eventModal.hide();
-                registerModal.show();
-            }
+            eventModal.hide();
+            registerModal.show();
         }
     });
 
@@ -1475,6 +1416,52 @@ function displayEvents(data) {
         registerToClass.classList.add('was-validated');
     }, false);
 }
+
+function getClosestDate(event) {
+    const today = new Date();
+    const startDate = new Date(event.EventStartDate);
+    const endDate = new Date(event.EventEndDate);
+    const recurrenceDays = event.EventRecurrency.split(',').map(day => day.trim());
+
+    if (startDate > endDate || today > endDate) {
+        return null;
+    }
+
+    let closestDate = null;
+    let minDiff = Infinity;
+
+    const daysOfWeek = {
+        'Sunday': 0,
+        'Monday': 1,
+        'Tuesday': 2,
+        'Wednesday': 3,
+        'Thursday': 4,
+        'Friday': 5,
+        'Saturday': 6
+    };
+
+    for (let d = new Date(today); d <= endDate; d.setDate(d.getDate() + 1)) {
+        if (d >= startDate && recurrenceDays.includes(d.toLocaleString('en-US', { weekday: 'long' }))) {
+            const diff = Math.abs(d - today);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestDate = new Date(d);
+            }
+        }
+    }
+
+    return closestDate;
+}
+
+function getSortedEventsByClosestDate(events) {
+    return events.map(event => {
+        event.closestDate = getClosestDate(event);
+        return event;
+    }).filter(event => event.closestDate !== null)
+        .sort((a, b) => a.closestDate - b.closestDate)
+        .slice(0, 5);
+}
+
 
 function displayExhibits(data) {
     const container = document.getElementById('exhibits-content');
