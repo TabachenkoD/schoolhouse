@@ -170,7 +170,7 @@ main {
 
                 div {
                     cursor: pointer;
-                    margin-bottom: 36px;
+                    margin-bottom: 60px;
 
                     a {
                         text-decoration: none;
@@ -180,6 +180,7 @@ main {
                     span {
                         font-size: $font-size-medium;
                         line-height: 1.25;
+                        margin-bottom: 10px;
                     }
 
                     p {
@@ -206,7 +207,7 @@ main {
                 .exhibits-item {
                     div {
                         margin-bottom: 10px;
-                        max-height: 300px;
+                        max-height: 350px;
                         overflow: hidden;
                         cursor: pointer;
 

@@ -958,7 +958,7 @@ main p {
 }
 .classes-events-exhibits .flex-container .classes .classes-content div {
   cursor: pointer;
-  margin-bottom: 36px;
+  margin-bottom: 60px;
 }
 .classes-events-exhibits .flex-container .classes .classes-content div a {
   text-decoration: none;
@@ -967,6 +967,7 @@ main p {
 .classes-events-exhibits .flex-container .classes .classes-content div span {
   font-size: 1.5rem;
   line-height: 1.25;
+  margin-bottom: 10px;
 }
 .classes-events-exhibits .flex-container .classes .classes-content div p {
   font-size: 1.2rem;
@@ -986,7 +987,7 @@ main p {
 }
 .classes-events-exhibits .flex-container .exhibits-home .exhibits-content .exhibits-item div {
   margin-bottom: 10px;
-  max-height: 300px;
+  max-height: 350px;
   overflow: hidden;
   cursor: pointer;
 }
