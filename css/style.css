@@ -1189,8 +1189,8 @@ main p {
   max-width: 400px;
   width: 100%;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* border-radius: 8px; */
+  /*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 .upcoming-events .upcoming-events-container .upcoming-events-img-container img {
   width: 100%;
@@ -1462,6 +1462,7 @@ main p {
   position: relative;
 }
 .weekly-classes .classes-item-container .classes-thumbnail-container img {
+  max-height: 268px;
   transition: all 0.4s ease;
 }
 .weekly-classes .classes-item-container .classes-thumbnail-container svg {

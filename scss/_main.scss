@@ -425,8 +425,8 @@ main {
             max-width: 400px;
             width: 100%;
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* border-radius: 8px; */
+           /*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */ 
 
             img {
                 width: 100%;
@@ -741,6 +741,7 @@ main {
             position: relative;
 
             img {
+                max-height: 268px;
                 transition: all 0.4s ease;
             }
 
