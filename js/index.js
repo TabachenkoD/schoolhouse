@@ -1,4 +1,4 @@
-var SERVER_URL = "https://schoolhouse.hnhexpresssolutions.com";/* "https://shm.sheynpartners.com/api"; */
+var SERVER_URL = "http://schoolhouse.hnhexpresssolutions.com";/* "https://shm.sheynpartners.com/api"; */
 /* var SERVER_IMG_EXHIBITS_URL = "http://shm.sheynpartners.com/api/Content/Images/Exhibits"; */
 var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
 
