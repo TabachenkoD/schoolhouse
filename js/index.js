@@ -1,5 +1,5 @@
-var SERVER_URL = "https://shm.sheynpartners.com/api";
-var SERVER_IMG_EXHIBITS_URL = "http://shm.sheynpartners.com/api/Content/Images/Exhibits";
+var SERVER_URL = "http://schoolhouse.hnhexpresssolutions.com";/* "https://shm.sheynpartners.com/api"; */
+/* var SERVER_IMG_EXHIBITS_URL = "http://shm.sheynpartners.com/api/Content/Images/Exhibits"; */
 var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
 
 
@@ -1195,7 +1195,7 @@ async function fetchEvents() {
     }
 }
 
-async function fetchExhibits() {
+/* async function fetchExhibits() {
     try {
         const response = await fetch(`${SERVER_URL}/exhibits`);
         if (!response.ok) {
@@ -1208,7 +1208,7 @@ async function fetchExhibits() {
     } finally {
         showSkeleton(false, 'exhibits-content', 'skeleton-exhibits-item');
     }
-}
+} */
 
 function showSkeleton(show, containerId, skeletonClass) {
     const container = document.getElementById(containerId);
@@ -1462,8 +1462,7 @@ function getSortedEventsByClosestDate(events) {
         .slice(0, 5);
 }
 
-
-function displayExhibits(data) {
+/* function displayExhibits(data) {
     const container = document.getElementById('exhibits-content');
     container.innerHTML = '';
 
@@ -1483,6 +1482,7 @@ function displayExhibits(data) {
         container.appendChild(div);
     }
 }
+ */
 
 async function fetchEventDetails(eventId) {
     try {
