@@ -426,7 +426,7 @@ main {
             width: 100%;
             overflow: hidden;
             /* border-radius: 8px; */
-           /*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */ 
+            /*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
             img {
                 width: 100%;
@@ -859,6 +859,7 @@ main {
     .p-underline {
         font-weight: bold;
         color: $dark-blue;
+        scroll-margin-top: 100px;
     }
 
     .common-subtitle {
@@ -869,55 +870,97 @@ main {
         padding-bottom: 20px;
     }
 
-    .lobby-section {
+    #second-floor-exhibits {
+        scroll-margin-top: 130px;
+    }
+
+    .exhibits-items-section {
         display: flex;
-        width: 100%;
-        gap: 30px;
+        flex-direction: column;
 
-        @media (max-width: 992px) {
-            flex-wrap: wrap;
-        }
-    }
-
-    .lobby-section-item div:first-child {
-        max-width: 500px;
-        min-width: 280px;
-        overflow: hidden;
-
-
-        img {
-            transition: transform 0.5s ease;
+        .exhibits-items-imgs {
             width: 100%;
-        }
-    }
+            display: flex;
+            margin: 30px 0;
+            justify-content: space-between;
+            gap: 40px;
 
-    .lobby-section-item div:last-child {
-        padding: 20px 0;
-        color: $dark-blue;
-        letter-spacing: 1px;
+            div {
+                max-width: calc(100svw / 3);
+                overflow: hidden;
+                cursor: pointer;
 
-        h5 {
-            transition: color 0.5s ease;
-        }
-    }
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease-in-out;
+                }
 
-    .lobby-section-item {
-        cursor: pointer;
-
-        &:hover {
-            img {
-                transform: scale(1.1);
+                &:hover {
+                    img {
+                        transform: scale(1.05);
+                    }
+                }
             }
 
-            h5 {
-                color: $light-blue;
+            @media (max-width: 700px) {
+                flex-direction: column;
+
+                div {
+                    max-width: 100%;
+                    width: 100%;
+                }
+            }
+        }
+
+        .custom-2 {
+            display: flex;
+            gap: 20px;
+
+            div {
+                flex: 1 1 calc(50% - 10px) !important;
+                max-width: none;
+            }
+        }
+
+        .exhibits-items-imgs-custom-4 {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+
+            div {
+                flex: 1 1 calc(50% - 10px);
+                box-sizing: border-box;
+                overflow: hidden;
+                cursor: pointer;
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s ease-in-out;
+                }
+
+                &:hover {
+                    img {
+                        transform: scale(1.05);
+                    }
+                }
             }
 
-        }
-    }
+            @media (max-width: 500px) {
+                flex-direction: column;
 
-    .modal-title {
-        color: $dark-blue;
+                div {
+                    max-width: 100%;
+                    width: 100%;
+                }
+            }
+        }
     }
 }
 
@@ -1361,6 +1404,52 @@ main {
         svg {
             transform: rotate(180deg);
             transition: transform 0.3s ease;
+        }
+    }
+
+    .field-trip-topics-container {
+        display: flex;
+        gap: 40px;
+
+        div {
+            flex: 50;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 15px;
+
+            div {
+                flex: 1 1;
+            }
+        }
+    }
+
+    .field-trip-2-container {
+        position: absolute;
+        top: 40%;
+        margin-top: 20px;
+        max-width: 300px;
+        border-radius: 8px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+
+            position: relative;
+            margin: 0 auto;
+            margin-top: 20px;
         }
     }
 }
@@ -1905,6 +1994,26 @@ main {
 
         &:hover {
             background-color: $dark-blue;
+        }
+    }
+
+    .membership-container {
+        display: flex;
+        gap: 50px;
+
+        div {
+            flex: 50;   
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            flex-direction: column;
+            gap: 15px;
         }
     }
 }
