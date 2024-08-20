@@ -785,16 +785,16 @@ body._pc .menu-list > li:hover .menu-sub-list {
     background-color: #ba2c36;
   }
   .menu-list > li:nth-child(5):hover {
-    background-color: #008CD2;
+    background-color: #336699;
   }
   .menu-list > li:nth-child(6):hover {
-    background-color: #ED7A1F;
+    background-color: #663399;
   }
   .menu-list > li:nth-child(7):hover {
-    background-color: #95CDE7;
+    background-color: #16A637;
   }
   .menu-list > li:nth-child(8):hover {
-    background-color: #ba2c36;
+    background-color: #FF66C4;
   }
 }
 main {
@@ -2081,11 +2081,11 @@ main p {
   padding-top: 30px;
 }
 .about .blue {
-  color: #008CD2;
+  color: #336699;
 }
 .about .about-subtitles {
   font-size: 1.5rem;
-  color: #008CD2;
+  color: #336699;
   margin-top: 40px;
   margin-bottom: 16px;
 }
@@ -2099,10 +2099,10 @@ main p {
 }
 .about .p-underline {
   font-weight: bold;
-  color: #008CD2;
+  color: #336699;
 }
 .about b {
-  color: #008CD2;
+  color: #336699;
   font-size: 20px;
 }
 .about .about-board-directors {
@@ -2133,7 +2133,7 @@ main p {
   position: absolute;
   top: 10px;
   left: -15px;
-  background-color: #008CD2;
+  background-color: #336699;
   height: 10px;
   width: 10px;
   border-radius: 50%;
@@ -2274,19 +2274,23 @@ main p {
 .donate {
   padding-top: 30px;
 }
+.join .purple,
+.donate .purple {
+  color: #663399;
+}
 .join select,
 .donate select {
   height: 45px;
 }
 .join b,
 .donate b {
-  color: #ED7A1F;
+  color: #663399;
   font-size: 20px;
 }
 .join .p-underline,
 .donate .p-underline {
   font-weight: bold;
-  color: #ED7A1F;
+  color: #663399;
 }
 .join .msg-red,
 .donate .msg-red {
@@ -2338,7 +2342,7 @@ main p {
 .donate p svg {
   margin-left: 7px;
   margin-bottom: 7px;
-  fill: #ED7A1F;
+  fill: #663399;
   transition: transform 0.3s ease;
 }
 .join p.rotate-chevrone svg,
@@ -2638,8 +2642,11 @@ main p {
   width: 100%;
   overflow: hidden;
 }
+.support .green {
+  color: #16A637;
+}
 .support b {
-  color: #95CDE7;
+  color: #16A637;
   font-size: 20px;
 }
 .support .support-request-btn {
@@ -2701,14 +2708,14 @@ main p {
   padding-top: 30px;
 }
 .volunteer b {
-  color: #ba2c36;
+  color: #FF66C4;
   font-size: 20px;
 }
 .volunteer .mb-16 {
   text-decoration: underline;
 }
 .volunteer .p-underline {
-  color: #ba2c36;
+  color: #FF66C4;
 }
 .volunteer .volunteer-pdf-btn-container {
   display: flex;
@@ -2741,6 +2748,44 @@ main p {
   .volunteer .volunteer-pdf-btn-container {
     gap: 20px;
     flex-direction: column;
+  }
+}
+.volunteer .teen-volunteer-container {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+.volunteer .teen-volunteer-container .teen-volunteer-content-container {
+  min-width: 500px;
+}
+@media (max-width: 1024px) {
+  .volunteer .teen-volunteer-container .teen-volunteer-content-container {
+    min-width: 100px;
+  }
+}
+.volunteer .teen-volunteer-container .teen-volunteer-img-container {
+  max-width: 500px;
+}
+.volunteer .teen-volunteer-container .teen-volunteer-img-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.volunteer .teen-volunteer-container .adult-volunteer-img-container {
+  max-width: 500px;
+}
+.volunteer .teen-volunteer-container .adult-volunteer-img-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 1024px) {
+  .volunteer .teen-volunteer-container {
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
   }
 }
 
