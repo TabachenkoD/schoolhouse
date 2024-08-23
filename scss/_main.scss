@@ -2152,6 +2152,7 @@ main {
         display: flex;
         gap: 50px;
         margin-bottom: 50px;
+
         .teen-volunteer-content-container {
             min-width: 500px;
 
@@ -2501,4 +2502,30 @@ main {
         padding: 16px 22px;
         width: 100%;
     }
+}
+
+.events {
+    padding-top: 50px;
+
+    .events-text-section {
+        position: relative;
+        border: 3px solid $orange;
+        border-radius: 8px;
+        margin-bottom: 40px;
+
+        div {
+            padding: 10px;
+            padding-top: 40px;
+        }
+
+        h4 {
+            display: block;
+            background-color: $white;
+            position: absolute;
+            padding-right: 10px;
+            top: -15px;
+            left: -4px;
+        }
+    }
+
 }

@@ -3063,6 +3063,28 @@ main p {
   }
 }
 
+.events {
+  padding-top: 50px;
+}
+.events .events-text-section {
+  position: relative;
+  border: 3px solid #ED7A1F;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+.events .events-text-section div {
+  padding: 10px;
+  padding-top: 40px;
+}
+.events .events-text-section h4 {
+  display: block;
+  background-color: #FBFDFB;
+  position: absolute;
+  padding-right: 10px;
+  top: -15px;
+  left: -4px;
+}
+
 footer {
   background-color: #008CD2;
   width: 100%;
