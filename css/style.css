@@ -2078,7 +2078,7 @@ main p {
 }
 
 .about {
-  padding-top: 30px;
+  padding-top: 50px;
 }
 .about .blue {
   color: #336699;
@@ -2215,13 +2215,16 @@ main p {
   display: flex;
   justify-content: center;
   gap: 80px;
-  padding: 80px 0 20px 0;
+  padding: 50px 0 20px 0;
 }
 .about .history-line-container .history-line-item {
   padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.about .history-line-container .history-line-item span {
+  margin-bottom: 25px;
 }
 .about .history-line-container .history-line-item div {
   cursor: pointer;
@@ -2267,6 +2270,36 @@ main p {
 @media (max-width: 1000px) {
   .about .history-line-container {
     gap: 40px;
+  }
+}
+.about .about-top-contaioner {
+  display: flex;
+  gap: 100px;
+}
+.about .about-top-contaioner .about-top-text-contaioner {
+  flex: 70;
+}
+.about .about-top-contaioner .about-top-img-contaioner {
+  flex: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.about .about-top-contaioner .about-top-img-contaioner div {
+  max-height: 250px;
+}
+.about .about-top-contaioner .about-top-img-contaioner div img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .about .about-top-contaioner {
+    gap: 20px;
+    flex-direction: column;
+  }
+  .about .about-top-contaioner .about-top-img-contaioner {
+    flex-direction: row;
   }
 }
 

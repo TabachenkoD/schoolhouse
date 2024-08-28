@@ -1455,7 +1455,7 @@ main {
 }
 
 .about {
-    padding-top: 30px;
+    padding-top: 50px;
 
     .blue {
         color: #336699;
@@ -1612,13 +1612,17 @@ main {
         display: flex;
         justify-content: center;
         gap: 80px;
-        padding: 80px 0 20px 0;
+        padding: 50px 0 20px 0;
 
         .history-line-item {
             padding-top: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+
+            span {
+                margin-bottom: 25px;
+            }
 
             div {
                 cursor: pointer;
@@ -1676,6 +1680,43 @@ main {
 
         @media (max-width: 1000px) {
             gap: 40px;
+        }
+    }
+
+    .about-top-contaioner {
+        display: flex;
+        gap: 100px;
+
+        .about-top-text-contaioner {
+            flex: 70;
+        }
+
+        .about-top-img-contaioner {
+            flex: 30;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            div {
+                max-height: 250px;
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            gap: 20px;
+            flex-direction: column;
+
+            .about-top-img-contaioner {
+                flex-direction: row;
+
+            }
+
         }
     }
 }
