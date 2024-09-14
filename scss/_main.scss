@@ -2569,4 +2569,199 @@ main {
         }
     }
 
+    .sponsorship-container {
+        padding: 50px 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 100px;
+
+        .sponsorship-top-row,
+        .sponsorship-botom-row {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+
+            div {
+                max-width: 450px;
+                width: 100%;
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            .sponsor-btn-container {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+
+                .sponsor-btn {
+                    border-radius: 8px;
+                    background-color: $orange;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: fit-content;
+                    transition: background-color 0.3s;
+                    cursor: pointer;
+
+                    a {
+                        color: $white;
+                        padding: 20px 30px;
+                        font-size: 30px;
+                        font-weight: 700;
+
+                        @media (max-width: 787px) {
+                            font-size: 24px;
+                            padding: 14px 26px;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: $orange-btn-hover;
+
+                    }
+                }
+            }
+
+            @media (max-width: 787px) {
+                gap: 50px;
+            }
+        }
+
+        .sponsorship-top-row {
+            @media (max-width: 525px) {
+                justify-content: center;
+                align-items: center;
+                flex-direction: column-reverse;
+            }
+        }
+
+        .sponsorship-botom-row {
+            @media (max-width: 525px) {
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 787px) {
+            gap: 50px;
+        }
+    }
+
+    .ffd-sponsors-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        width: 100%;
+        height: 150px;
+    }
+
+    .previous-event-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 0;
+
+        .previous-event-carusels-container {
+            padding-top: 50px;
+            display: flex;
+            gap: 100px;
+
+            .left-slider-container {
+                flex: 50;
+
+                p {
+                    padding-top: 15px;
+                    text-align: center;
+                    color: $orange;
+                    font-size: 20px;
+                }
+            }
+
+            .right-slider-container {
+                flex: 50;
+
+                p {
+                    padding-top: 15px;
+                    text-align: center;
+                    color: $orange;
+                    font-size: 20px;
+                }
+            }
+
+            .carousel-indicators [data-bs-target] {
+                background-color: rgba(237, 122, 31, 0.5);
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+            }
+
+            .carousel-indicators .active {
+                background-color: #ED7A1F;
+                opacity: 1;
+            }
+
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                filter: invert(48%) sepia(94%) saturate(4564%) hue-rotate(2deg) brightness(96%) contrast(103%);
+            }
+
+            @media (max-width: 900px) {
+                gap: 30px;
+            }
+
+            @media (max-width: 600px) {
+                gap: 30px;
+                flex-direction: column;
+            }
+        }
+    }
+
+    .previous-sponsor-container {
+        .sponsors {
+            overflow: hidden;
+            position: relative;
+
+            .sponsors-title {
+                font-size: $font-size-large;
+                line-height: 2.5rem;
+                text-align: center;
+                margin: 50px 0;
+            }
+
+            .sponsors-slider {
+                display: inline-block;
+                white-space: nowrap;
+                animation: scroll 60s linear infinite;
+            }
+
+            .slider-img {
+                display: inline-block;
+                margin: 0 20px;
+                height: 80px;
+
+                img {
+                    height: 100%;
+                    width: auto;
+                }
+            }
+
+            @keyframes scroll {
+                from {
+                    transform: translateX(0);
+                }
+
+                to {
+                    transform: translateX(-50%);
+                }
+            }
+        }
+    }
 }
