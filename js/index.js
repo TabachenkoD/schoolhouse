@@ -124,27 +124,352 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    const membershipRadios = document.querySelectorAll('input[name="membership"]');
-    if (membershipRadios.length > 0) {
-        function updateMembershipOptions() {
-            const selectedMembership = document.querySelector('input[name="membership"]:checked');
-            const familyOptions = document.querySelectorAll('.membership-type-family-option');
-            const grandparentOptions = document.querySelectorAll('.membership-type-grandparent-option');
+    const joinForm = document.querySelector('#join-form');
+    if (joinForm) {
+        let currentMembershipId = null;
+        const joinButtons = document.querySelectorAll('.join-btn');
 
-            familyOptions.forEach(option => option.style.display = 'none');
-            grandparentOptions.forEach(option => option.style.display = 'none');
+        joinButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const membershipId = parseInt(this.getAttribute('data-membership-id'));
+                openMembershipModal(membershipId);
+            });
+        });
 
-            if (selectedMembership?.id === 'membership-family') {
-                familyOptions.forEach(option => option.style.display = 'block');
-            } else if (selectedMembership?.id === 'membership-grandparent') {
-                grandparentOptions.forEach(option => option.style.display = 'block');
+        function openMembershipModal(membershipId) {
+            currentMembershipId = membershipId;
+            const memberSection = document.querySelector('#exampleModal .modal-body .member-section-form');
+            let kidsCount = 0;
+            memberSection.innerHTML = '';
+
+            const adultsContainer = document.createElement('div');
+            adultsContainer.classList.add('row', 'adults-container');
+
+            if ([1, 4, 5].includes(membershipId)) {
+                adultsContainer.appendChild(createAdultFields(1));
+                adultsContainer.appendChild(createAdultFields(2));
+                kidsCount = 5;
+            } else if ([2, 3].includes(membershipId)) {
+                adultsContainer.appendChild(createAdultFields(1));
+                adultsContainer.appendChild(createAdultFields(2));
+                adultsContainer.appendChild(createAdultFields(3));
+                kidsCount = 10;
             }
+
+            memberSection.appendChild(adultsContainer);
+
+            const hr = document.createElement('hr');
+            hr.classList.add('my-3');
+            memberSection.appendChild(hr);
+
+            const childContainer = document.createElement('div');
+            childContainer.classList.add('row', 'adults-container');
+
+            for (let i = 1; i <= kidsCount; i++) {
+                const isRequired = i === 1;
+                childContainer.appendChild(createChildFields(i, isRequired));
+            }
+
+            memberSection.appendChild(childContainer);
         }
 
-        membershipRadios.forEach(radio => {
-            radio.addEventListener('change', updateMembershipOptions);
+        function createAdultFields(index) {
+            const col = document.createElement('div');
+            col.classList.add('col-12', 'col-md-6', 'adult-member');
+
+            const container = document.createElement('div');
+            container.classList.add('pt-3');
+
+            let titleText = '';
+            if (index === 1) {
+                titleText = 'Primary Adult Member';
+            } else if (index === 2) {
+                titleText = 'Second Adult Member';
+            } else if (index === 3) {
+                titleText = 'Third Adult Member';
+            } else {
+                titleText = `Adult Member ${index}`;
+            }
+
+            const title = document.createElement('p');
+            title.classList.add('p-underline');
+            title.textContent = titleText;
+            container.appendChild(title);
+
+            container.appendChild(createFormGroup(`adult${index}-firstName`, 'First Name', true));
+            container.appendChild(createFormGroup(`adult${index}-lastName`, 'Last Name', true));
+            container.appendChild(createFormGroup(`adult${index}-phone`, 'Phone Number', true));
+            container.appendChild(createFormGroup(`adult${index}-email`, 'Email Address', true, 'email'));
+            col.appendChild(container);
+
+            return col;
+        }
+
+        function createChildFields(index, isRequired) {
+            const col = document.createElement('div');
+            col.classList.add('col-12', 'col-md-6', 'adult-member');
+
+            const container = document.createElement('div');
+            container.classList.add('pt-3');
+
+            const title = document.createElement('p');
+            title.classList.add('p-underline');
+            title.textContent = `Child ${index}`;
+            container.appendChild(title);
+
+            container.appendChild(createFormGroup(`child${index}-firstName`, 'First Name', isRequired));
+            container.appendChild(createFormGroup(`child${index}-lastName`, 'Last Name', isRequired));
+            container.appendChild(createFormGroup(`child${index}-birthday`, 'Birthday (month/day/year)', isRequired, 'date'));
+            col.appendChild(container);
+
+            return col;
+        }
+
+        function createFormGroup(id, labelText, isRequired, type = 'text') {
+            const formGroup = document.createElement('div');
+            formGroup.classList.add('mb-3');
+
+            const label = document.createElement('label');
+            label.setAttribute('for', id);
+            label.classList.add('form-label');
+            label.innerHTML = labelText + (isRequired ? '' : ' <span class="text-body-secondary">(Optional)</span>');
+            formGroup.appendChild(label);
+
+            const input = document.createElement('input');
+            input.setAttribute('type', type);
+            input.classList.add('form-control');
+            input.id = id;
+            input.name = id;
+            if (isRequired) {
+                input.setAttribute('required', 'required');
+            }
+
+            if (labelText === 'Phone Number') {
+                input.setAttribute('pattern', '^[0-9\\(\\)\\+\\- ]+$');
+                input.setAttribute('inputmode', 'tel');
+            }
+
+            if (labelText === 'Email Address') {
+                input.setAttribute('type', 'email');
+                input.setAttribute('placeholder', 'email@example.com');
+                input.setAttribute('pattern', '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$');
+            }
+
+            formGroup.appendChild(input);
+
+            if (isRequired) {
+                const invalidFeedback = document.createElement('div');
+                invalidFeedback.classList.add('invalid-feedback');
+
+                if (labelText === 'Phone Number') {
+                    invalidFeedback.textContent = 'Please enter a valid phone number.';
+                } else if (labelText === 'Email Address') {
+                    invalidFeedback.textContent = 'Please enter a valid email address.';
+                } else {
+                    invalidFeedback.textContent = `Valid ${labelText.toLowerCase()} is required.`;
+                }
+
+                formGroup.appendChild(invalidFeedback);
+            }
+
+            return formGroup;
+        }
+
+        document.getElementById('join-submit-button').addEventListener('click', function (event) {
+            const form = document.getElementById('join-form');
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                form.classList.add('was-validated');
+
+                const firstInvalidField = form.querySelector(':invalid');
+                if (firstInvalidField) {
+                    firstInvalidField.focus();
+                }
+            } else {
+                event.preventDefault();
+                submitFormData();
+            }
+
+            function submitFormData() {
+                const memberInfo = {
+                    FirstName: document.getElementById('adult1-firstName').value,
+                    LastName: document.getElementById('adult1-lastName').value,
+                    Phone: document.getElementById('adult1-phone').value,
+                    Email: document.getElementById('adult1-email').value
+                };
+
+                const billingInfo = collectBillingInfo(memberInfo);
+                const mailingInfo = collectMailingInfo(memberInfo, billingInfo);
+                const paymentInfo = collectPaymentInfo();
+                const additionalMembers = collectAdditionalMembers();
+
+                const data = {
+                    MembershipType: currentMembershipId,
+                    MemberInfo: memberInfo,
+                    MemberBillingInfo: billingInfo,
+                    MemberMailingInfo: mailingInfo || billingInfo,
+                    MemberPaymentInfo: paymentInfo,
+                    AdditionalMembers: additionalMembers
+                };
+                console.log(data)
+                fetch(`${SERVER_URL}/members/members/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Membership form submitted successfully!');
+                            form.reset();
+                            form.classList.remove('was-validated');
+                            /* const modalElement = document.getElementById('exampleModal');
+                            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                            modalInstance.hide(); */
+                        } else {
+                            response.json().then(errorData => {
+                                console.error('Server Error:', errorData);
+                                alert('Error submitting membership form: ' + (errorData.message || 'Unknown error.'));
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Network Error:', error);
+                        alert('Network error submitting membership form.');
+                    });
+            }
+
+            function collectAdditionalMembers() {
+                const additionalMembers = [];
+
+                let totalAdults = 1;
+                if ([1, 4, 5].includes(currentMembershipId)) {
+                    totalAdults = 2;
+                } else if ([2, 3].includes(currentMembershipId)) {
+                    totalAdults = 3;
+                }
+
+                for (let i = 2; i <= totalAdults; i++) {
+                    const firstName = document.getElementById(`adult${i}-firstName`).value;
+                    const lastName = document.getElementById(`adult${i}-lastName`).value;
+                    if (firstName || lastName) {
+                        additionalMembers.push({
+                            FirstName: firstName,
+                            LastName: lastName,
+                            Dob: null,
+                            Relationship: 'Adult Member',
+                            IsChildren: false
+                        });
+                    }
+                }
+
+                let kidsCount = 0;
+                if ([1, 4, 5].includes(currentMembershipId)) {
+                    kidsCount = 5;
+                } else if ([2, 3].includes(currentMembershipId)) {
+                    kidsCount = 10;
+                }
+
+                for (let i = 1; i <= kidsCount; i++) {
+                    const firstName = document.getElementById(`child${i}-firstName`).value;
+                    const lastName = document.getElementById(`child${i}-lastName`).value;
+                    const dob = document.getElementById(`child${i}-birthday`).value;
+                    if (firstName || lastName || dob) {
+                        additionalMembers.push({
+                            FirstName: firstName,
+                            LastName: lastName,
+                            Dob: dob,
+                            Relationship: 'Child',
+                            IsChildren: true
+                        });
+                    }
+                }
+
+                return additionalMembers;
+            }
+
+            function collectBillingInfo(memberInfo) {
+                const billingCountry = document.getElementById('billing-country').value;
+                let stateProvince = '';
+                let zipPostalCode = '';
+                let country = billingCountry;
+                let address1 = document.getElementById('billing-address-1').value;
+                let address2 = document.getElementById('billing-address-2').value;
+                let city = document.getElementById('billing-city').value;
+
+                if (billingCountry === 'United States') {
+                    stateProvince = document.getElementById('billing-state').value;
+                    zipPostalCode = document.getElementById('billing-zip').value;
+                } else if (billingCountry === 'Canada') {
+                    stateProvince = document.getElementById('billing-province').value;
+                    zipPostalCode = document.getElementById('billing-code').value;
+                } else { // Other countries
+                    country = document.getElementById('billing-country-other').value;
+                    stateProvince = document.getElementById('billing-region-other').value;
+                    zipPostalCode = document.getElementById('billing-code-other').value;
+                }
+
+                return {
+                    FirstName: document.getElementById('billing-firstName').value,
+                    LastName: document.getElementById('billing-lastName').value,
+                    Email: memberInfo.Email,
+                    Phone: memberInfo.Phone,
+                    Country: country,
+                    Address1: address1,
+                    Address2: address2,
+                    City: city,
+                    StateProvince: stateProvince,
+                    ZipPostalCode: zipPostalCode
+                };
+            }
+
+            function collectPaymentInfo() {
+                const cardTypeInputs = document.querySelectorAll('input[name="card-type"]');
+                let cardType = '';
+                cardTypeInputs.forEach(input => {
+                    if (input.checked) {
+                        cardType = input.id.replace('card-type-', '');
+                    }
+                });
+
+                return {
+                    CardType: cardType,
+                    CardNumber: document.getElementById('card-number').value,
+                    CardExpMonth: document.getElementById('exp-month').value,
+                    CardExpYear: parseInt(document.getElementById('exp-year').value),
+                    CardCvv: document.getElementById('card-verification').value
+                };
+            }
+
+            function collectMailingInfo(memberInfo, billingInfo) {
+                const address1 = document.getElementById('mailing-address').value;
+                const address2 = document.getElementById('mailing-address-2').value;
+                const city = document.getElementById('mailing-address-city').value;
+                const stateProvince = document.getElementById('mailing-address-state').value;
+                const zipPostalCode = document.getElementById('mailing-address-zip').value;
+
+                if (!address1 && !address2 && !city && !stateProvince && !zipPostalCode) {
+                    return null;
+                }
+
+                const country = billingInfo.Country;
+
+                return {
+                    FirstName: memberInfo.FirstName,
+                    LastName: memberInfo.LastName,
+                    Email: memberInfo.Email,
+                    Phone: memberInfo.Phone,
+                    Country: country,
+                    Address1: address1,
+                    Address2: address2,
+                    City: city,
+                    StateProvince: stateProvince,
+                    ZipPostalCode: zipPostalCode
+                };
+            }
         });
-        updateMembershipOptions();
     }
 
     const billingCountrySelects = document.querySelectorAll('.billing-country-select');
@@ -1271,8 +1596,8 @@ function displayEvents(data) {
 
                         document.getElementById('requirePayment').innerHTML = '';
                         document.getElementById('free-admission-container').classList.add('hidden');
-                        document.getElementById('price-for-member').innerHTML= "";
-                        document.getElementById('price-for-non-member').innerHTML= "";
+                        document.getElementById('price-for-member').innerHTML = "";
+                        document.getElementById('price-for-non-member').innerHTML = "";
 
                         const container = document.getElementById('children-details-container');
                         container.innerHTML = '';

@@ -1855,12 +1855,33 @@ main {
         -webkit-overflow-scrolling: touch;
     }
 
-    .member-section-form {
+    .form-label {
+        margin-bottom: 0;
+    }
+    .adults-container {
         display: flex;
-        gap: 50px;
+        flex-wrap: wrap;
 
-        @media (max-width: 768px) {
-            flex-direction: column;
+        .p-underline {
+            margin-bottom: 12px;
+        }
+    }
+
+    .adult-member {
+        flex: 1 1 50%;
+        max-width: 400px;
+    }
+
+    @media (max-width: 992px) {
+        .adult-member {
+            max-width: 245px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .adult-member {
+            flex: 1 1 100%;
+            max-width: none;
         }
     }
 
@@ -2059,6 +2080,22 @@ main {
         @media (max-width: 1024px) {
             flex-direction: column;
             gap: 15px;
+        }
+    }
+
+    .join-btn {
+        width: fit-content;
+        background-color: #663399;
+        border: none;
+        border-radius: 8px;
+        color: $white;
+        font-size: 20px;
+        padding: 10px 40px;
+        margin: 0 auto;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #8a43d1;
         }
     }
 }
