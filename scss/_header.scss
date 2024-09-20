@@ -167,7 +167,8 @@ header {
 }
 
 .menu-list,
-.menu-sub-list {
+.menu-sub-list-visit,
+.menu-sub-list-calendar {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -175,7 +176,7 @@ header {
     text-transform: uppercase;
 }
 
-.menu-sub-list {
+.menu-sub-list-visit {
     font-size: $font-size-small-medium;
     line-height: 1.3;
     opacity: 0;
@@ -211,6 +212,42 @@ header {
     }
 }
 
+.menu-sub-list-calendar {
+    font-size: $font-size-small-medium;
+    line-height: 1.3;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease 0s;
+    z-index: 5;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    padding: 8px;
+    background-color: $orange;
+
+    & li>a {
+        color: $white;
+    }
+
+    @media (min-width: 1380px) {
+        min-width: 220px;
+    }
+
+    @media (max-width: 1024px) {
+        display: none;
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        background-color: $white;
+
+        & li>a {
+            color: $orange;
+        }
+    }
+}
+
 .menu-list {
     display: flex;
     align-items: center;
@@ -231,7 +268,7 @@ header {
         }
 
         @media (min-width: 1024px) {
-            &:has(.menu-sub-list):hover {
+            &:has(.menu-sub-list-visit):hover {
                 background-color: $dark-blue;
                 color: $white;
 
@@ -239,11 +276,19 @@ header {
                     color: $white;
                 }
             }
+
+            &:has(.menu-sub-list-calendar):hover {
+                background-color: $orange;
+                color: $white;
+
+                .menu-link {
+                    color: $white;
+                }
+            }
+
         }
 
-        &:hover>a {
-            color: $light-blue;
-        }
+
     }
 
     @media (max-width: 1024px) {
@@ -254,7 +299,28 @@ header {
 
 }
 
-body._pc .menu-list>li:hover .menu-sub-list {
+.menu-sub-list-visit {
+    & li {
+        &:hover>a {
+            color: $light-blue;
+        }
+    }
+}
+
+.menu-sub-list-calendar {
+    & li {
+        &:hover>a {
+            color: #feb77c;
+        }
+    }
+}
+
+body._pc .menu-list>li:hover .menu-sub-list-visit {
+    opacity: 1;
+    visibility: visible;
+}
+
+body._pc .menu-list>li:hover .menu-sub-list-calendar {
     opacity: 1;
     visibility: visible;
 }
@@ -317,7 +383,7 @@ body._pc .menu-list>li:hover .menu-sub-list {
 }
 
 @media (min-width: 1024px) {
-    .menu-list > li:hover {
+    .menu-list>li:hover {
         color: $white;
 
         .menu-link {
@@ -325,31 +391,38 @@ body._pc .menu-list>li:hover .menu-sub-list {
         }
     }
 
-    .menu-list > li:nth-child(2):hover { // Calendar
+    .menu-list>li:nth-child(2):hover {
+        // Calendar
         background-color: $orange;
     }
 
-    .menu-list > li:nth-child(3):hover { // Party
+    .menu-list>li:nth-child(3):hover {
+        // Party
         background-color: $light-blue;
     }
 
-    .menu-list > li:nth-child(4):hover { // Education
+    .menu-list>li:nth-child(4):hover {
+        // Education
         background-color: $red;
     }
 
-    .menu-list > li:nth-child(5):hover { // About
+    .menu-list>li:nth-child(5):hover {
+        // About
         background-color: #336699;
     }
 
-    .menu-list > li:nth-child(6):hover { // Join
+    .menu-list>li:nth-child(6):hover {
+        // Join
         background-color: #663399;
     }
 
-    .menu-list > li:nth-child(7):hover { // Support
+    .menu-list>li:nth-child(7):hover {
+        // Support
         background-color: #16A637;
     }
 
-    .menu-list > li:nth-child(8):hover { // Volunteer
+    .menu-list>li:nth-child(8):hover {
+        // Volunteer
         background-color: #FF66C4;
     }
 }
