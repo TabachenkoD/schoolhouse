@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     AdditionalMembers: additionalMembers
                 };
                 console.log(data)
-                fetch(`${SERVER_URL}/members/members/create`, {
+                fetch(`${SERVER_URL}/members/create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1451,6 +1451,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 const nonMemberPriceValue = nonMemberPrice.replace(/[^\d]/g, '');
                 totalAmountDue.value = nonMemberPriceValue;
             }
+        });
+    }
+
+    /* events page */
+    const sponsorshipImages = document.querySelectorAll('.sponsorship-container img');
+    if(sponsorshipImages.length > 0) {
+        const modalImage = document.getElementById('modalImage');
+
+        sponsorshipImages.forEach(image => {
+            image.addEventListener('click', function () {
+                modalImage.src = this.src;
+                const myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+                myModal.show();
+            });
         });
     }
 });
