@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
     menuItemsWithSubmenu.forEach(item => {
-        const submenu = item.querySelector('.menu-sub-list');
+        const submenu = item.querySelector('.menu-sub-list-visit');
+        const submenuCalendar = item.querySelector('.menu-sub-list-calendar');
         const link = item.querySelector('.menu-link');
 
         link.addEventListener('click', function (event) {
@@ -31,7 +32,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.stopPropagation();
             }
         });
+
+        link.addEventListener('click', function (event) {
+            if (submenuCalendar && event.target === link) {
+                event.preventDefault();
+                const isVisible = submenuCalendar.style.display === 'block';
+
+                document.querySelectorAll('.menu-sub-list').forEach(sub => {
+                    if (sub !== submenuCalendar) {
+                        sub.style.display = 'none';
+                    }
+                });
+                submenuCalendar.style.display = isVisible ? 'none' : 'block';
+                event.stopPropagation();
+            }
+        });
     });
+    /* document.querySelectorAll('.menu-list > li').forEach(item => {
+        const submenuVisit = item.querySelector('.menu-sub-list-visit');
+        const submenuCalendar = item.querySelector('.menu-sub-list-calendar');
+        const link = item.querySelector('.menu-link');
+    
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+    
+            document.querySelectorAll('.menu-sub-list-visit, .menu-sub-list-calendar').forEach(sub => {
+                if (sub !== submenuVisit && sub !== submenuCalendar) {
+                    sub.style.opacity = '0';
+                    sub.style.visibility = 'hidden';
+                }
+            });
+    
+            if (submenuVisit || submenuCalendar) {
+                const submenu = submenuVisit || submenuCalendar;
+                const isVisible = submenu.style.opacity === '1';
+    
+                submenu.style.opacity = isVisible ? '0' : '1';
+                submenu.style.visibility = isVisible ? 'hidden' : 'visible';
+            }
+    
+            event.stopPropagation();
+        });
+    
+        document.addEventListener('click', function () {
+            document.querySelectorAll('.menu-sub-list-visit, .menu-sub-list-calendar').forEach(sub => {
+                sub.style.opacity = '0';
+                sub.style.visibility = 'hidden';
+            });
+        });
+    }); */
 
     const iconMenu = document.querySelector('.menu-icon');
     if (iconMenu) {
