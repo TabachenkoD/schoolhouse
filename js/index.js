@@ -48,39 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    /* document.querySelectorAll('.menu-list > li').forEach(item => {
-        const submenuVisit = item.querySelector('.menu-sub-list-visit');
-        const submenuCalendar = item.querySelector('.menu-sub-list-calendar');
-        const link = item.querySelector('.menu-link');
-    
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-    
-            document.querySelectorAll('.menu-sub-list-visit, .menu-sub-list-calendar').forEach(sub => {
-                if (sub !== submenuVisit && sub !== submenuCalendar) {
-                    sub.style.opacity = '0';
-                    sub.style.visibility = 'hidden';
-                }
-            });
-    
-            if (submenuVisit || submenuCalendar) {
-                const submenu = submenuVisit || submenuCalendar;
-                const isVisible = submenu.style.opacity === '1';
-    
-                submenu.style.opacity = isVisible ? '0' : '1';
-                submenu.style.visibility = isVisible ? 'hidden' : 'visible';
-            }
-    
-            event.stopPropagation();
-        });
-    
-        document.addEventListener('click', function () {
-            document.querySelectorAll('.menu-sub-list-visit, .menu-sub-list-calendar').forEach(sub => {
-                sub.style.opacity = '0';
-                sub.style.visibility = 'hidden';
-            });
-        });
-    }); */
 
     const iconMenu = document.querySelector('.menu-icon');
     if (iconMenu) {
@@ -340,6 +307,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 submitFormData();
             }
 
+            function showToast(message, isSuccess) {
+                const toastEl = document.getElementById('myToast');
+                const toastMessage = document.getElementById('toast-message');
+
+                toastMessage.textContent = message;
+                toastEl.classList.remove('bg-success', 'bg-danger');
+                if (isSuccess) toastEl.classList.add('bg-success');
+                else toastEl.classList.add('bg-danger');
+
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }
+
             function submitFormData() {
                 const memberInfo = {
                     FirstName: document.getElementById('adult1-firstName').value,
@@ -361,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     MemberPaymentInfo: paymentInfo,
                     AdditionalMembers: additionalMembers
                 };
-                console.log(data)
+
                 fetch(`${SERVER_URL}/members/create`, {
                     method: 'POST',
                     headers: {
@@ -370,23 +350,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify(data)
                 })
                     .then(response => {
-                        if (response.ok) {
-                            alert('Membership form submitted successfully!');
+                        if (response.ok) return response.json();
+                    })
+                    .then(data => {
+                        if (data.length <= 24) {
+                            showToast('Membership form submitted successfully!', true);
                             form.reset();
                             form.classList.remove('was-validated');
-                            /* const modalElement = document.getElementById('exampleModal');
+                            const modalElement = document.getElementById('exampleModal');
                             const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                            modalInstance.hide(); */
+                            modalInstance.hide();
                         } else {
-                            response.json().then(errorData => {
-                                console.error('Server Error:', errorData);
-                                alert('Error submitting membership form: ' + (errorData.message || 'Unknown error.'));
-                            });
+                            showToast(data, false);
                         }
                     })
                     .catch(error => {
-                        console.error('Network Error:', error);
-                        alert('Network error submitting membership form.');
+                        showToast('Network error: Could not submit the form.', false);
                     });
             }
 
@@ -1505,7 +1484,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* events page */
     const sponsorshipImages = document.querySelectorAll('.sponsorship-container img');
-    if(sponsorshipImages.length > 0) {
+    if (sponsorshipImages.length > 0) {
         const modalImage = document.getElementById('modalImage');
 
         sponsorshipImages.forEach(image => {

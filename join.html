@@ -1100,14 +1100,22 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="join-submit-button" class="btn" style="color: #FBFDFB; background-color: #663399;">Submit</button>
+                            <button type="button" id="join-submit-button" class="btn"
+                                style="color: #FBFDFB; background-color: #663399;">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="myToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body d-flex justify-content-between">
+                    <strong id="toast-message" class="me-auto">Membership form submitted successfully!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
 
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
