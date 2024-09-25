@@ -433,9 +433,9 @@ a {
 }
 
 .fc-event.Grade-2 {
-  background-color: #f2de0a;
+  background-color: #3366CC;
   /* Yellow */
-  border-color: #f2de0a;
+  border-color: #3366CC;
 }
 
 .fc-event.All-Ages {
@@ -1738,7 +1738,7 @@ main p {
   cursor: pointer;
   margin-bottom: 3px;
   color: #FBFDFB;
-  padding-left: 4px;
+  padding: 5px 10px;
 }
 .calendar .fc-daygrid-event-dot {
   display: none !important;
