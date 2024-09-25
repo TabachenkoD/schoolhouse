@@ -2759,6 +2759,34 @@ main p {
 .donate .join-btn:hover {
   background-color: #8a43d1;
 }
+.join .membership-family-section,
+.donate .membership-family-section {
+  display: flex;
+  padding-bottom: 30px;
+  gap: 50px;
+}
+.join .membership-family-section .membership-family-section-left,
+.donate .membership-family-section .membership-family-section-left {
+  flex: 50%;
+}
+.join .membership-family-section .membership-family-section-right,
+.donate .membership-family-section .membership-family-section-right {
+  flex: 50%;
+  width: 100%;
+}
+.join .membership-family-section .membership-family-section-right img,
+.donate .membership-family-section .membership-family-section-right img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 1024px) {
+  .join .membership-family-section,
+  .donate .membership-family-section {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
 
 .support {
   padding-top: 30px;

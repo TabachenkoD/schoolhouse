@@ -2099,6 +2099,32 @@ main {
             background-color: #8a43d1;
         }
     }
+
+    .membership-family-section {
+        display: flex;
+        padding-bottom: 30px;
+        gap: 50px;
+
+        .membership-family-section-left {
+            flex: 50%;
+        }
+
+        .membership-family-section-right {
+            flex: 50%;
+            width: 100%;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            flex-direction: column;
+            gap: 30px;
+        }
+    }
 }
 
 .support {
@@ -2885,7 +2911,7 @@ main {
             }
         }
 
-        .ffd-sponsors-form-btn-container{
+        .ffd-sponsors-form-btn-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -2893,7 +2919,7 @@ main {
 
             .btn {
                 font-size: 22px;
-                color: #FBFDFB; 
+                color: #FBFDFB;
                 background-color: #008CD2;
                 transition: background-color 0.3s ease;
 
