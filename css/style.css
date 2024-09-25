@@ -3388,6 +3388,111 @@ main p {
   }
 }
 
+.events-sponsors {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.events-sponsors .ffd-sponsors-logo-container {
+  max-width: 400px;
+  width: 100%;
+}
+.events-sponsors .ffd-sponsors-logo-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.events-sponsors .ffd-sponsors-form-container {
+  max-width: 600px;
+}
+.events-sponsors .ffd-sponsors-form-container .card-type-container {
+  display: flex;
+  gap: 20px;
+}
+.events-sponsors .ffd-sponsors-form-container .card-type-container .form-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.events-sponsors .ffd-sponsors-form-container .card-type-container .form-check label {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.events-sponsors .ffd-sponsors-form-container .card-verification .tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+.events-sponsors .ffd-sponsors-form-container .card-verification .card-tooltip {
+  font-size: 14px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 27px;
+  width: 300px;
+  background-color: #f9f9f9;
+  border: 1px solid #ED7A1F;
+  padding: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.events-sponsors .ffd-sponsors-form-container .card-verification .tooltip-container:hover .card-tooltip {
+  display: block;
+  opacity: 1;
+}
+.events-sponsors .ffd-sponsors-form-container .card-verification .info-icon {
+  cursor: pointer;
+}
+.events-sponsors .ffd-sponsors-form-container .card-verification svg {
+  margin-left: 7px;
+  fill: #ED7A1F;
+}
+@media (max-width: 768px) {
+  .events-sponsors .ffd-sponsors-form-container .card-verification svg {
+    display: none;
+  }
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-btn-container .btn {
+  font-size: 22px;
+  color: #FBFDFB;
+  background-color: #008CD2;
+  transition: background-color 0.3s ease;
+  /* &:hover{
+      background-color: $light-blue;
+  } */
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-footer {
+  padding-top: 50px;
+  text-align: center;
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-footer .sponsors-footer-title {
+  font-size: 20px;
+  color: #008CD2;
+  font-weight: bold;
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-footer .sponsors-footer-title a {
+  color: #008CD2;
+  text-decoration: none;
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-footer .footer-address {
+  padding-top: 15px;
+  font-weight: bold;
+}
+.events-sponsors .ffd-sponsors-form-container .ffd-sponsors-form-footer .footer-text {
+  font-size: 10px;
+}
+
 footer {
   background-color: #008CD2;
   width: 100%;

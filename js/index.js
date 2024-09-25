@@ -291,213 +291,216 @@ document.addEventListener("DOMContentLoaded", function () {
             return formGroup;
         }
 
-        document.getElementById('join-submit-button').addEventListener('click', function (event) {
-            const form = document.getElementById('join-form');
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-                form.classList.add('was-validated');
+        const joinSubmitButton = document.getElementById('join-submit-button');
+        if (joinSubmitButton) {
+            joinSubmitButton.addEventListener('click', function (event) {
+                const form = document.getElementById('join-form');
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    form.classList.add('was-validated');
 
-                const firstInvalidField = form.querySelector(':invalid');
-                if (firstInvalidField) {
-                    firstInvalidField.focus();
+                    const firstInvalidField = form.querySelector(':invalid');
+                    if (firstInvalidField) {
+                        firstInvalidField.focus();
+                    }
+                } else {
+                    event.preventDefault();
+                    submitFormData();
                 }
-            } else {
-                event.preventDefault();
-                submitFormData();
-            }
 
-            function showToast(message, isSuccess) {
-                const toastEl = document.getElementById('myToast');
-                const toastMessage = document.getElementById('toast-message');
+                function showToast(message, isSuccess) {
+                    const toastEl = document.getElementById('myToast');
+                    const toastMessage = document.getElementById('toast-message');
 
-                toastMessage.textContent = message;
-                toastEl.classList.remove('bg-success', 'bg-danger');
-                if (isSuccess) toastEl.classList.add('bg-success');
-                else toastEl.classList.add('bg-danger');
+                    toastMessage.textContent = message;
+                    toastEl.classList.remove('bg-success', 'bg-danger');
+                    if (isSuccess) toastEl.classList.add('bg-success');
+                    else toastEl.classList.add('bg-danger');
 
-                const toast = new bootstrap.Toast(toastEl);
-                toast.show();
-            }
+                    const toast = new bootstrap.Toast(toastEl);
+                    toast.show();
+                }
 
-            function submitFormData() {
-                const memberInfo = {
-                    FirstName: document.getElementById('adult1-firstName').value,
-                    LastName: document.getElementById('adult1-lastName').value,
-                    Phone: document.getElementById('adult1-phone').value,
-                    Email: document.getElementById('adult1-email').value
-                };
+                function submitFormData() {
+                    const memberInfo = {
+                        FirstName: document.getElementById('adult1-firstName').value,
+                        LastName: document.getElementById('adult1-lastName').value,
+                        Phone: document.getElementById('adult1-phone').value,
+                        Email: document.getElementById('adult1-email').value
+                    };
 
-                const billingInfo = collectBillingInfo(memberInfo);
-                const mailingInfo = collectMailingInfo(memberInfo, billingInfo);
-                const paymentInfo = collectPaymentInfo();
-                const additionalMembers = collectAdditionalMembers();
+                    const billingInfo = collectBillingInfo(memberInfo);
+                    const mailingInfo = collectMailingInfo(memberInfo, billingInfo);
+                    const paymentInfo = collectPaymentInfo();
+                    const additionalMembers = collectAdditionalMembers();
 
-                const data = {
-                    MembershipType: currentMembershipId,
-                    MemberInfo: memberInfo,
-                    MemberBillingInfo: billingInfo,
-                    MemberMailingInfo: mailingInfo || billingInfo,
-                    MemberPaymentInfo: paymentInfo,
-                    AdditionalMembers: additionalMembers
-                };
+                    const data = {
+                        MembershipType: currentMembershipId,
+                        MemberInfo: memberInfo,
+                        MemberBillingInfo: billingInfo,
+                        MemberMailingInfo: mailingInfo || billingInfo,
+                        MemberPaymentInfo: paymentInfo,
+                        AdditionalMembers: additionalMembers
+                    };
 
-                fetch(`${SERVER_URL}/members/create`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                    .then(response => {
-                        if (response.ok) return response.json();
+                    fetch(`${SERVER_URL}/members/create`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
                     })
-                    .then(data => {
-                        if (data.length <= 24) {
-                            showToast('Membership form submitted successfully!', true);
-                            form.reset();
-                            form.classList.remove('was-validated');
-                            const modalElement = document.getElementById('exampleModal');
-                            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                            modalInstance.hide();
-                        } else {
-                            showToast(data, false);
+                        .then(response => {
+                            if (response.ok) return response.json();
+                        })
+                        .then(data => {
+                            if (data.length <= 24) {
+                                showToast('Membership form submitted successfully!', true);
+                                form.reset();
+                                form.classList.remove('was-validated');
+                                const modalElement = document.getElementById('exampleModal');
+                                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                                modalInstance.hide();
+                            } else {
+                                showToast(data, false);
+                            }
+                        })
+                        .catch(error => {
+                            showToast('Network error: Could not submit the form.', false);
+                        });
+                }
+
+                function collectAdditionalMembers() {
+                    const additionalMembers = [];
+
+                    let totalAdults = 1;
+                    if ([1, 4, 5].includes(currentMembershipId)) {
+                        totalAdults = 2;
+                    } else if ([2, 3].includes(currentMembershipId)) {
+                        totalAdults = 3;
+                    }
+
+                    for (let i = 2; i <= totalAdults; i++) {
+                        const firstName = document.getElementById(`adult${i}-firstName`).value;
+                        const lastName = document.getElementById(`adult${i}-lastName`).value;
+                        if (firstName || lastName) {
+                            additionalMembers.push({
+                                FirstName: firstName,
+                                LastName: lastName,
+                                Dob: null,
+                                Relationship: 'Adult Member',
+                                IsChildren: false
+                            });
                         }
-                    })
-                    .catch(error => {
-                        showToast('Network error: Could not submit the form.', false);
+                    }
+
+                    let kidsCount = 0;
+                    if ([1, 4, 5].includes(currentMembershipId)) {
+                        kidsCount = 5;
+                    } else if ([2, 3].includes(currentMembershipId)) {
+                        kidsCount = 10;
+                    }
+
+                    for (let i = 1; i <= kidsCount; i++) {
+                        const firstName = document.getElementById(`child${i}-firstName`).value;
+                        const lastName = document.getElementById(`child${i}-lastName`).value;
+                        const dob = document.getElementById(`child${i}-birthday`).value;
+                        if (firstName || lastName || dob) {
+                            additionalMembers.push({
+                                FirstName: firstName,
+                                LastName: lastName,
+                                Dob: dob,
+                                Relationship: 'Child',
+                                IsChildren: true
+                            });
+                        }
+                    }
+
+                    return additionalMembers;
+                }
+
+                function collectBillingInfo(memberInfo) {
+                    const billingCountry = document.getElementById('billing-country').value;
+                    let stateProvince = '';
+                    let zipPostalCode = '';
+                    let country = billingCountry;
+                    let address1 = document.getElementById('billing-address-1').value;
+                    let address2 = document.getElementById('billing-address-2').value;
+                    let city = document.getElementById('billing-city').value;
+
+                    if (billingCountry === 'United States') {
+                        stateProvince = document.getElementById('billing-state').value;
+                        zipPostalCode = document.getElementById('billing-zip').value;
+                    } else if (billingCountry === 'Canada') {
+                        stateProvince = document.getElementById('billing-province').value;
+                        zipPostalCode = document.getElementById('billing-code').value;
+                    } else { // Other countries
+                        country = document.getElementById('billing-country-other').value;
+                        stateProvince = document.getElementById('billing-region-other').value;
+                        zipPostalCode = document.getElementById('billing-code-other').value;
+                    }
+
+                    return {
+                        FirstName: document.getElementById('billing-firstName').value,
+                        LastName: document.getElementById('billing-lastName').value,
+                        Email: memberInfo.Email,
+                        Phone: memberInfo.Phone,
+                        Country: country,
+                        Address1: address1,
+                        Address2: address2,
+                        City: city,
+                        StateProvince: stateProvince,
+                        ZipPostalCode: zipPostalCode
+                    };
+                }
+
+                function collectPaymentInfo() {
+                    const cardTypeInputs = document.querySelectorAll('input[name="card-type"]');
+                    let cardType = '';
+                    cardTypeInputs.forEach(input => {
+                        if (input.checked) {
+                            cardType = input.id.replace('card-type-', '');
+                        }
                     });
-            }
 
-            function collectAdditionalMembers() {
-                const additionalMembers = [];
-
-                let totalAdults = 1;
-                if ([1, 4, 5].includes(currentMembershipId)) {
-                    totalAdults = 2;
-                } else if ([2, 3].includes(currentMembershipId)) {
-                    totalAdults = 3;
+                    return {
+                        CardType: cardType,
+                        CardNumber: document.getElementById('card-number').value,
+                        CardExpMonth: document.getElementById('exp-month').value,
+                        CardExpYear: parseInt(document.getElementById('exp-year').value),
+                        CardCvv: document.getElementById('card-verification').value
+                    };
                 }
 
-                for (let i = 2; i <= totalAdults; i++) {
-                    const firstName = document.getElementById(`adult${i}-firstName`).value;
-                    const lastName = document.getElementById(`adult${i}-lastName`).value;
-                    if (firstName || lastName) {
-                        additionalMembers.push({
-                            FirstName: firstName,
-                            LastName: lastName,
-                            Dob: null,
-                            Relationship: 'Adult Member',
-                            IsChildren: false
-                        });
+                function collectMailingInfo(memberInfo, billingInfo) {
+                    const address1 = document.getElementById('mailing-address').value;
+                    const address2 = document.getElementById('mailing-address-2').value;
+                    const city = document.getElementById('mailing-address-city').value;
+                    const stateProvince = document.getElementById('mailing-address-state').value;
+                    const zipPostalCode = document.getElementById('mailing-address-zip').value;
+
+                    if (!address1 && !address2 && !city && !stateProvince && !zipPostalCode) {
+                        return null;
                     }
+
+                    const country = billingInfo.Country;
+
+                    return {
+                        FirstName: memberInfo.FirstName,
+                        LastName: memberInfo.LastName,
+                        Email: memberInfo.Email,
+                        Phone: memberInfo.Phone,
+                        Country: country,
+                        Address1: address1,
+                        Address2: address2,
+                        City: city,
+                        StateProvince: stateProvince,
+                        ZipPostalCode: zipPostalCode
+                    };
                 }
-
-                let kidsCount = 0;
-                if ([1, 4, 5].includes(currentMembershipId)) {
-                    kidsCount = 5;
-                } else if ([2, 3].includes(currentMembershipId)) {
-                    kidsCount = 10;
-                }
-
-                for (let i = 1; i <= kidsCount; i++) {
-                    const firstName = document.getElementById(`child${i}-firstName`).value;
-                    const lastName = document.getElementById(`child${i}-lastName`).value;
-                    const dob = document.getElementById(`child${i}-birthday`).value;
-                    if (firstName || lastName || dob) {
-                        additionalMembers.push({
-                            FirstName: firstName,
-                            LastName: lastName,
-                            Dob: dob,
-                            Relationship: 'Child',
-                            IsChildren: true
-                        });
-                    }
-                }
-
-                return additionalMembers;
-            }
-
-            function collectBillingInfo(memberInfo) {
-                const billingCountry = document.getElementById('billing-country').value;
-                let stateProvince = '';
-                let zipPostalCode = '';
-                let country = billingCountry;
-                let address1 = document.getElementById('billing-address-1').value;
-                let address2 = document.getElementById('billing-address-2').value;
-                let city = document.getElementById('billing-city').value;
-
-                if (billingCountry === 'United States') {
-                    stateProvince = document.getElementById('billing-state').value;
-                    zipPostalCode = document.getElementById('billing-zip').value;
-                } else if (billingCountry === 'Canada') {
-                    stateProvince = document.getElementById('billing-province').value;
-                    zipPostalCode = document.getElementById('billing-code').value;
-                } else { // Other countries
-                    country = document.getElementById('billing-country-other').value;
-                    stateProvince = document.getElementById('billing-region-other').value;
-                    zipPostalCode = document.getElementById('billing-code-other').value;
-                }
-
-                return {
-                    FirstName: document.getElementById('billing-firstName').value,
-                    LastName: document.getElementById('billing-lastName').value,
-                    Email: memberInfo.Email,
-                    Phone: memberInfo.Phone,
-                    Country: country,
-                    Address1: address1,
-                    Address2: address2,
-                    City: city,
-                    StateProvince: stateProvince,
-                    ZipPostalCode: zipPostalCode
-                };
-            }
-
-            function collectPaymentInfo() {
-                const cardTypeInputs = document.querySelectorAll('input[name="card-type"]');
-                let cardType = '';
-                cardTypeInputs.forEach(input => {
-                    if (input.checked) {
-                        cardType = input.id.replace('card-type-', '');
-                    }
-                });
-
-                return {
-                    CardType: cardType,
-                    CardNumber: document.getElementById('card-number').value,
-                    CardExpMonth: document.getElementById('exp-month').value,
-                    CardExpYear: parseInt(document.getElementById('exp-year').value),
-                    CardCvv: document.getElementById('card-verification').value
-                };
-            }
-
-            function collectMailingInfo(memberInfo, billingInfo) {
-                const address1 = document.getElementById('mailing-address').value;
-                const address2 = document.getElementById('mailing-address-2').value;
-                const city = document.getElementById('mailing-address-city').value;
-                const stateProvince = document.getElementById('mailing-address-state').value;
-                const zipPostalCode = document.getElementById('mailing-address-zip').value;
-
-                if (!address1 && !address2 && !city && !stateProvince && !zipPostalCode) {
-                    return null;
-                }
-
-                const country = billingInfo.Country;
-
-                return {
-                    FirstName: memberInfo.FirstName,
-                    LastName: memberInfo.LastName,
-                    Email: memberInfo.Email,
-                    Phone: memberInfo.Phone,
-                    Country: country,
-                    Address1: address1,
-                    Address2: address2,
-                    City: city,
-                    StateProvince: stateProvince,
-                    ZipPostalCode: zipPostalCode
-                };
-            }
-        });
+            });
+        }
     }
 
     const billingCountrySelects = document.querySelectorAll('.billing-country-select');
