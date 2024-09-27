@@ -408,40 +408,45 @@ a {
     padding: 0 4rem;
   }
 }
-.fc-event.Infants-and-Toddlers {
+.fc-event.SkyBlue {
   background-color: #00BFFF;
   /* SkyBlue */
   border-color: #00BFFF;
 }
 
-.fc-event.Ages-2-5yrs {
+.fc-event.Orange {
   background-color: #FFA500;
   /* Orange */
   border-color: #FFA500;
 }
 
-.fc-event.Ages-3-5yrs {
+.fc-event.Purple {
   background-color: #800080;
   /* Purple */
   border-color: #800080;
 }
 
-.fc-event.Ages-3-7-Years {
+.fc-event.HotPink {
   background-color: #FF69B4;
   /* HotPink */
   border-color: #FF69B4;
 }
 
-.fc-event.Grade-2 {
+.fc-event.Yellow {
   background-color: #3366CC;
   /* Yellow */
   border-color: #3366CC;
 }
 
-.fc-event.All-Ages {
+.fc-event.LimeGreen {
   background-color: #32CD32;
   /* LimeGreen */
   border-color: #32CD32;
+}
+
+.fc-event.default-category {
+  background-color: #777;
+  border-color: #777;
 }
 
 .donate-btn-container {
@@ -1001,13 +1006,12 @@ main p {
 .classes-events-exhibits .flex-container .classes .classes-content {
   color: #ED7A1F;
 }
-.classes-events-exhibits .flex-container .classes .classes-content .events-item {
-  width: -moz-fit-content;
-  width: fit-content;
-}
 .classes-events-exhibits .flex-container .classes .classes-content .events-item a span {
   display: block;
   font-size: 30px;
+}
+.classes-events-exhibits .flex-container .classes .classes-content .events-item a .item-title {
+  margin-right: 10px;
 }
 .classes-events-exhibits .flex-container .classes .classes-content div {
   cursor: pointer;
@@ -1016,6 +1020,10 @@ main p {
 .classes-events-exhibits .flex-container .classes .classes-content div a {
   text-decoration: none;
   color: #ED7A1F;
+  transition: color 0.3s ease-in-out;
+}
+.classes-events-exhibits .flex-container .classes .classes-content div a:hover {
+  color: #ec6b02;
 }
 .classes-events-exhibits .flex-container .classes .classes-content div span {
   font-size: 1.5rem;
@@ -1025,7 +1033,6 @@ main p {
 .classes-events-exhibits .flex-container .classes .classes-content div p {
   font-size: 1.2rem;
   margin: 0;
-  cursor: default;
 }
 .classes-events-exhibits .flex-container .exhibits-home {
   flex: 1 1 0;

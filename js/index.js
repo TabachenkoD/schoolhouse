@@ -1,5 +1,4 @@
-var SERVER_URL = "https://schoolhouse.hnhexpresssolutions.com";/* "https://shm.sheynpartners.com/api"; */
-/* var SERVER_IMG_EXHIBITS_URL = "http://shm.sheynpartners.com/api/Content/Images/Exhibits"; */
+var SERVER_URL = "https://schoolhouse.hnhexpresssolutions.com";
 var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
 
 
@@ -1233,11 +1232,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById('eventDate').innerText = eventObj.start.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
                 document.getElementById('eventDescription').innerText = eventObj.extendedProps.description;
                 document.getElementById('eventRecurrency').innerText = eventObj.extendedProps.eventRecurrency;
-                const categoryClass = eventObj.extendedProps.category
-                    .replace(/\s+/g, '-')
-                    .replace(/[^a-zA-Z0-9-]/g, '')
-                    .replace(/-+/g, '-')
-                    .replace(/^-/, '');
+
+                const categoryClassMap = {
+                    '2 mo - 2 yrs': 'SkyBlue',
+                    '2.5 yrs - 5 yrs': 'Orange',
+                    '18 mo & Up': 'Purple',
+                    '3 yrs & Up': 'HotPink',
+                    '15 mo - 2.5 yrs': 'Yellow',
+                    'All Ages': 'LimeGreen',
+                };
+
+                const categoryClass = categoryClassMap[eventObj.extendedProps.category] || 'default-category';
+
                 const eventCategoryElement = document.getElementById('eventCategory');
                 eventCategoryElement.innerText = eventObj.extendedProps.category;
                 eventCategoryElement.className = '';
@@ -1299,11 +1305,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 let currentDate = new Date(startDate);
                 while (currentDate <= endDate) {
                     if (recurrencyDayIndexes.includes(currentDate.getDay())) {
+                        const categoryClassMap = {
+                            '2 mo - 2 yrs': 'SkyBlue',
+                            '2.5 yrs - 5 yrs': 'Orange',
+                            '18 mo & Up': 'Purple',
+                            '3 yrs & Up': 'HotPink',
+                            '15 mo - 2.5 yrs': 'Yellow',
+                            'All Ages': 'LimeGreen',
+                        };
+
+                        const categoryClass = categoryClassMap[item.Category] || 'default-category';
+
                         events.push({
                             title: item.Title,
                             start: new Date(currentDate),
                             end: new Date(currentDate),
-                            classNames: [item.Category.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').replace(/-+/g, '-').replace(/^-/, '')],
+                            classNames: [categoryClass],
                             description: item.Description,
                             requirePayment: item.RequirePayment,
                             eventRecurrency: item.EventRecurrency,
@@ -1389,11 +1406,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 var childAgeDiv = document.createElement('div');
                 childAgeDiv.className = '';
                 var childAgeLabel = document.createElement('label');
-                childAgeLabel.className = 'form-label register-form-inpits';
+                childAgeLabel.className = 'form-label register-form-inpits 1111';
                 childAgeLabel.setAttribute('for', 'childAge' + i);
                 childAgeLabel.textContent = 'Child Age';
                 var childAgeInput = document.createElement('input');
                 childAgeInput.type = 'text';
+                childAgeInput.pattern = '^[0-9\\(\\)\\+\\- ]+$';
                 childAgeInput.className = 'form-control';
                 childAgeInput.id = 'childAge' + i;
                 childAgeInput.setAttribute('name', 'childAge' + i);
@@ -1541,13 +1559,9 @@ function initMap() {
     });
 }
 
-/* index.js Classes and Exhibits */
 async function fetchMainPageData() {
     showSkeleton(true, 'classes-content', 'skeleton-events');
-    /* showSkeleton(true, 'exhibits-content', 'skeleton-exhibits-item'); */
-
     fetchEvents();
-    /* fetchExhibits(); */
 }
 
 async function fetchEvents() {
@@ -1557,6 +1571,7 @@ async function fetchEvents() {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+
         displayEvents(data);
     } catch (error) {
         displayEvents([]);
@@ -1565,20 +1580,6 @@ async function fetchEvents() {
     }
 }
 
-/* async function fetchExhibits() {
-    try {
-        const response = await fetch(`${SERVER_URL}/exhibits`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        displayExhibits(data);
-    } catch (error) {
-        displayExhibits([]);
-    } finally {
-        showSkeleton(false, 'exhibits-content', 'skeleton-exhibits-item');
-    }
-} */
 
 function showSkeleton(show, containerId, skeletonClass) {
     const container = document.getElementById(containerId);
@@ -1600,7 +1601,15 @@ function displayEvents(data) {
         sortedEvents.forEach(item => {
             const div = document.createElement('div');
             div.classList.add('events-item');
-            div.innerHTML = `<a href="#" data-id="${item.ClassEventId}"><span>${item.Title}</span><p>${item.Description}</p></a>`;
+            div.innerHTML = `
+                <a href="#" data-id="${item.ClassEventId}" class="d-block w-100">
+                    <div class="w-100 d-flex justify-content-between m-0 flex-wrap">
+                        <span class="item-title">${item.Title}</span>
+                        <span>For ${item.Category}</span>
+                    </div>
+                    <p class="d-block w-100 class="item-description">${item.Description}</p>
+                </a>
+            `;
             container.appendChild(div);
 
             div.querySelector('a').addEventListener('click', async (event) => {
@@ -1621,11 +1630,16 @@ function displayEvents(data) {
                         document.getElementById('free-admission-container').classList.remove('hidden');
                     }
 
-                    const categoryClass = eventDetails.Category
-                        .replace(/\s+/g, '-')
-                        .replace(/[^a-zA-Z0-9-]/g, '')
-                        .replace(/-+/g, '-')
-                        .replace(/^-/, '');
+                    const categoryClassMap = {
+                        '2 mo - 2 yrs': 'SkyBlue',
+                        '2.5 yrs - 5 yrs': 'Orange',
+                        '18 mo & Up': 'Purple',
+                        '3 yrs & Up': 'HotPink',
+                        '15 mo - 2.5 yrs': 'Yellow',
+                        'All Ages': 'LimeGreen',
+                    };
+
+                    const categoryClass = categoryClassMap[eventDetails.Category] || 'default-category';
 
                     const eventCategoryElement = document.getElementById('eventCategory');
                     eventCategoryElement.className = '';
@@ -1714,6 +1728,7 @@ function displayEvents(data) {
             childAgeLabel.textContent = 'Child Age';
             var childAgeInput = document.createElement('input');
             childAgeInput.type = 'text';
+            childAgeInput.pattern = '^[0-9\\(\\)\\+\\- ]+$';
             childAgeInput.className = 'form-control';
             childAgeInput.id = 'childAge' + i;
             childAgeInput.setAttribute('name', 'childAge' + i);
@@ -1831,28 +1846,6 @@ function getSortedEventsByClosestDate(events) {
         .sort((a, b) => a.closestDate - b.closestDate)
         .slice(0, 5);
 }
-
-/* function displayExhibits(data) {
-    const container = document.getElementById('exhibits-content');
-    container.innerHTML = '';
-
-    if (data.length > 0) {
-        data.forEach(item => {
-            const div = document.createElement('div');
-            div.innerHTML = `
-            <div class="exhibits-content-img_container">
-                <img src="${SERVER_IMG_EXHIBITS_URL}/${item.ExhibitImageName}" alt="${item.Title}" />
-            </div>
-            <span>${item.Title}</span>`;
-            container.appendChild(div);
-        });
-    } else {
-        const div = document.createElement('div');
-        div.innerHTML = `<p>No exhibits available now</p>`;
-        container.appendChild(div);
-    }
-}
- */
 
 async function fetchEventDetails(eventId) {
     try {

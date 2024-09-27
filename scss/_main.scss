@@ -158,13 +158,17 @@ main {
                 color: $orange;
 
                 .events-item {
-                    width: fit-content;
-
                     a {
                         span {
                             display: block;
                             font-size: 30px;
                         }
+
+                        .item-title {
+                            margin-right: 10px;
+                        }
+
+                        .item-description {}
                     }
                 }
 
@@ -175,6 +179,11 @@ main {
                     a {
                         text-decoration: none;
                         color: $orange;
+                        transition: color 0.3s ease-in-out;
+
+                        &:hover {
+                            color: $orange-btn-hover;
+                        }
                     }
 
                     span {
@@ -186,7 +195,6 @@ main {
                     p {
                         font-size: 1.2rem;
                         margin: 0;
-                        cursor: default;
                     }
                 }
             }

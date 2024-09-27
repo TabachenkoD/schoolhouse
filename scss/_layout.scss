@@ -70,42 +70,46 @@ a {
     }
 }
 
-.fc-event.Infants-and-Toddlers {
+.fc-event.SkyBlue {
     background-color: #00BFFF;
     /* SkyBlue */
     border-color: #00BFFF;
 }
 
-.fc-event.Ages-2-5yrs {
+.fc-event.Orange {
     background-color: #FFA500;
     /* Orange */
     border-color: #FFA500;
 }
 
-.fc-event.Ages-3-5yrs {
+.fc-event.Purple {
     background-color: #800080;
     /* Purple */
     border-color: #800080;
 }
 
-.fc-event.Ages-3-7-Years {
+.fc-event.HotPink {
     background-color: #FF69B4;
     /* HotPink */
     border-color: #FF69B4;
 }
 
-.fc-event.Grade-2 {
+.fc-event.Yellow {
     background-color: #3366CC;
     /* Yellow */
     border-color: #3366CC;
 }
 
-.fc-event.All-Ages {
+.fc-event.LimeGreen {
     background-color: #32CD32;
     /* LimeGreen */
     border-color: #32CD32;
 }
 
+.fc-event.default-category{
+    background-color: #777;
+    border-color: #777;
+}
 .donate-btn-container {
     position: fixed;
     bottom: 20px;
