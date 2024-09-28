@@ -270,6 +270,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 input.setAttribute('pattern', '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$');
             }
 
+            if (labelText.includes('Birthday')) {
+                const today = new Date().toISOString().split('T')[0];
+                input.setAttribute('max', today);
+            }
+
             formGroup.appendChild(input);
 
             if (isRequired) {
@@ -1242,10 +1247,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     'All Ages': 'LimeGreen',
                 };
 
-                const categoryClass = categoryClassMap[eventObj.extendedProps.category] || 'default-category';
+                const categoryClass = categoryClassMap[eventObj.extendedProps.ageRange] || 'default-category';
 
                 const eventCategoryElement = document.getElementById('eventCategory');
-                eventCategoryElement.innerText = eventObj.extendedProps.category;
+                eventCategoryElement.innerText = eventObj.extendedProps.ageRange;
                 eventCategoryElement.className = '';
                 eventCategoryElement.classList.add('fc-event', categoryClass);
 
@@ -1314,7 +1319,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             'All Ages': 'LimeGreen',
                         };
 
-                        const categoryClass = categoryClassMap[item.Category] || 'default-category';
+                        const categoryClass = categoryClassMap[item.AgeRange] || 'default-category';
 
                         events.push({
                             title: item.Title,
@@ -1324,7 +1329,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             description: item.Description,
                             requirePayment: item.RequirePayment,
                             eventRecurrency: item.EventRecurrency,
-                            category: item.Category
+                            category: item.Category,
+                            ageRange: item.AgeRange
                         });
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -1605,7 +1611,7 @@ function displayEvents(data) {
                 <a href="#" data-id="${item.ClassEventId}" class="d-block w-100">
                     <div class="w-100 d-flex justify-content-between m-0 flex-wrap">
                         <span class="item-title">${item.Title}</span>
-                        <span>For ${item.Category}</span>
+                        <span>For ${item.AgeRange}</span>
                     </div>
                     <p class="d-block w-100 class="item-description">${item.Description}</p>
                 </a>
@@ -1619,7 +1625,8 @@ function displayEvents(data) {
 
                 if (eventDetails) {
                     document.getElementById('eventTitle').textContent = eventDetails.Title;
-                    document.getElementById('eventCategory').textContent = eventDetails.Category;
+                   /*  document.getElementById('eventCategory').textContent = eventDetails.Category; */
+                    document.getElementById('eventCategory').textContent = eventDetails.AgeRange;
                     document.getElementById('eventDescription').textContent = eventDetails.Description;
                     document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
                     selectedDate = item.closestDate;
@@ -1639,7 +1646,7 @@ function displayEvents(data) {
                         'All Ages': 'LimeGreen',
                     };
 
-                    const categoryClass = categoryClassMap[eventDetails.Category] || 'default-category';
+                    const categoryClass = categoryClassMap[eventDetails.AgeRange] || 'default-category';
 
                     const eventCategoryElement = document.getElementById('eventCategory');
                     eventCategoryElement.className = '';
