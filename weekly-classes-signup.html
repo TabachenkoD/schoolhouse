@@ -140,7 +140,7 @@
                                         </a>
                                     </div>
                                     <div class="social-icons-mobile">
-                                        <a class="cart-icon hidden position-relative" id="cart-icon-mobile"
+                                        <a class="cart-icon hidden position-relative" id="cart-icon-mobile" style="pointer-events: none;"
                                             data-bs-toggle="offcanvas" href="#offcanvasRight" role="button"
                                             aria-controls="offcanvasRight">
                                             <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none"
@@ -214,7 +214,7 @@
                             </svg>
                         </a>
                         <a class="cart-icon hidden position-relative" id="cart-icon" data-bs-toggle="offcanvas"
-                            href="#offcanvasRight" role="button" aria-controls="offcanvasRight">
+                            href="#offcanvasRight" role="button" aria-controls="offcanvasRight" style="pointer-events: none;">
                             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -612,11 +612,20 @@
                             <hr class="my-4">
                         </div>
                         <div class="fotm-btn-container">
-                            <button class="btn btn-lg btn-submit" type="button">Submit</button>
+                            <button class="btn btn-lg btn-submit" type="button" id="weekly-classes-signup-submit">Submit</button>
                             <button class="btn btn-lg btn-reset mx-3" type="reset">Reset</button>
                         </div>
                     </form>
                     <div class="donate-server-messege hidden" id="donate-server-messege"></div>
+                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                        <div id="myToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive"
+                            aria-atomic="true">
+                            <div class="toast-body d-flex justify-content-between">
+                                <strong id="toast-message" class="me-auto">Submitted successfully!</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

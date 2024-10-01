@@ -1237,6 +1237,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById('eventDate').innerText = eventObj.start.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
                 document.getElementById('eventDescription').innerText = eventObj.extendedProps.description;
                 document.getElementById('eventRecurrency').innerText = eventObj.extendedProps.eventRecurrency;
+                document.getElementById('ClassEventIdValue').textContent = eventObj.extendedProps.EventId;
+
+                if (eventObj.extendedProps.category !== 'Class') {
+                    document.getElementById('registerButton').style.display = 'none';
+                    document.getElementById('eventModalLabel').innerText = 'Event Details';
+                    document.getElementById('eventName').innerHTML = 'Event: ';
+                }
 
                 const categoryClassMap = {
                     '2 mo - 2 yrs': 'SkyBlue',
@@ -1284,6 +1291,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function generateEvents(data) {
             const events = [];
             data.forEach(item => {
+                if (!item.IsEnabled) return;
                 const startDate = new Date(item.EventStartDate);
                 const endDate = new Date(item.EventEndDate);
                 const recurrencyDays = item.EventRecurrency.split(',').map(day => day.trim());
@@ -1330,7 +1338,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             requirePayment: item.RequirePayment,
                             eventRecurrency: item.EventRecurrency,
                             category: item.Category,
-                            ageRange: item.AgeRange
+                            ageRange: item.AgeRange,
+                            EventId: item.ClassEventId
                         });
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -1440,7 +1449,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 const eventTitle = document.getElementById('eventTitle').textContent;
                 const eventDate = document.getElementById('eventDate').textContent;
-
+                const classEventId = document.getElementById('ClassEventIdValue').textContent;
                 const formData = new FormData(registerToClass);
                 const formValues = {};
 
@@ -1468,6 +1477,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 formValues['children'] = children;
                 formValues['eventTitle'] = eventTitle;
                 formValues['eventDate'] = eventDate;
+                formValues['EventId'] = classEventId;
                 formValues['memberPrice'] = document.getElementById('price-for-member').textContent;
                 formValues['nonMemberPrice'] = document.getElementById('price-for-non-member').textContent;
                 if (!document.getElementById('free-admission-container').classList.contains('hidden')) formValues['requirePayment'] = true;
@@ -1487,26 +1497,183 @@ document.addEventListener("DOMContentLoaded", function () {
         }, false);
     }
 
-    const totalAmountDue = document.getElementById('total-amount-due');
-    if (totalAmountDue) {
-        const membershipYes = document.getElementById('membership-yes');
-        const membershipNo = document.getElementById('membership-no');
+    /* weekly-classes-signup */
+    const WeeklyClassesForm = document.getElementById('weekly-classes-signup-form');
+    if (WeeklyClassesForm) {
+        const totalAmountDue = document.getElementById('total-amount-due');
+        if (totalAmountDue) {
+            const membershipYes = document.getElementById('membership-yes');
+            const membershipNo = document.getElementById('membership-no');
 
-        membershipYes.addEventListener('change', function () {
-            if (membershipYes.checked) {
-                const memberPrice = document.getElementById('cart-total-price-member').textContent;
-                const memberPriceValue = memberPrice.replace(/[^\d]/g, '');
-                totalAmountDue.value = memberPriceValue;
-            }
-        });
+            membershipYes.addEventListener('change', function () {
+                if (membershipYes.checked) {
+                    const memberPrice = document.getElementById('cart-total-price-member').textContent;
+                    const memberPriceValue = memberPrice.replace(/[^\d]/g, '');
+                    totalAmountDue.value = memberPriceValue;
+                }
+            });
 
-        membershipNo.addEventListener('change', function () {
-            if (membershipNo.checked) {
-                const nonMemberPrice = document.getElementById('cart-total-price-non-member').textContent;
-                const nonMemberPriceValue = nonMemberPrice.replace(/[^\d]/g, '');
-                totalAmountDue.value = nonMemberPriceValue;
+            membershipNo.addEventListener('change', function () {
+                if (membershipNo.checked) {
+                    const nonMemberPrice = document.getElementById('cart-total-price-non-member').textContent;
+                    const nonMemberPriceValue = nonMemberPrice.replace(/[^\d]/g, '');
+                    totalAmountDue.value = nonMemberPriceValue;
+                }
+            });
+        }
+
+        function showToast(message, isSuccess) {
+            const toastEl = document.getElementById('myToast');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastMessage.textContent = message;
+            toastEl.classList.remove('bg-success', 'bg-danger');
+            if (isSuccess) toastEl.classList.add('bg-success');
+            else toastEl.classList.add('bg-danger');
+
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        document.getElementById('weekly-classes-signup-submit').addEventListener('click', function () {
+            if (WeeklyClassesForm.checkValidity() === false) {
+                WeeklyClassesForm.classList.add('was-validated');
+            } else {
+                var billingFirstName = document.getElementById('billing-firstName').value;
+                var billingLastName = document.getElementById('billing-lastName').value;
+                var billingAddress1 = document.getElementById('billing-address-1').value;
+                var billingAddress2 = document.getElementById('billing-address-2').value;
+                var billingCountry = document.getElementById('billing-country').value;
+                var billingCity = document.getElementById('billing-city').value;
+
+                var billingState = '';
+                var billingZip = '';
+                var billingProvince = '';
+                var billingPostalCode = '';
+                var billingCountryOther = '';
+                var billingRegion = '';
+                var billingPostalCodeOther = '';
+
+                if (billingCountry === 'United States') {
+                    billingState = document.getElementById('billing-state').value;
+                    billingZip = document.getElementById('billing-zip').value;
+                } else if (billingCountry === 'Canada') {
+                    billingProvince = document.getElementById('billing-province').value;
+                    billingPostalCode = document.getElementById('billing-code').value;
+                } else if (billingCountry === 'Other') {
+                    billingCountryOther = document.getElementById('billing-country-other').value;
+                    billingRegion = document.getElementById('billing-region-other').value;
+                    billingPostalCodeOther = document.getElementById('billing-code-other').value;
+                }
+
+                var cardType = document.querySelector('input[name="card-type"]:checked').value;
+                var cardNumber = document.getElementById('card-number').value;
+                var cardVerificationNumber = document.getElementById('card-verification').value;
+                var cardExpMonth = document.getElementById('exp-month').value;
+                var cardExpYear = document.getElementById('exp-year').value;
+
+                var membershipRadios = document.getElementsByName('membership');
+                var isMember = false;
+                for (var i = 0; i < membershipRadios.length; i++) {
+                    if (membershipRadios[i].checked && membershipRadios[i].value === 'yes') {
+                        isMember = true;
+                        break;
+                    }
+                }
+
+                var registeredClasses = JSON.parse(localStorage.getItem('registredToClasses'));
+
+                var ClassReservationItems = [];
+                var totalAmount = 0;
+
+                registeredClasses.forEach(function (registeredClass) {
+                    var classVisitor = {
+                        FirstName: registeredClass.firstName,
+                        LastName: registeredClass.lastName,
+                        Email: registeredClass.email,
+                        Phone: registeredClass.phone
+                    };
+
+                    var classVisitorPaymentInformation = {
+                        CardType: cardType,
+                        CardNumber: cardNumber,
+                        CardExpMonth: cardExpMonth,
+                        CardExpYear: parseInt(cardExpYear),
+                        CardCvv: cardVerificationNumber
+                    };
+
+                    var classVisitorBillingInformation = {
+                        BillingCountry: billingCountry,
+                        BillingAddress1: billingAddress1,
+                        BillingAddress2: billingAddress2,
+                        BillingCity: billingCity
+                    };
+
+                    if (billingCountry === 'United States') {
+                        classVisitorBillingInformation.BillingState = billingState;
+                        classVisitorBillingInformation.BillingZip = billingZip;
+                    } else if (billingCountry === 'Canada') {
+                        classVisitorBillingInformation.BillingProvince = billingProvince;
+                        classVisitorBillingInformation.BillingPostalCode = billingPostalCode;
+                    } else if (billingCountry === 'Other') {
+                        classVisitorBillingInformation.BillingCountry = billingCountryOther;
+                        classVisitorBillingInformation.BillingRegion = billingRegion;
+                        classVisitorBillingInformation.BillingPostalCode = billingPostalCodeOther;
+                    }
+
+                    var childrens = registeredClass.children.map(function (child) {
+                        return {
+                            ChildName: child.name,
+                            ChildAge: parseInt(child.age)
+                        };
+                    });
+
+                    var subTotal = isMember ? parseFloat(registeredClass.memberPrice) : parseFloat(registeredClass.nonMemberPrice);
+                    totalAmount += subTotal;
+
+                    var classReservationItem = {
+                        EventId: parseInt(registeredClass.EventId),
+                        ScheduleDate: registeredClass.eventDate,
+                        SubTotal: subTotal,
+                        ClassVisitor: classVisitor,
+                        ClassVisitorPaymentInformation: classVisitorPaymentInformation,
+                        ClassVisitorBillingInformation: classVisitorBillingInformation,
+                        Childrens: childrens
+                    };
+
+                    ClassReservationItems.push(classReservationItem);
+                });
+
+                var dataToSend = {
+                    Total: totalAmount,
+                    ClassReservationItems: ClassReservationItems
+                };
+
+                fetch(`${SERVER_URL}/reservations/class/reservation/none-members `, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                })
+                    .then(async function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            const err = await response.json()
+                            throw new Error(`${err.Message}`);
+                        }
+                    })
+                    .then(function (data) {
+                        showToast('Submitted successfully!', true);
+                        WeeklyClassesForm.reset();
+                        WeeklyClassesForm.classList.remove('was-validated');
+                    })
+                    .catch(function (error) {
+                        showToast(`${error}`, false);
+                    });
             }
-        });
+        })
     }
 
     /* events page */
@@ -1577,7 +1744,6 @@ async function fetchEvents() {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-
         displayEvents(data);
     } catch (error) {
         displayEvents([]);
@@ -1625,10 +1791,11 @@ function displayEvents(data) {
 
                 if (eventDetails) {
                     document.getElementById('eventTitle').textContent = eventDetails.Title;
-                   /*  document.getElementById('eventCategory').textContent = eventDetails.Category; */
+                    /*  document.getElementById('eventCategory').textContent = eventDetails.Category; */
                     document.getElementById('eventCategory').textContent = eventDetails.AgeRange;
                     document.getElementById('eventDescription').textContent = eventDetails.Description;
                     document.getElementById('eventRecurrency').textContent = eventDetails.EventRecurrency;
+                    document.getElementById('ClassEventIdValue').textContent = eventDetails.ClassEventId;
                     selectedDate = item.closestDate;
                     document.getElementById('selected-date').textContent = selectedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });;
 
@@ -1757,6 +1924,7 @@ function displayEvents(data) {
             event.stopPropagation();
         } else {
             const eventTitle = document.getElementById('eventTitle').textContent;
+            const classEventId = document.getElementById('ClassEventIdValue').textContent;
             const eventDate = selectedDate.toLocaleString('en-US', {
                 year: 'numeric',
                 month: '2-digit',
@@ -1790,6 +1958,7 @@ function displayEvents(data) {
             formValues['children'] = children;
             formValues['eventTitle'] = eventTitle;
             formValues['eventDate'] = eventDate;
+            formValues['EventId'] = classEventId;
             formValues['memberPrice'] = document.getElementById('price-for-member').textContent;
             formValues['nonMemberPrice'] = document.getElementById('price-for-non-member').textContent;
             if (!document.getElementById('free-admission-container').classList.contains('hidden')) formValues['requirePayment'] = true;
@@ -1849,7 +2018,7 @@ function getSortedEventsByClosestDate(events) {
     return events.map(event => {
         event.closestDate = getClosestDate(event);
         return event;
-    }).filter(event => event.closestDate !== null)
+    }).filter(event => event.closestDate !== null && event.Category === 'Class')
         .sort((a, b) => a.closestDate - b.closestDate)
         .slice(0, 5);
 }

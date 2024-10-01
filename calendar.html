@@ -265,13 +265,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-2"><span><b>Class: </b></span> <span id="eventTitle"
+                        <div class="mb-2"><span><b id="eventName">Class: </b></span> <span id="eventTitle"
                                 style="color: #ED7A1F;"></span></div>
                         <div class="mb-2"><span><b>Date: </b></span>
                            <span id="eventDate"></span>
                         </div>
                         <div class="mb-2"><span><b>Category: </b></span> <span id="eventCategory"></span></div>
                         <div class="mb-2"><span><b>Recurs: </b></span> <span id="eventRecurrency"></span></div>
+                        <div id="ClassEventIdValue" style="display: none;"></div>
                         <div id="requirePayment"></div>
                         <p class="py-3" id="eventDescription"></p>
                     </div>
@@ -322,9 +323,9 @@
 
                                     <div class="">
                                         <label for="phone" class="form-label register-form-inpits">Phone
-                                            Number<br><span class="text-body-secondary">(Optional)</span></label>
-                                        <input type="text" class="form-control" id="phone" placeholder="" value=""
-                                            name="phone">
+                                            Number</label>
+                                        <input type="text" pattern="^[0-9\(\)\+\- ]+$" class="form-control" id="phone" placeholder="" value=""
+                                            name="phone" required>
                                     </div>
                                 </div>
                                 <div class="">
