@@ -3430,13 +3430,14 @@ main p {
   align-items: center;
 }
 .events-sponsors .ffd-sponsors-logo-container {
-  max-width: 400px;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.events-sponsors .ffd-sponsors-logo-container img {
-  display: block;
-  width: 100%;
-  height: auto;
+.events-sponsors .ffd-sponsors-logo-container p {
+  color: #ED7A1F;
+  font-size: 28px;
+  font-weight: 700;
 }
 .events-sponsors .ffd-sponsors-form-container {
   max-width: 600px;
