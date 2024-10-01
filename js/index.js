@@ -1668,6 +1668,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         showToast('Submitted successfully!', true);
                         WeeklyClassesForm.reset();
                         WeeklyClassesForm.classList.remove('was-validated');
+                        localStorage.removeItem('registredToClasses');
+                        var cartItemsCount = document.getElementById('cart-items-count');
+                        if (cartItemsCount) {
+                            cartItemsCount.textContent = '0';
+                        }
                     })
                     .catch(function (error) {
                         showToast(`${error}`, false);
