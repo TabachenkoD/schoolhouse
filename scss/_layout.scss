@@ -107,9 +107,16 @@ a {
 }
 
 .fc-event.default-category{
-    background-color: #777;
-    border-color: #777;
+    background-color: #cbcbcb;
+    border-color: #cbcbcb;
 }
+
+.fc-event.Red{
+    background-color: #ba2c36;
+    /* Red */
+    border-color: #ba2c36;
+}
+
 .donate-btn-container {
     position: fixed;
     bottom: 20px;

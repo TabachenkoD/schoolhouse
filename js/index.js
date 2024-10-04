@@ -1252,6 +1252,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     '3 yrs & Up': 'HotPink',
                     '15 mo - 2.5 yrs': 'Yellow',
                     'All Ages': 'LimeGreen',
+                    'Special Events': 'Red'
                 };
 
                 const categoryClass = categoryClassMap[eventObj.extendedProps.ageRange] || 'default-category';
@@ -1325,6 +1326,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             '3 yrs & Up': 'HotPink',
                             '15 mo - 2.5 yrs': 'Yellow',
                             'All Ages': 'LimeGreen',
+                            'Special Events': 'Red'
                         };
 
                         const categoryClass = categoryClassMap[item.AgeRange] || 'default-category';
@@ -1816,6 +1818,7 @@ function displayEvents(data) {
                         '3 yrs & Up': 'HotPink',
                         '15 mo - 2.5 yrs': 'Yellow',
                         'All Ages': 'LimeGreen',
+                        'Special Events': 'Red'
                     };
 
                     const categoryClass = categoryClassMap[eventDetails.AgeRange] || 'default-category';
