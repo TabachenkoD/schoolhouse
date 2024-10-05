@@ -14,7 +14,7 @@
     <meta property="og:title" content="Schoolhouse Children's Museum - About" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Schoolhouse Children's Museum - Sponsors</title>
+    <title>Schoolhouse Children's Museum - Attend Event</title>
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -239,26 +239,26 @@
     <main>
         <div class="events-sponsors container">
             <div class="ffd-sponsors-logo-container">
-              <p>Event Sponsorship Form</p>
+                <p style="color: #008CD2;">Attend Event</p>
             </div>
             <div class="ffd-sponsors-form-container">
-                <form class="needs-validation" id="sponsor-event-form" novalidate>
+                <form class="needs-validation" id="attend-event-form" novalidate>
                     <div class="row g-3">
                         <div class="member-section-form pb-3">
                             <div class="col-12 pt-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="" value="" required
-                                    name="name">
+                                <label for="first-name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="first-name" placeholder="" value="" required
+                                    name="first-name">
                                 <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div>
                             </div>
                             <div class="col-12 pt-3">
-                                <label for="company-name" class="form-label">Company Name</label>
-                                <input type="text" class="form-control" id="company-name" placeholder="" value=""
-                                    required name="company-name">
+                                <label for="last-name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="last-name" placeholder="" value="" required
+                                    name="last-name">
                                 <div class="invalid-feedback">
-                                    Valid company name is required.
+                                    Valid last name is required.
                                 </div>
                             </div>
                             <div class="col-12 pt-3">
@@ -424,172 +424,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="col-12 pt-3">
-                                <label for="sponsor-level" class="form-label">Sponsor Level</label>
-                                <input type="text" class="form-control" id="sponsor-level" placeholder="" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid sponsor level is required.
-                                </div>
-                            </div>
-                            <div class="col-12 pt-3">
-                                <label for="sponsor-amount" class="form-label">Sponsor Amount</label>
-                                <input type="text" class="form-control" id="sponsor-amount" placeholder="" value=""
-                                    required pattern="^[0-9\(\)\+\- ]+$">
-                                <div class="invalid-feedback">
-                                    Valid sponsor level is required.
-                                </div>
-                            </div>
-                        </div>
 
-                        <div>
-                            <p style="font-size: 15px;">If paying by check please contact Miriam Naranjo: <a href='mailto:Miriam@schoolhousemuseum.org'>Miriam@schoolhousemuseum.org</a></p>
-                            <label for="card-type" class="form-label">Card Type</label>
-                            <div class="card-type-container py-2">
-                                <div class="form-check">
-                                    <input id="card-type-visa" name="card-type" type="radio" class="form-check-input"
-                                        required>
-                                    <label class="form-check-label" for="card-type-visa">
-                                        <img src="img/card-types/visa.png" alt="visa" loading="lazy" title="Visa" />
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input id="card-type-master" name="card-type" type="radio" class="form-check-input"
-                                        required>
-                                    <label class="form-check-label" for="card-type-master">
-                                        <img src="img/card-types/master.png" alt="master card" loading="lazy"
-                                            title="Master Card" />
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input id="card-type-discover" name="card-type" type="radio"
-                                        class="form-check-input" required>
-                                    <label class="form-check-label" for="card-type-discover">
-                                        <img src="img/card-types/discover.png" alt="discover" loading="lazy"
-                                            title="Discover" />
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input id="card-type-american-express" name="card-type" type="radio"
-                                        class="form-check-input" required>
-                                    <label class="form-check-label" for="card-type-american-express">
-                                        <img src="img/card-types/american.png" alt="American Express" loading="lazy"
-                                            title="American Express" />
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-section-form pb-3">
-                            <div>
-                                <div>
-                                    <label for="card-number" class="form-label">Card Number</label>
-                                    <input type="text" class="form-control" id="card-number" placeholder="" value=""
-                                        required>
-                                    <div class="invalid-feedback">
-                                        Valid card number is required.
-                                    </div>
-                                </div>
-                                <div class="card-verification pt-3">
-                                    <label for="card-verification" class="form-label">Card Verification
-                                        #</label>
-                                    <div class="tooltip-container">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20px"
-                                            class="info-icon">
-                                            <path
-                                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-                                        </svg>
-                                        <div class="card-tooltip">
-                                            <p>Visa, MasterCard, or Discover: the three-digit card
-                                                verification
-                                                number
-                                                can
-                                                be found on the back of the card.</p>
-                                            <p>American Express: the four-digit card verification number can
-                                                be
-                                                found on
-                                                the
-                                                front of the card.</p>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" id="card-verification" placeholder=""
-                                        value="" maxlength="4" required>
-                                    <div class="invalid-feedback">
-                                        Valid card verification is required.
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="col-12">
-                                    <label for="exp-month" class="form-label">Exp Month</label>
-                                    <select class="form-select" id="exp-month" required>
-                                        <option value="">Choose...</option>
-                                        <option value="01" label="01 - January">01 - January</option>
-                                        <option value="02" label="02 - February">02 - February</option>
-                                        <option value="03" label="03 - March">03 - March</option>
-                                        <option value="04" label="04 - April">04 - April</option>
-                                        <option value="05" label="05 - May">05 - May</option>
-                                        <option value="06" label="06 - June">06 - June</option>
-                                        <option value="07" label="07 - July">07 - July</option>
-                                        <option value="08" label="08 - August">08 - August</option>
-                                        <option value="09" label="09 - September">09 - September</option>
-                                        <option value="10" label="10 - October">10 - October</option>
-                                        <option value="11" label="11 - November">11 - November</option>
-                                        <option value="12" label="12 - December">12 - December</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 pt-3">
-                                    <label for="exp-year" class="form-label">Exp Year</label>
-                                    <select class="form-select" id="exp-year" required>
-                                        <option value="">Choose...</option>
-                                        <option value="2024" label="2024">2024</option>
-                                        <option value="2025" label="2025">2025</option>
-                                        <option value="2026" label="2026">2026</option>
-                                        <option value="2027" label="2027">2027</option>
-                                        <option value="2028" label="2028">2028</option>
-                                        <option value="2029" label="2029">2029</option>
-                                        <option value="2030" label="2030">2030</option>
-                                        <option value="2031" label="2031">2031</option>
-                                        <option value="2032" label="2032">2032</option>
-                                        <option value="2033" label="2033">2033</option>
-                                        <option value="2034" label="2034">2034</option>
-                                        <option value="2035" label="2035">2035</option>
-                                        <option value="2036" label="2036">2036</option>
-                                        <option value="2037" label="2037">2037</option>
-                                        <option value="2038" label="2038">2038</option>
-                                        <option value="2039" label="2039">2039</option>
-                                        <option value="2040" label="2040">2040</option>
-                                        <option value="2041" label="2041">2041</option>
-                                        <option value="2042" label="2042">2042</option>
-                                        <option value="2043" label="2043">2043</option>
-                                        <option value="2044" label="2044">2044</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="ffd-sponsors-form-btn-container">
                         <button type="submit" class="btn">Submit</button>
                     </div>
                 </form>
-                <div class="ffd-sponsors-form-footer">
-                    <!-- <p class="sponsors-footer-title">
-                        Return completed form to: Miriam Naranjo
-                        <a href='tel:(561) 742-6787'>(561) 742-6787</a>
-                        <a href='mailto:miriam@schoolhousemuseum.org'>miriam@schoolhousemuseum.org</a>
-                    </p> -->
-                    <div>
-                        <img src="img/logo.png" alt="" />
-                    </div>
-                    <p class="footer-address">129 East Ocean Avenue, Boynton Beach, FL 33435-4536</p>
-                    <p class="footer-text">CONTRIBUTIONS BENEFIT THE SCHOOLHOUSE CHILDREN’S MUSEUM, A NOT FOR PROFIT
-                        EXEMPT ORGANIZATION. A
-                        COPY OF THE OFFICIAL REGISTRATION AND FINANCIAL INFORMATION
-                        OF THE SCHOOLHOUSE CHILDREN’S MUSEUM MAY BE OBTAINED FROM THE DIVISION OF CONSUMER SERVICES BY
-                        CALLING TOLL FREE 1-800-435-7352 WITHN THE STATE OF FLORIDA.
-                        REGISTRATION DOES NOT IMPLY ENDORSEMENT, APPROVAL OR RECOMMENDATION BY THE STATE. THE
-                        SCHOOLHOUSE CHILDREN’S MUSEUM RECEIVES 100% OF EACH CONTRIBUTION</p>
-                </div>
             </div>
         </div>
         <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">

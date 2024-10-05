@@ -2667,8 +2667,10 @@ main {
 
             .sponsor-btn-container {
                 display: inline-flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                gap: 30px;
 
                 .sponsor-btn {
                     border-radius: 8px;
@@ -2694,8 +2696,28 @@ main {
 
                     &:hover {
                         background-color: $orange-btn-hover;
-
                     }
+                }
+
+                .attend-btn {
+                    background-color: $dark-blue;
+
+                    a {
+                        color: $white;
+                        padding: 20px 65px;
+                       
+                        @media (max-width: 787px) {
+                            padding: 14px 52px;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: $light-blue;
+                    }
+                }
+
+                @media (max-width: 525px) {
+                    gap: 10px;
                 }
             }
 

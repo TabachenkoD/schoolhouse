@@ -3275,8 +3275,10 @@ main p {
 .events .sponsorship-container .sponsorship-top-row .sponsor-btn-container,
 .events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container {
   display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 }
 .events .sponsorship-container .sponsorship-top-row .sponsor-btn-container .sponsor-btn,
 .events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container .sponsor-btn {
@@ -3307,6 +3309,31 @@ main p {
 .events .sponsorship-container .sponsorship-top-row .sponsor-btn-container .sponsor-btn:hover,
 .events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container .sponsor-btn:hover {
   background-color: #ec6b02;
+}
+.events .sponsorship-container .sponsorship-top-row .sponsor-btn-container .attend-btn,
+.events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container .attend-btn {
+  background-color: #008CD2;
+}
+.events .sponsorship-container .sponsorship-top-row .sponsor-btn-container .attend-btn a,
+.events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container .attend-btn a {
+  color: #FBFDFB;
+  padding: 20px 65px;
+}
+@media (max-width: 787px) {
+  .events .sponsorship-container .sponsorship-top-row .sponsor-btn-container .attend-btn a,
+  .events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container .attend-btn a {
+    padding: 14px 52px;
+  }
+}
+.events .sponsorship-container .sponsorship-top-row .sponsor-btn-container .attend-btn:hover,
+.events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container .attend-btn:hover {
+  background-color: #95CDE7;
+}
+@media (max-width: 525px) {
+  .events .sponsorship-container .sponsorship-top-row .sponsor-btn-container,
+  .events .sponsorship-container .sponsorship-botom-row .sponsor-btn-container {
+    gap: 10px;
+  }
 }
 @media (max-width: 787px) {
   .events .sponsorship-container .sponsorship-top-row,

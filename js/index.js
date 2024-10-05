@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     submitFormData();
                 }
 
-                function showToast(message, isSuccess) {
+                /* function showToast(message, isSuccess) {
                     const toastEl = document.getElementById('myToast');
                     const toastMessage = document.getElementById('toast-message');
 
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const toast = new bootstrap.Toast(toastEl);
                     toast.show();
-                }
+                } */
 
                 function submitFormData() {
                     const memberInfo = {
@@ -1524,18 +1524,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        function showToast(message, isSuccess) {
-            const toastEl = document.getElementById('myToast');
-            const toastMessage = document.getElementById('toast-message');
-
-            toastMessage.textContent = message;
-            toastEl.classList.remove('bg-success', 'bg-danger');
-            if (isSuccess) toastEl.classList.add('bg-success');
-            else toastEl.classList.add('bg-danger');
-
-            const toast = new bootstrap.Toast(toastEl);
-            toast.show();
-        }
+        /*  function showToast(message, isSuccess) {
+             const toastEl = document.getElementById('myToast');
+             const toastMessage = document.getElementById('toast-message');
+ 
+             toastMessage.textContent = message;
+             toastEl.classList.remove('bg-success', 'bg-danger');
+             if (isSuccess) toastEl.classList.add('bg-success');
+             else toastEl.classList.add('bg-danger');
+ 
+             const toast = new bootstrap.Toast(toastEl);
+             toast.show();
+         } */
 
         document.getElementById('weekly-classes-signup-submit').addEventListener('click', function () {
             if (WeeklyClassesForm.checkValidity() === false) {
@@ -1694,6 +1694,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 const myModal = new bootstrap.Modal(document.getElementById('imageModal'));
                 myModal.show();
             });
+        });
+    }
+
+    /* sponsor event form */
+    const sponsorEventForm = document.getElementById('sponsor-event-form');
+    if (sponsorEventForm) {
+        sponsorEventForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var form = this;
+
+
+            if (form.checkValidity() === false) {
+                form.classList.add('was-validated');
+            } else {
+                collectAndSendData();
+            }
         });
     }
 });
@@ -2184,6 +2202,94 @@ function updateCart() {
     }
 }
 
+/* sponsor event form */
+function collectAndSendData() {
+    var name = document.getElementById('name').value.trim();
+    var companyName = document.getElementById('company-name').value.trim();
+    var address = document.getElementById('address').value.trim();
+    var city = document.getElementById('billing-city').value.trim();
+    var state = document.getElementById('billing-state').value;
+    var zip = document.getElementById('billing-zip').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var email = document.getElementById('email').value.trim();
 
+    // Sponsorship Information
+    var sponsorLevel = document.getElementById('sponsor-level').value.trim();
+    var sponsorAmount = document.getElementById('sponsor-amount').value.trim();
+
+    // Payment Information
+    var cardTypeElement = document.querySelector('input[name="card-type"]:checked');
+    var cardType = '';
+    if (cardTypeElement) {
+        cardType = cardTypeElement.id.replace('card-type-', '').replace('-', ' ').toUpperCase();
+    }
+
+    var cardNumber = document.getElementById('card-number').value.trim();
+    var cardVerification = document.getElementById('card-verification').value.trim();
+    var expMonth = document.getElementById('exp-month').value;
+    var expYear = document.getElementById('exp-year').value;
+   
+    var dataToSend = {
+        EventId: 0,
+        Sponsor: {
+            FullName: name,
+            CompanyName: companyName,
+            SponsorAddress: address,
+            SponsorCity: city,
+            SponsorState: state,
+            SponsorZip: zip,
+            Phone: phone,
+            Email: email,
+            CardType: cardType,
+            CardNumber: cardNumber,
+            CardVerificationNumber: cardVerification,
+            CardExpMonth: expMonth,
+            CardExpYear: expYear
+
+        },
+        SponsorshipLevel: sponsorLevel,
+        SponsorshipAmount: sponsorAmount,
+    };
+    sendDataToServer(dataToSend);
+}
+
+function sendDataToServer(data) {
+    fetch(`${SERVER_URL}/sponsorships `, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(async function (response) {
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error(`${res.Message}`);
+            }
+            return res;
+        })
+        .then(function (responseData) {
+            showToast('Submitted successfully!', true);
+            const sponsorEventForm = document.getElementById('sponsor-event-form');
+            sponsorEventForm.reset();
+            sponsorEventForm.classList.remove('was-validated');
+        })
+        .catch(function (error) {
+            showToast(`${error}`, false);
+        });
+}
+
+function showToast(message, isSuccess) {
+    const toastEl = document.getElementById('myToast');
+    const toastMessage = document.getElementById('toast-message');
+
+    toastMessage.textContent = message;
+    toastEl.classList.remove('bg-success', 'bg-danger');
+    if (isSuccess) toastEl.classList.add('bg-success');
+    else toastEl.classList.add('bg-danger');
+
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+}
 
 
