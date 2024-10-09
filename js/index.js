@@ -1771,7 +1771,7 @@ async function fetchMainPageData() {
 
 async function fetchEvents() {
     try {
-        const response = await fetch(`${SERVER_URL}/events`);
+        const response = await fetch(`${SERVER_URL}/events`);/* /upcoming */
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -1807,7 +1807,7 @@ function displayEvents(data) {
             div.classList.add('events-item');
             div.innerHTML = `
                 <a href="#" data-id="${item.ClassEventId}" class="d-block w-100">
-                    <div class="w-100 d-flex justify-content-between m-0 flex-wrap">
+                    <div class="w-100 d-flex m-0 flex-wrap">
                         <span class="item-title">${item.Title}</span>
                         <span>For ${item.AgeRange}</span>
                     </div>
