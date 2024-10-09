@@ -2332,6 +2332,7 @@ function renderExhibits(containerId, exhibits) {
 
         const groupContainer = document.createElement('div');
         groupContainer.classList.add('exhibits-items-section');
+        groupContainer.classList.add('mt-5');
 
         const groupTitle = document.createElement('h5');
         groupTitle.style.color = '#008CD2';
@@ -2339,7 +2340,15 @@ function renderExhibits(containerId, exhibits) {
         groupContainer.appendChild(groupTitle);
 
         const groupExhibitsDiv = document.createElement('div');
-        groupExhibitsDiv.classList.add('exhibits-items-imgs');
+        
+        if (groupData.exhibits.length === 2) {
+            groupExhibitsDiv.classList.add('exhibits-items-imgs');
+            groupExhibitsDiv.classList.add('custom-2');
+        } else if (groupData.exhibits.length === 4) {
+            groupExhibitsDiv.classList.add('exhibits-items-imgs-custom-4');
+        } else {
+            groupExhibitsDiv.classList.add('exhibits-items-imgs');
+        }
         groupContainer.appendChild(groupExhibitsDiv);
         
         groupData.exhibits.forEach(exhibit => {
