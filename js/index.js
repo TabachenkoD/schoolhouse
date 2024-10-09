@@ -1,4 +1,5 @@
 var SERVER_URL = "https://schoolhouse.hnhexpresssolutions.com";
+var SERVER_URL_IMG = "https://schoolhouse.hnhexpresssolutions.com/Content/Images/Exhibits";
 var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
 
 
@@ -80,6 +81,10 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchMainPageData();
     }
 
+    /* exhibits page */
+    if (window.location.pathname === '/visit/exhibits.html' || window.location.pathname === '/visit/exhibits') {
+        fetchExhibits();
+    }
 
     /* classes */
     var carouselInner = document.getElementById('carousel-inner');
@@ -717,7 +722,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* exhibits page */
-    const modal = document.getElementById('exampleModal');
+    /* const modal = document.getElementById('exampleModal');
     if (modal) {
         const modalTitle = modal.querySelector('.modal-title');
         const modalBody = modal.querySelector('.modal-body');
@@ -734,7 +739,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 bootstrapModal.show();
             });
         });
-    }
+    } */
 
     /* general admission */
     const datepickerElement = document.getElementById('datepicker-general-admission');
@@ -1229,6 +1234,7 @@ document.addEventListener("DOMContentLoaded", function () {
             validRange: {
                 start: new Date().toISOString().split('T')[0]
             },
+            /* hiddenDays: [0, 1], */
             displayEventTime: false,
             eventClick: function (info) {
                 var eventObj = info.event;
@@ -1318,7 +1324,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 let currentDate = new Date(startDate);
                 while (currentDate <= endDate) {
-                    if (recurrencyDayIndexes.includes(currentDate.getDay())) {
+                    const currentDay = currentDate.getDay();
+                    if (recurrencyDayIndexes.includes(currentDay) && currentDay !== 0 && currentDay !== 1) {
                         const categoryClassMap = {
                             '2 mo - 2 yrs': 'SkyBlue',
                             '2.5 yrs - 5 yrs': 'Orange',
@@ -2228,7 +2235,7 @@ function collectAndSendData() {
     var cardVerification = document.getElementById('card-verification').value.trim();
     var expMonth = document.getElementById('exp-month').value;
     var expYear = document.getElementById('exp-year').value;
-   
+
     var dataToSend = {
         EventId: 0,
         Sponsor: {
@@ -2292,4 +2299,68 @@ function showToast(message, isSuccess) {
     toast.show();
 }
 
+function fetchExhibits() {
+    fetch(`${SERVER_URL}/exhibits`)
+        .then(response => response.json())
+        .then(data => {
+            const firstFloorExhibits = data.filter(exhibit => exhibit.Floors === 'First floor');
+            const secondFloorExhibits = data.filter(exhibit => exhibit.Floors === 'Second floor');
 
+            renderExhibits('first-floor-exhibits-container', firstFloorExhibits);
+            renderExhibits('second-floor-exhibits-container', secondFloorExhibits);
+        })
+        .catch(error => {
+            console.error('Error fetching exhibits:', error);
+        });
+}
+
+function renderExhibits(containerId, exhibits) {
+    const container = document.getElementById(containerId);
+
+    const groupedExhibits = exhibits.reduce((acc, exhibit) => {
+        const groupKey = exhibit.Groups.replace(/\s+/g, '');
+
+        if (!acc[groupKey]) {
+            acc[groupKey] = { groupName: exhibit.Groups, exhibits: [] };
+        }
+        acc[groupKey].exhibits.push(exhibit);
+        return acc;
+    }, {});
+
+    for (const group in groupedExhibits) {
+        const groupData = groupedExhibits[group];
+
+        const groupContainer = document.createElement('div');
+        groupContainer.classList.add('exhibits-items-section');
+
+        const groupTitle = document.createElement('h5');
+        groupTitle.style.color = '#008CD2';
+        groupTitle.textContent = groupData.groupName;
+        groupContainer.appendChild(groupTitle);
+
+        const groupExhibitsDiv = document.createElement('div');
+        groupExhibitsDiv.classList.add('exhibits-items-imgs');
+        groupContainer.appendChild(groupExhibitsDiv);
+        
+        groupData.exhibits.forEach(exhibit => {
+            const exhibitDiv = document.createElement('div');
+            const exhibitLink = document.createElement('a');
+            exhibitLink.href = `#${exhibit.Title.toLowerCase().replace(/\s+/g, '-')}`;
+
+            const exhibitImg = document.createElement('img');
+            exhibitImg.src = `${SERVER_URL_IMG}/${exhibit.ExhibitImageName}`; 
+            exhibitImg.alt = exhibit.Title;
+            exhibitImg.loading = 'lazy';
+            exhibitLink.appendChild(exhibitImg);
+            exhibitDiv.appendChild(exhibitLink);
+            groupExhibitsDiv.appendChild(exhibitDiv);
+
+            const exhibitDescription = document.createElement('div');
+            exhibitDescription.innerHTML = `<p class="p-underline" id="${exhibit.Title.toLowerCase().replace(/\s+/g, '-')}">${exhibit.Title}</p>
+                                            <p>${exhibit.Description || 'No description available.'}</p>`;
+            groupContainer.appendChild(exhibitDescription);
+        });
+
+        container.appendChild(groupContainer);
+    }
+}
