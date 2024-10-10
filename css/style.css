@@ -3182,6 +3182,40 @@ main p {
   border-radius: 5px;
   padding: 5px 10px;
 }
+.general-admission .memer-admission-final {
+  margin-top: 30px;
+}
+.general-admission .memer-admission-final h3 {
+  font-size: 30px;
+  color: #ED7A1F;
+  margin-bottom: 15px;
+}
+.general-admission .memer-admission-final .general-thanks-message {
+  padding: 8px 15px;
+  background-color: #e6ffcc;
+  border-radius: 8px;
+  border: 1px solid #8dc652;
+  margin-bottom: 20px;
+}
+.general-admission .memer-admission-final .general-thanks-message svg {
+  margin-right: 5px;
+}
+.general-admission #error-container {
+  display: none;
+  margin-top: 30px;
+  padding: 7px 15px;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 8px;
+  color: #FBFDFB;
+}
+.general-admission #error-container p {
+  margin: 0;
+}
+.general-admission #error-container a {
+  color: #FBFDFB;
+  text-decoration: none;
+}
 
 #registerModal .register-form-inpits {
   display: flex;

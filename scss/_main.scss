@@ -2564,6 +2564,46 @@ main {
             padding: 5px 10px;
         }
     }
+
+    .memer-admission-final {
+        margin-top: 30px;
+
+        h3 {
+            font-size: 30px;
+            color: $orange;
+            margin-bottom: 15px;
+        }
+
+        .general-thanks-message {
+            padding: 8px 15px;
+            background-color: #e6ffcc;
+            border-radius: 8px;
+            border: 1px solid #8dc652;
+            margin-bottom: 20px;
+
+            svg {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    #error-container {
+        display: none;
+        margin-top: 30px;
+        padding: 7px 15px;
+        width: fit-content;
+        border-radius: 8px;
+        color: $white;
+
+        p {
+            margin: 0;
+        }
+
+        a {
+            color: $white;
+            text-decoration: none;
+        }
+    }
 }
 
 #registerModal {
@@ -2705,7 +2745,7 @@ main {
                     a {
                         color: $white;
                         padding: 20px 65px;
-                       
+
                         @media (max-width: 787px) {
                             padding: 14px 52px;
                         }
@@ -2871,7 +2911,7 @@ main {
         justify-content: center;
         align-items: center;
 
-        p{
+        p {
             color: $orange;
             font-size: 28px;
             font-weight: 700;

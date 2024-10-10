@@ -721,26 +721,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    /* exhibits page */
-    /* const modal = document.getElementById('exampleModal');
-    if (modal) {
-        const modalTitle = modal.querySelector('.modal-title');
-        const modalBody = modal.querySelector('.modal-body');
-
-        document.querySelectorAll('.lobby-section-item').forEach(function (item) {
-            item.addEventListener('click', function () {
-                var title = item.getAttribute('data-title');
-                var content = item.getAttribute('data-content');
-
-                modalTitle.textContent = title;
-                modalBody.innerHTML = content;
-
-                var bootstrapModal = new bootstrap.Modal(modal);
-                bootstrapModal.show();
-            });
-        });
-    } */
-
     /* general admission */
     const datepickerElement = document.getElementById('datepicker-general-admission');
     const timepickerElement = document.getElementById('timepicker-general-admission');
@@ -853,49 +833,50 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
-        const toggleBtn = document.getElementsByClassName('general-admission-hide-btn')
-        toggleBtn[0].addEventListener('click', (e) => {
-            e.preventDefault();
-            const form = document.getElementById('quantity-person-form');
-            const firstStep = document.getElementById('general-admission-first-step');
-            const secondStep = document.getElementById('general-admission-second-step');
+        const toggleBtn = document.getElementsByClassName('general-admission-hide-btn');
+        if (toggleBtn.length > 0) {
+            toggleBtn[0].addEventListener('click', (e) => {
+                e.preventDefault();
+                const form = document.getElementById('quantity-person-form');
+                const firstStep = document.getElementById('general-admission-first-step');
+                const secondStep = document.getElementById('general-admission-second-step');
 
-            const quantityInputs = document.querySelectorAll('.quantity');
-            function checkInputs() {
-                let allEmpty = true;
+                const quantityInputs = document.querySelectorAll('.quantity');
+                function checkInputs() {
+                    let allEmpty = true;
+
+                    quantityInputs.forEach(input => {
+                        if (input.value.trim() !== '') {
+                            allEmpty = false;
+                        }
+                    });
+
+                    quantityInputs.forEach(input => {
+                        if (allEmpty) {
+                            input.setAttribute('required', 'required');
+                        } else {
+                            input.removeAttribute('required');
+                        }
+                    });
+                }
 
                 quantityInputs.forEach(input => {
-                    if (input.value.trim() !== '') {
-                        allEmpty = false;
-                    }
+                    input.addEventListener('input', checkInputs);
                 });
 
-                quantityInputs.forEach(input => {
-                    if (allEmpty) {
-                        input.setAttribute('required', 'required');
-                    } else {
-                        input.removeAttribute('required');
-                    }
-                });
-            }
+                checkInputs();
 
-            quantityInputs.forEach(input => {
-                input.addEventListener('input', checkInputs);
+                if (form && !form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    return;
+                }
+
+                firstStep.classList.add('hidden');
+                secondStep.classList.remove('hidden');
             });
-
-            checkInputs();
-
-            if (form && !form.checkValidity()) {
-                form.classList.add('was-validated');
-                return;
-            }
-
-            firstStep.classList.add('hidden');
-            secondStep.classList.remove('hidden');
-        });
+        }
 
         const nextBtn = document.querySelector('.continue-to-payment-btn');
-        const memberSubmitBtn = document.querySelector('.continue-btn-member');
         const formGeneralAdmission1 = document.getElementById('general-admission-form-1');
         const secondStep = document.getElementById('general-admission-second-step');
         const thirdStep = document.getElementById('general-admission-third-step');
@@ -903,9 +884,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const backBtnStep2 = document.getElementById('back-step-2');
         const backBtnStep3 = document.getElementById('back-step-3');
 
-        formGeneralAdmission1.addEventListener('submit', function (event) {
-            event.preventDefault();
-        });
+        if (formGeneralAdmission1) {
+            formGeneralAdmission1.addEventListener('submit', function (event) {
+                event.preventDefault();
+            });
+        }
+
 
         if (nextBtn) {
             nextBtn.addEventListener('click', function (event) {
@@ -924,21 +908,65 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         /* member admission submit */
+        const memberSubmitBtn = document.getElementById('member-admission-submit-btn');
         if (memberSubmitBtn) {
             memberSubmitBtn.addEventListener('click', function (event) {
                 event.preventDefault();
-                if (formGeneralAdmission1.checkValidity()) {
-                    secondStep.classList.add('hidden');
+                const selectedTime = document.querySelector('input[name="scheduleTime"]:checked').value;
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                };
+                const formattedDate = sheduleDateObj.toLocaleString('en-US', options);
 
-                    if (thirdStep) {
-                        thirdStep.classList.remove('hidden');
-                    }
+                const emailInput = document.getElementById('member-email');
+                const emailValue = emailInput.value.trim();
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    const formData = new FormData(formGeneralAdmission1);
+                const errContainer = document.getElementById('error-container');
+                if (emailPattern.test(emailValue)) {
+                    emailInput.classList.remove('is-invalid');
+                    emailInput.classList.add('is-valid');
 
-                    console.log(formData, "memberSubmitBtn")
+                    fetch(`${SERVER_URL}/reservations/memberadmission`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ScheduleDate: formattedDate, ScheduleTime: selectedTime, MemberEmail: emailValue })
+                    })
+                        .then(async response => {
+                            const resData = await response.json();
+                            if (response.ok) {
+                                errContainer.style.display = 'none';
+                                showToast(`${resData}`, true);
+                                emailInput.value = '';
+                                emailInput.classList.remove('is-valid');
+
+                                const timepicker = document.querySelector('#selected-time-display').innerText;
+                                document.getElementById('general-admission-first-step').classList.add('hidden');
+                                const reservedTime = document.getElementById('member-time');
+                                reservedTime.innerHTML = `${timepicker}`;
+                                const scheduledDateTime = document.getElementById('member-date');
+                                scheduledDateTime.innerHTML = `${datepickerInput.innerText}`;
+                                document.getElementById('memer-admission-final').classList.remove('hidden');
+                                document.getElementById('btn-container-member').classList.add('hidden');
+                                document.getElementById('title-member-admission').classList.add('hidden');
+                            } else {
+                                const erroMsg = document.getElementById('error-msg');
+                                erroMsg.innerText = resData.Message;
+                                errContainer.style.display = 'block';
+                            }
+                        })
+                        .catch(error => {
+                            showToast(`${error}`, false)
+                            console.error('Network error:', error);
+                        });
+
                 } else {
-                    formGeneralAdmission1.classList.add('was-validated');
+                    emailInput.classList.remove('is-valid');
+                    emailInput.classList.add('is-invalid');
                 }
             });
         }
@@ -2340,7 +2368,7 @@ function renderExhibits(containerId, exhibits) {
         groupContainer.appendChild(groupTitle);
 
         const groupExhibitsDiv = document.createElement('div');
-        
+
         if (groupData.exhibits.length === 2) {
             groupExhibitsDiv.classList.add('exhibits-items-imgs');
             groupExhibitsDiv.classList.add('custom-2');
@@ -2350,14 +2378,14 @@ function renderExhibits(containerId, exhibits) {
             groupExhibitsDiv.classList.add('exhibits-items-imgs');
         }
         groupContainer.appendChild(groupExhibitsDiv);
-        
+
         groupData.exhibits.forEach(exhibit => {
             const exhibitDiv = document.createElement('div');
             const exhibitLink = document.createElement('a');
             exhibitLink.href = `#${exhibit.Title.toLowerCase().replace(/\s+/g, '-')}`;
 
             const exhibitImg = document.createElement('img');
-            exhibitImg.src = `${SERVER_URL_IMG}/${exhibit.ExhibitImageName}`; 
+            exhibitImg.src = `${SERVER_URL_IMG}/${exhibit.ExhibitImageName}`;
             exhibitImg.alt = exhibit.Title;
             exhibitImg.loading = 'lazy';
             exhibitLink.appendChild(exhibitImg);

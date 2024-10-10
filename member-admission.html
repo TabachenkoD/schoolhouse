@@ -241,7 +241,7 @@
     </header>
     <main>
         <div class="general-admission container">
-            <h4 class="common-title">Member Admission</h4>
+            <h4 class="common-title" id="title-member-admission">Member Admission</h4>
 
             <div id="general-admission-first-step">
                 <div class="general-date-block">
@@ -323,10 +323,43 @@
                         </div>
                     </div>
                 </div>
-                <span><a href="#" class="rsvp-action-btn general-admission-hide-btn mt-4">Next</a></span>
+                <div class="d-flex align-items-center w-100 gap-5 pt-3">
+                    <label for="primary-adult-email" class="form-label m-0">Email Address</label>
+                    <input type="email" class="form-control" id="member-email" placeholder="example@example.com"
+                        name="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required style="max-width: 350px;">
+                    <div class="invalid-feedback" style="max-width: 500px;">
+                        Please enter a valid email address.
+                    </div>
+                </div>
+                <div id="error-container" class="bg-danger">
+                    <p id="error-msg"></p>
+                    <p>You can <a href="join.html">purchase membership</a> or purchase a visit through <a
+                            href="general-admission.html">General Admission</a></p>
+                </div>
             </div>
+            <span id="btn-container-member">
+                <a href="#" class="rsvp-action-btn mt-4" id="member-admission-submit-btn">Submit</a>
+            </span>
+            <div class="memer-admission-final hidden" id="memer-admission-final">
+                <h3>Member Visit Confirmation</h3>
+                <div class="selected-date">Time: <span class="general-reserved-time" id="member-time"></span>
+                </div>
+                <div class="mb-2"><span>Date: </span><span class="general-sheduled-time" id="member-date"></span>
+                </div>
+                <div class="general-thanks-message" id="general-thanks-message">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="#41BE4F"
+                        viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path
+                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                    </svg>
+                    We look forward to seeing you!
+                </div>
 
-            <div class="hidden" id="general-admission-second-step">
+            </div>
+        </div>
+        </div>
+
+        <!-- <div class="hidden" id="general-admission-second-step">
                 <div class="general-admission-personal-info">
                     <form class="needs-validation" id="general-admission-form-1" novalidate>
                         <h4 class="m-0">Membership Type</h4>
@@ -828,6 +861,15 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div> -->
+        <!-- </div> -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="myToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive"
+                aria-atomic="true">
+                <div class="toast-body d-flex justify-content-between">
+                    <strong id="toast-message" class="me-auto">Submitted successfully!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
         </div>
