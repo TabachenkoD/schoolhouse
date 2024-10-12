@@ -1841,7 +1841,6 @@ async function fetchEvents() {
     }
 }
 
-
 function showSkeleton(show, containerId, skeletonClass) {
     const container = document.getElementById(containerId);
     const skeletons = container.querySelectorAll(`.${skeletonClass}`);
@@ -1850,13 +1849,14 @@ function showSkeleton(show, containerId, skeletonClass) {
     });
 }
 
-function displayEvents(data) {
+async function displayEvents(data) {
     const container = document.getElementById('classes-content');
     container.innerHTML = '';
 
     var selectedDate;
 
-    const sortedEvents = getSortedEventsByClosestDate(data);
+    const closedDates = await fetchClosedDates();
+    const sortedEvents = getSortedEventsByClosestDate(data, closedDates);
 
     if (sortedEvents.length > 0) {
         sortedEvents.forEach(item => {
@@ -1888,7 +1888,7 @@ function displayEvents(data) {
                     selectedDate = item.closestDate;
                     document.getElementById('selected-date').textContent = selectedDate.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });;
 
-                    if (eventDetails.RequirePayment) {
+                    if (!eventDetails.RequirePayment) {
                         document.getElementById('requirePayment').innerHTML = `<span class="badge bg-danger" style="font-size: 14px;">FREE</span> with paid admission.`;
                         document.getElementById('free-admission-container').classList.remove('hidden');
                     }
@@ -1911,6 +1911,11 @@ function displayEvents(data) {
 
                     const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
                     eventModal.show();
+
+                    document.getElementById('eventModal').addEventListener('hidden.bs.modal', () => {
+                        document.getElementById('requirePayment').innerHTML = '';
+                        document.getElementById('free-admission-container').classList.add('hidden');
+                    });
 
                     document.getElementById('registerModal').addEventListener('hidden.bs.modal', () => {
                         const registerToClass = document.getElementById('register-to-classes-form');
@@ -2068,7 +2073,7 @@ function displayEvents(data) {
     }, false);
 }
 
-function getClosestDate(event) {
+/* function getClosestDate(event) {
     const today = new Date();
     const startDate = new Date(event.EventStartDate);
     const endDate = new Date(event.EventEndDate);
@@ -2102,13 +2107,58 @@ function getClosestDate(event) {
     }
 
     return closestDate;
+} */
+function getClosestDate(event, closedDates) {
+    const today = new Date();
+    const startDate = new Date(event.EventStartDate);
+    const endDate = new Date(event.EventEndDate);
+    const recurrenceDays = event.EventRecurrency.split(',').map(day => day.trim());
+
+    if (startDate > endDate || today > endDate) {
+        return null;
+    }
+
+    let closestDate = null;
+    let minDiff = Infinity;
+
+    const daysOfWeek = {
+        'Sunday': 0,
+        'Monday': 1,
+        'Tuesday': 2,
+        'Wednesday': 3,
+        'Thursday': 4,
+        'Friday': 5,
+        'Saturday': 6
+    };
+
+    for (let d = new Date(today); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const currentDay = d.toLocaleString('en-US', { weekday: 'long' });
+
+        const isClosedDate = closedDates.some(closedDate =>
+            d.getFullYear() === closedDate.getFullYear() &&
+            d.getMonth() === closedDate.getMonth() &&
+            d.getDate() === closedDate.getDate()
+        );
+
+        if (d >= startDate && recurrenceDays.includes(currentDay) && !isClosedDate) {
+            const diff = Math.abs(d - today);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestDate = new Date(d);
+            }
+        }
+    }
+
+    return closestDate;
 }
 
-function getSortedEventsByClosestDate(events) {
-    return events.map(event => {
-        event.closestDate = getClosestDate(event);
-        return event;
-    }).filter(event => event.closestDate !== null && event.Category === 'Class')
+function getSortedEventsByClosestDate(events, closedDates) {
+    return events
+        .map(event => {
+            event.closestDate = getClosestDate(event, closedDates);
+            return event;
+        })
+        .filter(event => event.closestDate !== null && event.Category === 'Class')
         .sort((a, b) => a.closestDate - b.closestDate)
         .slice(0, 5);
 }
