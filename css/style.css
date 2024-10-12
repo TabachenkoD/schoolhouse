@@ -3274,7 +3274,7 @@ main p {
   padding: 10px;
   padding-top: 40px;
 }
-.events .events-text-section h4 {
+.events .events-text-section .custom-position {
   display: block;
   background-color: #FBFDFB;
   position: absolute;
@@ -3488,6 +3488,122 @@ main p {
   to {
     transform: translateX(-50%);
   }
+}
+.events #event-page-description {
+  /* Optional: Set list-style-position */
+}
+.events #event-page-description .ql-size-small {
+  font-size: 0.75em;
+}
+.events #event-page-description .ql-size-large {
+  font-size: 1.5em;
+}
+.events #event-page-description .ql-size-huge {
+  font-size: 2.5em;
+}
+.events #event-page-description .ql-font-monospace {
+  font-family: Monaco, Courier New, monospace;
+}
+.events #event-page-description blockquote {
+  border-left: 4px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 16px;
+}
+.events #event-page-description h1 {
+  font-size: 2em;
+  /* 32px */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.events #event-page-description h2 {
+  font-size: 1.5em;
+  /* 24px */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.events #event-page-description h3 {
+  font-size: 1.17em;
+  /* 18.72px */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.events #event-page-description h4 {
+  font-size: 1em;
+  /* 16px */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.events #event-page-description h5 {
+  font-size: 0.83em;
+  /* 13.28px */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.events #event-page-description h6 {
+  font-size: 0.67em;
+  /* 10.72px */
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+.events #event-page-description ul {
+  list-style-type: disc;
+  /* For unordered lists */
+  margin-left: 1.5em;
+  /* Adjust as needed */
+  padding-left: 0;
+  /* Reset padding if needed */
+}
+.events #event-page-description ol {
+  list-style-type: decimal;
+  /* For ordered lists */
+  margin-left: 1.5em;
+  /* Adjust as needed */
+  padding-left: 0;
+  /* Reset padding if needed */
+}
+.events #event-page-description ul li,
+.events #event-page-description ol li {
+  margin: 0.5em 0;
+}
+.events #event-page-description ul,
+.events #event-page-description ol {
+  list-style-position: outside;
+  /* or 'inside' */
+}
+.events #event-page-description a {
+  color: blue;
+  /*  text-decoration: underline; */
+}
+.events #event-page-description a:hover {
+  color: darkblue;
+}
+.events #event-page-description .ql-font-serif {
+  font-family: Georgia, Times New Roman, serif;
+}
+.events #event-page-description .ql-align-center {
+  text-align: center;
+}
+.events #event-page-description .ql-align-right {
+  text-align: right;
+}
+.events #event-page-description .ql-align-justify {
+  text-align: justify;
+}
+.events #event-page-description .ql-indent-1 {
+  margin-left: 3em;
+}
+.events #event-page-description .ql-indent-2 {
+  margin-left: 6em;
+}
+.events #event-page-description .ql-indent-3 {
+  margin-left: 9em;
+}
+.events #event-page-description .ql-indent-4 {
+  margin-left: 12em;
+}
+.events #event-page-description .ql-indent-5 {
+  margin-left: 15em;
 }
 
 .events-sponsors {

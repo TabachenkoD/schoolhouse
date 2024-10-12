@@ -9,7 +9,7 @@ if (window.innerWidth <= 768) {
     document.body.classList.add('_pc');
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     /* Header */
 
     const menuItemsWithSubmenu = document.querySelectorAll('.menu-list > li');
@@ -726,6 +726,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const timepickerElement = document.getElementById('timepicker-general-admission');
 
     if (datepickerElement && timepickerElement) {
+        const closedDates = await fetchClosedDates();
         const datepickerInput = document.getElementById('selected-date-display');
         const changeDateLink = document.getElementById('change-date-link');
         const changeTimeLink = document.getElementById('change-time-link');
@@ -761,7 +762,8 @@ document.addEventListener("DOMContentLoaded", function () {
             defaultDate: defaultDate,
             restrictions: {
                 minDate: new Date(),
-                daysOfWeekDisabled: [0, 1]
+                daysOfWeekDisabled: [0, 1],
+                disabledDates: closedDates,
             },
             localization: {
                 locale: 'en',
@@ -1262,7 +1264,6 @@ document.addEventListener("DOMContentLoaded", function () {
             validRange: {
                 start: new Date().toISOString().split('T')[0]
             },
-            /* hiddenDays: [0, 1], */
             displayEventTime: false,
             eventClick: function (info) {
                 var eventObj = info.event;
@@ -1314,17 +1315,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                const events = generateEvents(data);
+                const events = await generateEvents(data);
                 calendar.addEventSource(events);
             } catch (error) {
-                console.error(error);
+                showToast(`${error}`, false);
             }
         }
 
         fetchCalendarEvent();
 
-        function generateEvents(data) {
+        async function generateEvents(data) {
             const events = [];
+            const closedDates = await fetchClosedDates();
+
             data.forEach(item => {
                 if (!item.IsEnabled) return;
                 const startDate = new Date(item.EventStartDate);
@@ -1353,7 +1356,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 let currentDate = new Date(startDate);
                 while (currentDate <= endDate) {
                     const currentDay = currentDate.getDay();
-                    if (recurrencyDayIndexes.includes(currentDay) && currentDay !== 0 && currentDay !== 1) {
+
+                    const isClosedDate = closedDates.some(closedDate => {
+                        return (
+                            closedDate.getFullYear() === currentDate.getFullYear() &&
+                            closedDate.getMonth() === currentDate.getMonth() &&
+                            closedDate.getDate() === currentDate.getDate()
+                        );
+                    });
+
+                    if (!isClosedDate && recurrencyDayIndexes.includes(currentDay) && currentDay !== 0 && currentDay !== 1) {
                         const categoryClassMap = {
                             '2 mo - 2 yrs': 'SkyBlue',
                             '2.5 yrs - 5 yrs': 'Orange',
@@ -1721,8 +1733,25 @@ document.addEventListener("DOMContentLoaded", function () {
     /* events page */
     const sponsorshipImages = document.querySelectorAll('.sponsorship-container img');
     if (sponsorshipImages.length > 0) {
-        const modalImage = document.getElementById('modalImage');
+        fetch(`${SERVER_URL}/events/allevents`)
+            .then(async response => {
+                const resData = await response.json()
 
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+
+                return resData[4].Description;
+            })
+            .then(contentHtml => {
+                /*  document.getElementById('event-page-description').innerHTML = contentHtml;  */
+            })
+            .catch(error => {
+                console.error('Error fetching content:', error);
+                document.getElementById('event-description').textContent = 'Error loading content.';
+            });
+
+        const modalImage = document.getElementById('modalImage');
         sponsorshipImages.forEach(image => {
             image.addEventListener('click', function () {
                 modalImage.src = this.src;
@@ -2401,3 +2430,18 @@ function renderExhibits(containerId, exhibits) {
         container.appendChild(groupContainer);
     }
 }
+
+const fetchClosedDates = async () => {
+    try {
+        const response = await fetch(`${SERVER_URL}/admin/closed-dates`);
+        const data = await response.json();
+        const closedDatesFormatted = Array.isArray(data) ?
+            data.map(dateString => {
+                const [month, day, year] = dateString.split('/');
+                return new Date(`${year}-${month}-${day}`);
+            }) : [];
+        return closedDatesFormatted;
+    } catch (error) {
+        console.error('Error fetching closed dates:', error);
+    }
+};

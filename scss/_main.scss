@@ -2671,7 +2671,7 @@ main {
             padding-top: 40px;
         }
 
-        h4 {
+        .custom-position {
             display: block;
             background-color: $white;
             position: absolute;
@@ -2896,6 +2896,148 @@ main {
                     transform: translateX(-50%);
                 }
             }
+        }
+    }
+
+    #event-page-description {
+        .ql-size-small {
+            font-size: 0.75em;
+        }
+
+        .ql-size-large {
+            font-size: 1.5em;
+        }
+
+        .ql-size-huge {
+            font-size: 2.5em;
+        }
+
+        .ql-font-monospace {
+            font-family: Monaco, Courier New, monospace;
+        }
+
+        blockquote {
+            border-left: 4px solid #ccc;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            padding-left: 16px;
+        }
+
+        h1 {
+            font-size: 2em;
+            /* 32px */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            /* 24px */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        h3 {
+            font-size: 1.17em;
+            /* 18.72px */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        h4 {
+            font-size: 1em;
+            /* 16px */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        h5 {
+            font-size: 0.83em;
+            /* 13.28px */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        h6 {
+            font-size: 0.67em;
+            /* 10.72px */
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+
+        ul {
+            list-style-type: disc;
+            /* For unordered lists */
+            margin-left: 1.5em;
+            /* Adjust as needed */
+            padding-left: 0;
+            /* Reset padding if needed */
+        }
+
+        ol {
+            list-style-type: decimal;
+            /* For ordered lists */
+            margin-left: 1.5em;
+            /* Adjust as needed */
+            padding-left: 0;
+            /* Reset padding if needed */
+        }
+
+        ul li,
+        ol li {
+            margin: 0.5em 0;
+        }
+
+        /* Optional: Set list-style-position */
+        ul,
+        ol {
+            list-style-position: outside;
+            /* or 'inside' */
+        }
+
+        a {
+            color: blue;
+            /*  text-decoration: underline; */
+        }
+
+        a:hover {
+            color: darkblue;
+        }
+
+        .ql-font-serif {
+            font-family: Georgia, Times New Roman, serif;
+        }
+
+        .ql-align-center {
+            text-align: center;
+        }
+        
+        .ql-align-right {
+            text-align: right;
+        }
+        
+        .ql-align-justify {
+            text-align: justify;
+        }
+        
+        .ql-indent-1 {
+            margin-left: 3em;
+        }
+        
+        .ql-indent-2 {
+            margin-left: 6em;
+        }
+        
+        .ql-indent-3 {
+            margin-left: 9em;
+        }
+
+        .ql-indent-4 {
+            margin-left: 12em;
+        }
+
+        .ql-indent-5 {
+            margin-left: 15em;
         }
     }
 }

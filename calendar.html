@@ -255,7 +255,7 @@
             </div>
 
             <div id='calendar'></div>
-           
+
         </div>
         <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -268,7 +268,7 @@
                         <div class="mb-2"><span><b id="eventName">Class: </b></span> <span id="eventTitle"
                                 style="color: #ED7A1F;"></span></div>
                         <div class="mb-2"><span><b>Date: </b></span>
-                           <span id="eventDate"></span>
+                            <span id="eventDate"></span>
                         </div>
                         <div class="mb-2"><span><b>Category: </b></span> <span id="eventCategory"></span></div>
                         <div class="mb-2"><span><b>Recurs: </b></span> <span id="eventRecurrency"></span></div>
@@ -324,8 +324,8 @@
                                     <div class="">
                                         <label for="phone" class="form-label register-form-inpits">Phone
                                             Number</label>
-                                        <input type="text" pattern="^[0-9\(\)\+\- ]+$" class="form-control" id="phone" placeholder="" value=""
-                                            name="phone" required>
+                                        <input type="text" pattern="^[0-9\(\)\+\- ]+$" class="form-control" id="phone"
+                                            placeholder="" value="" name="phone" required>
                                     </div>
                                 </div>
                                 <div class="">
@@ -363,7 +363,15 @@
                 </div>
             </div>
         </div>
-
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="myToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive"
+                aria-atomic="true">
+                <div class="toast-body d-flex justify-content-between">
+                    <strong id="toast-message" class="me-auto">Membership form submitted successfully!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
                 <h5 id="offcanvasRightLabel" style="color: #008CD2;">Registered classes and events</h5>
