@@ -1,5 +1,6 @@
 var SERVER_URL = "https://schoolhouse.hnhexpresssolutions.com";
 var SERVER_URL_IMG = "https://schoolhouse.hnhexpresssolutions.com/Content/Images/Exhibits";
+var SERVER_URL_IMG_EVENTS = "https://schoolhouse.hnhexpresssolutions.com/Content/Images/Events";
 var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
 
 
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         /* } */
 
         fetchMainPageData();
+        await getLogoEventMainPage();
     }
 
     /* exhibits page */
@@ -1741,10 +1743,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
 
-                return resData[4].Description;
+                return resData.length > 0 ? resData[0] : null;
             })
-            .then(contentHtml => {
-                /*  document.getElementById('event-page-description').innerHTML = contentHtml;  */
+            .then(data => {
+                if (data) {
+                    document.getElementById('event-title').innerHTML = data.Title;
+                    document.getElementById('event-page-description').innerHTML = data.Description;
+                }
             })
             .catch(error => {
                 console.error('Error fetching content:', error);
@@ -1770,11 +1775,27 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             var form = this;
 
-
             if (form.checkValidity() === false) {
                 form.classList.add('was-validated');
             } else {
                 collectAndSendData();
+            }
+        });
+    }
+
+    /* attend event form */
+    const attendEventForm = document.getElementById('attend-event-form');
+    if (attendEventForm) {
+        attendEventForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var form = this;
+
+            if (form.checkValidity() === false) {
+                form.classList.add('was-validated');
+            } else {
+                dataAttendEventForm();
             }
         });
     }
@@ -2317,7 +2338,8 @@ function updateCart() {
 }
 
 /* sponsor event form */
-function collectAndSendData() {
+async function collectAndSendData() {
+    const allEvents = await fetchAllEvents();
     var name = document.getElementById('name').value.trim();
     var companyName = document.getElementById('company-name').value.trim();
     var address = document.getElementById('address').value.trim();
@@ -2344,7 +2366,7 @@ function collectAndSendData() {
     var expYear = document.getElementById('exp-year').value;
 
     var dataToSend = {
-        EventId: 0,
+        EventId: allEvents.length > 0 ? allEvents[0].ClassEventId : 0,
         Sponsor: {
             FullName: name,
             CompanyName: companyName,
@@ -2359,7 +2381,6 @@ function collectAndSendData() {
             CardVerificationNumber: cardVerification,
             CardExpMonth: expMonth,
             CardExpYear: expYear
-
         },
         SponsorshipLevel: sponsorLevel,
         SponsorshipAmount: sponsorAmount,
@@ -2387,6 +2408,61 @@ function sendDataToServer(data) {
             const sponsorEventForm = document.getElementById('sponsor-event-form');
             sponsorEventForm.reset();
             sponsorEventForm.classList.remove('was-validated');
+        })
+        .catch(function (error) {
+            showToast(`${error}`, false);
+        });
+}
+
+/* attend event form */
+async function dataAttendEventForm() {
+    const allEvents = await fetchAllEvents();
+    var firstName = document.getElementById('first-name').value.trim();
+    var lastName = document.getElementById('last-name').value.trim();
+    var address = document.getElementById('address').value.trim();
+    var city = document.getElementById('billing-city').value.trim();
+    var state = document.getElementById('billing-state').value;
+    var zip = document.getElementById('billing-zip').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var email = document.getElementById('email').value.trim();
+
+    var dataToSend = {
+        EventId: allEvents.length > 0 ? allEvents[0].ClassEventId : 0,
+        EventAttendee: {
+            FirstName: firstName,
+            LastName: lastName,
+            Email: email,
+            Phone: phone,
+            Address: address,
+            City: city,
+            State: state,
+            Zip: zip
+        }
+    };
+    console.log(dataToSend)
+    sendAttendDataToServer(dataToSend);
+}
+
+function sendAttendDataToServer(data) {
+    fetch(`${SERVER_URL}/events/events-attend `, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(async function (response) {
+            const res = await response.json();
+            if (!response.ok) {
+                throw new Error(`${res.Message}`);
+            }
+            return res;
+        })
+        .then(function (responseData) {
+            showToast('Submitted successfully!', true);
+            const attendEventForm = document.getElementById('attend-event-form');
+            attendEventForm.reset();
+            attendEventForm.classList.remove('was-validated');
         })
         .catch(function (error) {
             showToast(`${error}`, false);
@@ -2495,3 +2571,39 @@ const fetchClosedDates = async () => {
         console.error('Error fetching closed dates:', error);
     }
 };
+
+const fetchAllEvents = async () => {
+    try {
+        const response = await fetch(`${SERVER_URL}/events/allevents`);
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.error('Error fetching all events:', error);
+    }
+}
+
+const getLogoEventMainPage = async () => {
+    const eventArr = await fetchAllEvents();
+    if (eventArr.length > 0) {
+        const container = document.getElementById('upcoming-events-main-page');
+        container.innerHTML = `
+        <h3>UPCOMING EVENTS</h3>
+        <div class="upcoming-events-container">
+            <div class="upcoming-events-img-container">
+                <img src="${SERVER_URL_IMG_EVENTS}/${eventArr[0].EventImageName}" alt="Upcoming events" />
+            </div>
+            <div class="upcoming-events-btn-container">
+                <div>
+                    <a href="events.html">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+        `;
+    } else {
+        const container = document.getElementById('upcoming-events-main-page');
+        container.innerHTML = ""
+    }
+}
