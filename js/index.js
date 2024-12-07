@@ -1,7 +1,7 @@
-var SERVER_URL = "https://schoolhouse.hnhexpresssolutions.com";
-var SERVER_URL_IMG = "https://schoolhouse.hnhexpresssolutions.com/Content/Images/Exhibits";
-var SERVER_URL_IMG_EVENTS = "https://schoolhouse.hnhexpresssolutions.com/Content/Images/Events";
-var FRONTEND_REDIRECT_URL = "https://schoolhouse-eta.vercel.app";
+var SERVER_URL = "https://dev.sheynpartners.com:8081";
+var SERVER_URL_IMG = "https://dev.sheynpartners.com:8081/Content/Images/Exhibits";
+var SERVER_URL_IMG_EVENTS = "https://dev.sheynpartners.com:8081/Content/Images/Events";
+var FRONTEND_REDIRECT_URL = "https://dev.sheynpartners.com:8081";
 
 
 if (window.innerWidth <= 768) {
